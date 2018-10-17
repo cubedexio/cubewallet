@@ -19,5 +19,9 @@ module.exports = {
     source: 'src',
     img: 'src',
     image: 'xlink:href'
-  }
+  },
+  preLoaders: {
+    i18n: 'yaml-loader'
+  },
+
 }

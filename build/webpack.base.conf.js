@@ -41,6 +41,10 @@ let webpackConfig = {
         include: [resolve('src'), resolve('test')]
       },
       {
+        test: /\.(yaml|yml)$/,
+        loader: 'js-yaml-loader'
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
@@ -72,6 +76,14 @@ let webpackConfig = {
 module.exports = vuxLoader.merge(webpackConfig, {
   plugins: [
     'vux-ui',
+    {
+      name: 'i18n',
+      vuxStaticReplace: false,
+      staticReplace: false,
+      extractToFiles: 'src/locales/components.yml',
+      localeList: ['en', 'zh-CN']
+    
+    },
     'progress-bar',
     {
       name: 'duplicate-style',
