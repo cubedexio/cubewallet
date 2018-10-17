@@ -5,7 +5,7 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const vuxLoader = require('vux-loader')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -82,13 +82,13 @@ module.exports = vuxLoader.merge(webpackConfig, {
       staticReplace: false,
       extractToFiles: 'src/locales/components.yml',
       localeList: ['en', 'zh-CN']
-    
+
     },
     'progress-bar',
     {
       name: 'duplicate-style',
       options: {
-        cssProcessorOptions : {
+        cssProcessorOptions: {
           safe: true,
           zindex: false,
           autoprefixer: {
@@ -100,6 +100,10 @@ module.exports = vuxLoader.merge(webpackConfig, {
           }
         }
       }
+    },
+    {
+      name: 'less-theme',
+      path: 'src/style/vux_theme.less'
     }
   ]
 })
