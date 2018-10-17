@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Wallet from '@/components/Wallet'
 import User from '@/components/User'
+import Transaction from '@/components/Transaction'
 // import User from '@/pages/user/User'
 
 Vue.use(Router)
@@ -24,6 +25,11 @@ export default new Router({
           path: 'user',
           name: 'user',
           component: User
+        },
+        {
+            path: 'transaction',
+            name: 'transaction',
+            component: Transaction
         }
       ]
     }
