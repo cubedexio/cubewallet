@@ -3,10 +3,11 @@
 
 
 
+        <router-view></router-view>
+
         <div v-if="$store.state.loggedIn">
 
 
-            <router-view></router-view>
 
             <tabbar class="nav-tab" :v-if="$store.state.loggedIn ">
             <tabbar-item link="/" selected>
@@ -25,9 +26,8 @@
         </div>
 
         <div v-else>
-            <x-button type='primary' >login</x-button>
-            <x-button type='default' link="/register">register</x-button>
 
+            
         </div>
 
     </div>
@@ -36,11 +36,14 @@
 
 <script>
 import {Tabbar, TabbarItem, XButton} from 'vux'
+import Index  from '@/components/account/Index'
+
 export default {
   name: 'app',
   components:{
     Tabbar, XButton,
-    TabbarItem
+    TabbarItem,
+    Index
   }
 }
 </script>

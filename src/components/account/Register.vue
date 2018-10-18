@@ -3,7 +3,8 @@
 
 
       <group>
-          sb
+          Register Page
+
 
       </group>
 
@@ -25,6 +26,7 @@ import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
 
 
 export default {
+    
   components: {
     Group,
     XInput,
@@ -33,12 +35,15 @@ export default {
     Tabbar,
     TabbarItem
   },
-  data () {
+//   data () {
 
-  }
+//   }
 }
 </script>
 
 <style>
+.to-hide {
+    display: none;
+}
 
 </style>

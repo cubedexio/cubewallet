@@ -10,7 +10,7 @@ import News from '@/components/News'
 import Profile from '@/components/Profile'
 
 import Register from '@/components/account/Register'
-
+import Index from '@/components/account/Index'
 
 
 import User from '@/components/wallet/Wallet'
@@ -20,8 +20,22 @@ Vue.use(Router)
 export default new Router({
   mode:'history',
   routes: [
+      {
+          path: '/',
+          name: 'Index',
+          component: Index,
+        //   children: [
+        //       {
+        //           path: 'register',
+        //           name: 'Register',
+        //           component: Register
+        //       }
+        //   ]
+      },
+      
     {
-      path: '/',
+
+      path: '/home',
       name: 'Home',
       component: Home,
       children: [
