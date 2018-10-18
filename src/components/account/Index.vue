@@ -32,7 +32,11 @@ Register:
 
 <script>
 import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
+
+
+
 export default {
+
   components: {
     Group,
     XInput,
