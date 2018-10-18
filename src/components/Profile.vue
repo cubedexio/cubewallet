@@ -1,7 +1,5 @@
 <template>
-  <div class="profile">
-    <h1>UserProfile</h1>
-  </div>
+  <div class="profile"></div>
 </template>
 <script>
   export default {

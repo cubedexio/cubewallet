@@ -10,7 +10,7 @@
         <i class="icon-chart" slot="icon"></i>
       </tabbar-item>
       <tabbar-item link="/news">
-        <i class="icon-compass" slot="icon"></i>
+        <i class="icon-news-paper" slot="icon"></i>
       </tabbar-item>
       <tabbar-item link="/profile">
         <i class="icon-user" slot="icon"></i>

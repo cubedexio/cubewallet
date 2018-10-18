@@ -1,7 +1,5 @@
 <template>
-  <div class="market">
-    <h1>Market</h1>
-  </div>
+  <div class="market"></div>
 </template>
 <script>
   export default {
