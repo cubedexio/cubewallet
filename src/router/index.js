@@ -3,12 +3,17 @@ import Router from 'vue-router'
 
 import Home from '@/components/Home'
 import Wallet from '@/components/Wallet'
-import User from '@/components/User'
+
 import Transaction from '@/components/Transaction'
 import Market from '@/components/Market'
 import News from '@/components/News'
 import Profile from '@/components/Profile'
-// import User from '@/pages/user/User'
+
+import Register from '@/components/account/Register'
+
+
+
+import User from '@/components/wallet/Wallet'
 
 Vue.use(Router)
 
@@ -51,6 +56,11 @@ export default new Router({
       path:'/profile',
       name:'Profile',
       component:Profile
-    }
+    },
+    {
+        path:'/register',
+        name:'Register',
+        component:Register
+      }
   ]
 })

@@ -10,18 +10,20 @@ import router from './router'
 import vuexI18n from 'vuex-i18n'
 import Vuex from 'vuex';
 
+import store from './store'
+
 import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
 Vue.use(Vuex)
 
 /** i18n **/
-let store = new Vuex.Store({
+let store2 = new Vuex.Store({
   modules: {
     i18n: vuexI18n.store
   }
 })
-Vue.use(vuexI18n.plugin, store);
+Vue.use(vuexI18n.plugin, store2);
 
 const finalLocales = {
   'en': objectAssign(vuxLocales['en'], componentsLocales['en']),
@@ -52,5 +54,6 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app-box')

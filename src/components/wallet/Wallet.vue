@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="app">
     <div class="vux-demo">
-      <img class="logo" src="../assets/vux_logo.png">
+      <img class="logo" src="../../assets/vux_logo.png">
       <h1> </h1>
     </div>
     
