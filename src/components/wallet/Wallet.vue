@@ -6,6 +6,8 @@
     </div>
     
 
+    LoggedIn: {{ $store.state.loggedIn }}
+
     
   </div>
 </template>

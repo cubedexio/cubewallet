@@ -2,19 +2,22 @@
   <div id="app">
 
 
-      <group>
-          Register Page
+
+      <group title="Register">
+          <x-input title="phone" type='text' />
+          <x-input title="password" type='text' />
+
+          <x-button type='primary' >Register</x-button>
 
 
-      </group>
-
+      </group>    
 
     
   </div>
 </template>
 <i18n>
 Login:
-  zh-CN: 登录
+    zh-CN: 登录
 Register:
     zh-CN: 注册
 
