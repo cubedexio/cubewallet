@@ -24,39 +24,28 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-deposit:before {
-  content: "\e904";
-}
-.icon-withdraw:before {
-  content: "\e905";
+.icon-wallet:before {
+  content: "\e906";
 }
 .icon-chart:before {
   content: "\e900";
 }
-.icon-currency-dollar:before {
-  content: "\e906";
-}
-.icon-dots-horizontal-triple:before {
-  content: "\e907";
-}
-.icon-home:before {
+.icon-bell:before {
   content: "\e901";
 }
-.icon-navigation-more:before {
-  content: "\e908";
-}
-.icon-news-paper:before {
+.icon-compass:before {
   content: "\e902";
 }
-.icon-notifications:before {
-  content: "\e909";
-}
-.icon-transfer:before {
-  content: "\e90a";
-}
-.icon-user:before {
+.icon-eye:before {
   content: "\e903";
 }
-.icon-wallet:before {
-  content: "\e90b";
+.icon-plus:before {
+  content: "\e907";
 }
+.icon-settings:before {
+  content: "\e904";
+}
+.icon-user:before {
+  content: "\e905";
+}
+

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-    
+
 
 
         <div v-if="$store.state.loggedIn">
@@ -16,7 +16,7 @@
                 <i class="icon-chart" slot="icon"></i>
             </tabbar-item>
             <tabbar-item link="/news">
-                <i class="icon-news-paper" slot="icon"></i>
+                <i class="icon-compass" slot="icon"></i>
             </tabbar-item>
             <tabbar-item link="/profile">
                 <i class="icon-user" slot="icon"></i>
@@ -24,10 +24,10 @@
             </tabbar>
         </div>
 
-        <div v-else> 
+        <div v-else>
             <x-button type='primary' >login</x-button>
             <x-button type='default' link="/register">register</x-button>
-            
+
         </div>
 
     </div>
