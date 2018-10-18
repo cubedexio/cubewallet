@@ -4,9 +4,31 @@
 @c-red:#DD2C00;
 @gray:#B0BEC5;//辅助色 淡蓝灰色
 
+@keyframes start {
+  0%{
+    opacity: 1;
+    display: block;
+  }
+  100%{
+    opacity: 0;
+    display: none;
+  }
+}
 body{
   color:@nml-font;
-
+  .start{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    overflow: hidden;
+    img{
+      width: 100%;
+      height: auto;
+    }
+  }
   .nav-tab{
     height: 3rem;
     a{
