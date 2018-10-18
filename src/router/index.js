@@ -10,6 +10,7 @@ import News from '@/components/News'
 import Profile from '@/components/Profile'
 
 import Register from '@/components/account/Register'
+import Login from '@/components/account/Login'
 import Index from '@/components/account/Index'
 
 
@@ -57,24 +58,29 @@ export default new Router({
       component: Transaction
     },
     {
-      path:'/market',
-      name:'Market',
-      component:Market
+      path: '/market',
+      name: 'Market',
+      component: Market
     },
     {
-      path:'/news',
-      name:'News',
-      component:News
+      path: '/news',
+      name: 'News',
+      component: News
     },
     {
-      path:'/profile',
-      name:'Profile',
-      component:Profile
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     },
     {
-        path:'/register',
-        name:'Register',
-        component:Register
+        path: '/register',
+        name: 'Register',
+        component: Register
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
       }
-  ]
+    ]
 })

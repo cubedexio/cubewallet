@@ -7,13 +7,14 @@
       </transition>
       <group>
           Index Page
-            <!-- <x-button type='primary' >login</x-button> -->
-            <!-- <x-button type='default' link="/register">register</x-button> -->
+          {{ $store.state.loggedIn }}
+            <x-button type='primary' link="/login">login</x-button>
+            <x-button type='default' link="/register">register</x-button>
 
 
             <!-- <router-link  to="/register" class='to-hide'>Go to register</router-link> -->
             <!-- <router-view></router-view> -->
-            <a href="/register">Go register</a>
+
 
       </group>
 

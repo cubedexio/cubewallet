@@ -10,7 +10,7 @@
 
 
             <tabbar class="nav-tab" :v-if="$store.state.loggedIn ">
-            <tabbar-item link="/" selected>
+            <tabbar-item link="/home" selected>
                 <i class="icon-wallet" slot="icon"></i>
             </tabbar-item>
             <tabbar-item link="/market">

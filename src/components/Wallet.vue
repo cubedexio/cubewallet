@@ -15,6 +15,7 @@
     <br/>
 
     <divider></divider>
+    
 
         <button-tab>
             <button-tab-item>{{ $t('Transfer') }}</button-tab-item>
@@ -29,6 +30,7 @@
         <cell title="ADD" value="0" is-link link='/transaction'></cell>
     </group>
 
+LoggedIn: {{ $store.state.loggedIn }}
     
   </div>
 </template>
