@@ -36,7 +36,7 @@
 
 <script>
 import {Tabbar, TabbarItem, XButton} from 'vux'
-import Index  from '@/components/account/Index'
+import Index  from '@/pages/account/Index'
 
 export default {
   name: 'app',

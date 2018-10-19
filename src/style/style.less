@@ -14,7 +14,18 @@
     display: none;
   }
 }
+html {
+    width: 100%;
+    height: 100%;
+}
 body{
+    height: 100%;
+    width: 100%;
+    #app {
+        width: 100%;
+        height: 100%;
+    }
+
   color:@nml-font;
   .start{
     position: absolute;
@@ -38,5 +49,11 @@ body{
       }
     }
   }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 

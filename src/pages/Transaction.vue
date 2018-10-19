@@ -21,7 +21,7 @@
 
 
       <group title="EOS">
-          <x-input disabled type='text'  v-model="amount * 0.5"></x-input>
+          <x-input disabled type='text'  v-model="amount * 0.5" />
       </group>      
 
 
