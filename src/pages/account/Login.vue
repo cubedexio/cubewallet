@@ -6,12 +6,17 @@
             <div class="logo">
                 <img id="logo-img" src="../../assets/images/logo.png"/>
             </div>
-            <div class="login">
-                <input title=""/>
-                <input title=""/>
-                <group>
+            <div class="login">                
+    
+                <!-- <group>
                     <x-input />
-                </group>
+                </group> -->
+
+                
+                <label>手机号</label>
+                <cube-input name="phone"></cube-input>                
+                <label>密码</label>
+                <cube-input name="password"></cube-input>
             </div>
             
             <div>                
@@ -34,7 +39,7 @@ Register:
 <script>
 import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
 
-
+import CubeInput from '@/components/CubeInput'
 
 export default {
     
@@ -44,6 +49,7 @@ export default {
     XButton,
     Cell,
     Tabbar,
+    CubeInput,
     TabbarItem
   },
 //   data () {
@@ -61,6 +67,11 @@ export default {
 
 <style scoped>
 
+label {
+    color: white;
+    line-height: 3.2em;
+    height: 3.2em;
+}
 
 .to-hide {
     display: none;
@@ -74,6 +85,10 @@ export default {
 }
 .container {
     height: 100%;
+}
+
+.login {
+    width: 60%;
 }
 .logo {
     display: flex;

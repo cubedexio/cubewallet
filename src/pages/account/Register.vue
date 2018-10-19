@@ -1,19 +1,33 @@
 <template>
-  <div id="app">
+    <div id="register-app">
 
+        <div class="container">
 
-
-      <group title="Register">
-          <x-input title="phone" type='text' />
-          <x-input title="password" type='text' />
-
-          <x-button type='primary' >Register</x-button>
-
-
-      </group>    
-
+            <div class="logo">
+                <img id="logo-img" src="../../assets/images/logo.png"/>
+            </div>
+            <div class="register">                
     
-  </div>
+                <!-- <group>
+                    <x-input />
+                </group> -->
+
+                <label>名字</label>
+                <cube-input name="name"></cube-input>                   
+                <label>手机号</label>
+                <cube-input name="phone"></cube-input>                
+                <label>验证码</label>
+                <cube-input name="verifycode"></cube-input>
+                <label>密码</label>
+                <cube-input name="password"></cube-input>
+                <input type="checkbox"  name="agreeterm" /><label for="agreeterm"> 同意协议</label>
+            </div>
+            
+            <div>                
+                <x-button >注册帐号</x-button>
+            </div>
+      </div>
+    </div>
 </template>
 <i18n>
 Login:
@@ -26,7 +40,7 @@ Register:
 <script>
 import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
 
-
+import CubeInput from '@/components/CubeInput'
 
 export default {
     
@@ -36,17 +50,60 @@ export default {
     XButton,
     Cell,
     Tabbar,
+    CubeInput,
     TabbarItem
   },
 //   data () {
 
 //   }
+    methods: {
+        onLogin: function() {
+            console.log('onLogin')
+            this.$store.commit('setLoggedIn', true)
+            this.$router.replace('/home')
+        }
+    }
 }
 </script>
 
-<style>
+<style scoped>
+
+label {
+    color: white;
+    line-height: 3.2em;
+    height: 3.2em;
+}
+
 .to-hide {
     display: none;
+}
+
+#register-app {
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/images/sign_in.jpg")  no-repeat ;
+    background-size: 100%;
+}
+.container {
+    height: 100%;
+}
+
+.register {
+    width: 60%;
+}
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    border-bottom: 1px solid white;
+}
+
+.weui-cells {
+    background: transparent;
 }
 
 </style>
