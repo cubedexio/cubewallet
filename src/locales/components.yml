@@ -29,6 +29,10 @@ en:
   Confirm Tansaction: Confirm Tansaction
   Login: Login
   Register: Register
+  MyProperty: MyProperty
+  Exchange: Exchange
+  News: News
+  I have bottom line: I have bottom line
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -52,11 +56,15 @@ zh-CN:
   vux.search.placeholder: 搜索
   vux.x-header.back_text: 返回
   Transfer: 转账
-  Deposit: 充值
+  Deposit: 收款
   Withdraw: 提现
-  My Wallet: 我的钱包
+  My Wallet: 资产
   Buy: 买入
   Sell: 卖出
   Confirm Tansaction: 确认兑换
   Login: 登录
   Register: 注册
+  MyProperty: 我的资产
+  Exchange: 兑换
+  News: 资讯
+  I have bottom line: 我是有底线的

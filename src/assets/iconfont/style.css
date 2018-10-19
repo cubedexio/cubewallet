@@ -24,8 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-wallet:before {
-  content: "\e906";
+
+.icon-eye-off:before {
+  content: "\e908";
 }
 .icon-chart:before {
   content: "\e900";
@@ -48,4 +49,6 @@
 .icon-user:before {
   content: "\e905";
 }
-
+.icon-wallet:before {
+  content: "\e906";
+}
