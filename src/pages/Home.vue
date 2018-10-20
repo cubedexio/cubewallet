@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Wallet from '@/components/Wallet'
+import Wallet from '@/pages/Wallet'
 
 export default {
   components: {

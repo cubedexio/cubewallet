@@ -27,17 +27,26 @@
   background: url("../assets/images/head_bg_lg.jpg")0 0 no-repeat;
   background-size: 100% auto;
 }
+html {
+  width: 100%;
+  height: 100%;
+}
 body{
   background: #f0f0f0;
+    height: 100%;
+    width: 100%;
+    #app {
+        width: 100%;
+        height: 100%;
+    }
+
   color:@nml-font;
-  #app{
-    height:100%;
-  }
   .start{
-    display: block;
     position: absolute;
     left: 0;
     top: 0;
+    width: 100%;
+    height: 100%;
     z-index: 1000;
     overflow: hidden;
     img{
@@ -175,3 +184,13 @@ body{
 
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+button.weui-btn  {
+    width: 200px !important;
+}

@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Home from '@/components/Home'
-import Wallet from '@/components/Wallet'
+import Home from '@/pages/Home'
+import Wallet from '@/pages/Wallet'
 
-import Transaction from '@/components/Transaction'
-import Market from '@/components/Market'
-import News from '@/components/News'
-import Profile from '@/components/Profile'
+import Transaction from '@/pages/Transaction'
+import Market from '@/pages/Market'
+import News from '@/pages/News'
+import Profile from '@/pages/Profile'
 
-import Register from '@/components/account/Register'
-import Login from '@/components/account/Login'
-import Index from '@/components/account/Index'
+import Register from '@/pages/account/Register'
+import Login from '@/pages/account/Login'
+import Index from '@/pages/account/Index'
 
 
-import User from '@/components/wallet/Wallet'
+import User from '@/pages/wallet/Wallet'
 
 Vue.use(Router)
 
