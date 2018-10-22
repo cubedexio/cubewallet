@@ -15,6 +15,10 @@ import store from './store'
 import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
+
+
+
+
 Vue.use(Vuex)
 
 /** i18n **/
@@ -34,8 +38,15 @@ for (let i in finalLocales) {
   Vue.i18n.add(i, finalLocales[i])
 }
 
-import { LocalePlugin } from "vux"
+import { LocalePlugin, AjaxPlugin, AlertPlugin } from "vux"
 Vue.use(LocalePlugin)
+Vue.use(AjaxPlugin)
+Vue.use(AlertPlugin)
+
+
+// FOR TEST ONLY
+AjaxPlugin.$http.defaults.baseURL = 'http://localhost:3000'
+
 
 const nowLocale = Vue.locale.get()
 if (/zh/.test(nowLocale)) {

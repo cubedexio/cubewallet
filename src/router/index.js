@@ -16,12 +16,20 @@ import Index from '@/pages/account/Index'
 
 import User from '@/pages/wallet/Wallet'
 
+import License from '@/pages/license'
+
+
 Vue.use(Router)
 
 export default new Router({
   mode:'history',
   routes: [
-      {
+        {
+            path: '/license',
+            name: 'License',
+            component: License,
+        },
+        {
           path: '/',
           name: 'Index',
           component: Index,

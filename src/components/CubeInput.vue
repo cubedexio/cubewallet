@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input class='cube-input'/>
+    <input class='cube-input' :value='value' ref="cubeinput" @input='updateValue()'/>
   </div>
 </template>
 
@@ -8,13 +8,19 @@
 
 
 export default {
-  components: {
-    
-  },
-  data () {
-    return {
+    props: ['value'],
+    components: {
+        
+    },
+    data:  function() {
+        return {
+        }
+    },
+    methods: {
+        updateValue: function() {
+            this.$emit('input', this.$refs.cubeinput.value);
+        }
     }
-  }
 }
 </script>
 
@@ -28,8 +34,9 @@ export default {
     font-size: inherit;
     color: white;
     height: 3.2em;
-    /* line-height: 3em; */
+    line-height: 2.2em;
     border-bottom: solid 1px white;
+    border-radius: 0;
 
 }
 </style>
