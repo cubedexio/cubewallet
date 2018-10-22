@@ -4,28 +4,28 @@
         <div class="container">
 
             <div class="logo">
-                <img id="logo-img" src="../../assets/images/logo.png"/>
+                <img id="logo-img" src="../../assets/images/cbt_logo.png"/>
             </div>
-            <div class="login">                
-    
+            <div class="login">
+
                 <!-- <group>
                     <x-input />
                 </group> -->
 
-                
+
                 <label>手机号</label>
-                <cube-input name="phone"></cube-input>                
+                <cube-input name="phone"></cube-input>
                 <label>密码</label>
                 <cube-input name="password"></cube-input>
             </div>
-            
-            <div>                
+
+            <div>
                 <x-button >登陆</x-button>
             </div>
       </div>
 
 
-    
+
   </div>
 </template>
 <i18n>
@@ -42,7 +42,7 @@ import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
 import CubeInput from '@/components/CubeInput'
 
 export default {
-    
+
   components: {
     Group,
     XInput,

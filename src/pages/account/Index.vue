@@ -9,14 +9,14 @@
         <div class="container">
 
             <div class="logo">
-                <img id="logo-img" src="../../assets/images/logo.png"/>
+                <img id="logo-img" src="../../assets/images/cbt_logo.png"/>
             </div>
             <div class="hint">
                 <label id="hint-label">
                     创建<br/>/<br/>登陆帐号
                 </label>
             </div>
-            
+
             <div>
                 <x-button type='primary' link="/register">创建帐号</x-button>
                 <x-button link="/login">登陆帐号</x-button>

@@ -24,7 +24,7 @@
   text-align: left;
 }
 .head-bg-pic{
-  background: url("../assets/images/head_bg_lg.jpg")0 0 no-repeat;
+  background: url("../assets/images/head_bg_lg.jpg")0 -1.5rem no-repeat;
   background-size: 100% auto;
 }
 html {
@@ -116,7 +116,7 @@ body{
       }
     }
     .operation{
-      margin-top: .5rem;
+      margin-top: 1rem;
       img{
         width: 2.4rem;
         height: auto;
@@ -130,7 +130,7 @@ body{
   //钱包 首页
   #wallet{
     .property-list{
-      margin:1rem .5rem 0rem .5rem;
+      margin:0rem .5rem 0rem .5rem;
       background: transparent;
       overflow: hidden;
       .weui-cells{
@@ -170,8 +170,24 @@ body{
 
   //资讯
   #news{
+    height: 100%;
     .swiper{
-      margin:.5rem;
+      overflow: inherit;
+      margin:1rem;
+      .dots-class{
+        bottom: -1.5rem;
+        a{
+          i{
+            border-radius: 4px;
+            background: transparent;
+            border:1px solid #fff;
+            &.active{
+              background: #fff;
+            }
+
+          }
+        }
+      }
       .vux-swiper-item{
         border-radius: .5rem;
         .vux-swiper-desc{

@@ -76,7 +76,7 @@
     <divider>{{ $t('I have bottom line') }}</divider>
 
 
-    LoggedIn: {{ $store.state.loggedIn }}
+    <!--LoggedIn: {{ $store.state.loggedIn }}-->
 
   </div>
 </template>

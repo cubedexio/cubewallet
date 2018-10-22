@@ -2,7 +2,7 @@
   <div id="news" class="head-bg-pic">
     <x-header class="header-content " :left-options="{showBack: false}">{{ $t('News') }}</x-header>
     <section class="head-bg-lg">
-      <swiper class="swiper" auto loop height="160px" :list="swiperList" :index="demo06_index"></swiper>
+      <swiper class="swiper"  loop height="180px" dots-position="center" dots-class="dots-class" :list="swiperList" ></swiper>
     </section>
   </div>
 </template>

@@ -4,26 +4,26 @@
         <div class="container">
 
             <div class="logo">
-                <img id="logo-img" src="../../assets/images/logo.png"/>
+                <img id="logo-img" src="../../assets/images/cbt_logo.png"/>
             </div>
-            <div class="register">                
-    
+            <div class="register">
+
                 <!-- <group>
                     <x-input />
                 </group> -->
 
                 <label>名字</label>
-                <cube-input name="name"></cube-input>                   
+                <cube-input name="name"></cube-input>
                 <label>手机号</label>
-                <cube-input name="phone"></cube-input>                
+                <cube-input name="phone"></cube-input>
                 <label>验证码</label>
                 <cube-input name="verifycode"></cube-input>
                 <label>密码</label>
                 <cube-input name="password"></cube-input>
                 <input type="checkbox"  name="agreeterm" /><label for="agreeterm"> 同意协议</label>
             </div>
-            
-            <div>                
+
+            <div>
                 <x-button >注册帐号</x-button>
             </div>
       </div>
@@ -43,7 +43,7 @@ import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
 import CubeInput from '@/components/CubeInput'
 
 export default {
-    
+
   components: {
     Group,
     XInput,

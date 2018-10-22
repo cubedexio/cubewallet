@@ -1,13 +1,5 @@
 <template>
     <div id="app">
-
-    <transition name="fade">
-      <div class="start" ref="start" v-if="show">
-        <img src="@/assets/images/start.png" alt="">
-      </div>
-    </transition>
-
-
         <router-view></router-view>
 
         <div v-if="$store.state.loggedIn">
@@ -49,26 +41,6 @@
       Tabbar, XButton,
       TabbarItem,
       Index
-    },
-    data() {
-      return {
-        show: false
-      }
-    },
-    mounted() {
-      // console.log(this.$refs)
-      if(this.$refs.start){
-        let w = window.outerWidth;
-        let h = window.outerHeight;
-        console.log(w + ' . ' + h);
-        this.$refs.start.style.width = w + 'px';
-        this.$refs.start.style.height = h + 'px';
-
-      }
-
-      // setTimeout(()=>{
-      //   this.show = false;
-      // },5000)
     }
   }
 </script>
@@ -79,15 +51,4 @@
 @import './style/style.less';//引入网页字体
 @import './assets/iconfont/style.css';//引入网页字体
 
-  /*body {
-    background-color: #fbf9fe;
-  }*/
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-  }
 </style>
