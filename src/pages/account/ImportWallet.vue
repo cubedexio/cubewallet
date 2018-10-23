@@ -1,21 +1,19 @@
 <template>
-  <div id="login-app">
-
+  <div id="importkey-app">
+        <x-header :left-options="{showBack: false}" style="background-color:transparent;color:black !important">导入钱包</x-header>
         <div class="container">
+            
 
-            <div class="logo">
-                <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
-            </div>
-            <div class="login">                
+            <div class="importkey">                
     
-                <!-- <group>
-                    <x-input />
-                </group> -->
+                <label>私钥</label>
+                <!-- <x-textarea :max="20"></x-textarea> -->
+                <!-- <cube-textarea v-model="privatekey" placeholder="请输入您的私钥，仅作帐号认证使用，不会被保存"></cube-textarea> -->
                 
-                <label>手机号</label>
-                <cube-input name="phone" v-model="phone"></cube-input>                
-                <label>密码</label>
-                <cube-input name="password" v-model="password"></cube-input>
+                <label>钱包密码</label>
+                <cube-input name="password" v-model="password"></cube-input>               
+                <label>确认密码</label>
+                <cube-input name="password-confirm" v-model="passwordConfrim"></cube-input>
             </div>
             
             <div>                
@@ -31,17 +29,14 @@
   </div>
 </template>
 <i18n>
-Login:
-    zh-CN: 登录
-Register:
-    zh-CN: 注册
 
 </i18n>
 
 <script>
-import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
+import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, XHeader, XTextarea } from 'vux'
 
 import CubeInput from '@/components/CubeInput'
+import CubeTextarea from '@/components/CubeTextarea'
 
 export default {
 
@@ -52,12 +47,16 @@ export default {
         Cell,
         Tabbar,
         CubeInput,
-        TabbarItem
+        CubeTextarea,
+        TabbarItem,
+        XHeader,
+        XTextarea,
     },
     data: function() {
         return {
             phone: '',
-            password: ''
+            password: '',
+            privatekey: ''
         }
     },
     methods: {
@@ -96,42 +95,29 @@ export default {
 
 <style scoped>
 
+
 label {
-    color: white;
+    color: black;
     line-height: 3.2em;
     height: 3.2em;
 }
 
-.to-hide {
-    display: none;
-}
 
-#login-app {
+#importkey-app {
     width: 100%;
-    height: 100%;
-    background: url("../../assets/images/sign_in.jpg")  no-repeat ;
+    height: 100%;    
+    background-color: white;
     background-size: 100%;
 }
 .container {
-    height: 100%;
+    height: 100%;    
 }
-
-.login {
+.container .importkey {
     width: 70%;
 }
-.logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
 
-input {
-    border-bottom: 1px solid white;
+.vux-header .vux-header-title {
+    color: black !important;
+    
 }
-
-.weui-cells {
-    background: transparent;
-}
-
 </style>
