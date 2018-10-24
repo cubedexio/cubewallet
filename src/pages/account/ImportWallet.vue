@@ -3,8 +3,6 @@
         <x-header  :left-options="{showBack: false}" style="background-color:transparent;">导入钱包</x-header>
         <div class="container">
             
-
-            -{{eosAccountName}}-
             <div class="importkey">                
     
                 <label>私钥</label>
@@ -104,14 +102,16 @@ export default {
                     return;        
                 }
                 const eosAccount = res.data.account_names[0]
-                alert(eosAccount)
 
 
                 this.$store.commit('setPrivateKey', this.privatekey)
                 this.$store.commit('setEOSAccountName', eosAccount)
                 this.$store.commit('setWalletPassword', this.password)
+                this.$store.commit('setLoggedIn', true)
 
                 this.$router.replace('/home')
+
+
 
 
             }, (err)=>{

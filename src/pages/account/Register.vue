@@ -22,7 +22,7 @@
                     </x-button>                
                 </div>
                 <label>密码</label>
-                <cube-input name="password"></cube-input>
+                <cube-input v-model='password' name="password"></cube-input>
                 <input type="checkbox"  name="agreeterm"  id="agreeterm" v-model='agreeterm'/>
                 <label for="agreeterm"> 
                     注册即同意<a class='license' href='/license'>《CUBEWALLET》用户协议</a>
@@ -142,10 +142,12 @@ export default {
                 }else {
 
                     this.$store.commit('setLoggedIn', true)
+
+                    var self = this
                     this.$vux.alert.show({ 
                         title: '注册成功', 
                         onHide () {
-                            this.$router.replace('/importwallet')
+                            self.$router.replace('/importwallet')
                         }    
                     });               
                     
