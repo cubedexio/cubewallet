@@ -37,6 +37,10 @@ export default {
     line-height: 2.2em;
     border-bottom: solid 1px white;
     border-radius: 0;
+}
 
+.reversed .cube-input {
+    color: black;
+    border-bottom: solid 1px black;
 }
 </style>

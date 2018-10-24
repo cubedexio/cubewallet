@@ -34,6 +34,7 @@ en:
   News: News
   I have bottom line: I have bottom line
   VerifyCode: VerifyCode
+  Import EOS Account: Import EOS Account
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -70,3 +71,4 @@ zh-CN:
   News: 资讯
   I have bottom line: 我是有底线的
   VerifyCode: 验证码
+  Import EOS Account: 导入EOS帐号

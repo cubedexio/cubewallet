@@ -23,7 +23,7 @@
                 </div>
                 <label>密码</label>
                 <cube-input name="password"></cube-input>
-                <input type="checkbox"  name="agreeterm"  id="agreeterm"/>
+                <input type="checkbox"  name="agreeterm"  id="agreeterm" v-model='agreeterm'/>
                 <label for="agreeterm"> 
                     注册即同意<a class='license' href='/license'>《CUBEWALLET》用户协议</a>
                 </label>
@@ -67,6 +67,7 @@ export default {
 
     data: function(){
         return {
+            agreeterm: false,
             phone: '',
             password: '',
             sms: '',
@@ -113,6 +114,19 @@ export default {
 
         },
         register: function() {
+            if( this.phone.length !== 11) {
+                this.$vux.alert.show({ title: '手机号格式不正确' });  
+                return;
+            } 
+            if( this.password.length < 8 ) {
+                this.$vux.alert.show({ title: '密码最少8位' });  
+                return ;
+            }
+            if(!this.agreeterm){
+                this.$vux.alert.show({ title: '请先同意协议' });  
+                return;
+            }            
+            
             
             this.$http.post('/register',  {
                 phone: this.phone,    
@@ -127,10 +141,11 @@ export default {
                     return;     
                 }else {
 
+                    this.$store.commit('setLoggedIn', true)
                     this.$vux.alert.show({ 
                         title: '注册成功', 
                         onHide () {
-                            this.$router.replace('/home')
+                            this.$router.replace('/importwallet')
                         }    
                     });               
                     
@@ -146,7 +161,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .license {
     color: #F5A623;
 }

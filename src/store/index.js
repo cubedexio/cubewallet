@@ -9,12 +9,17 @@ Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
+import createPersistedState from 'vuex-persistedstate'
+
 
 
 export default new Vuex.Store({
     state: {
         count: 0,
-        loggedIn: false
+        loggedIn: false,
+        privateKey: undefined,
+        eosAccountName: undefined,
+        walletPassword: undefined
     },
     mutations: {
         increment (state) {
@@ -22,6 +27,15 @@ export default new Vuex.Store({
         },
         setLoggedIn (state, login) {
             state.loggedIn = login
+        },
+        setPrivateKey (state, key) {
+            state.privateKey = key
+        },
+        setEOSAccountName (state, name) {
+            state.eosAccountName = name
+        },
+        setWalletPassword (state, name) {
+            state.walletPassword = name
         }
     },
   modules: {
@@ -29,5 +43,5 @@ export default new Vuex.Store({
     // wallet
   },
   strict: debug,
-  plugins: debug ? [createLogger()] : []
+  plugins: debug ? [createLogger(),createPersistedState()] : [createPersistedState()]
 })

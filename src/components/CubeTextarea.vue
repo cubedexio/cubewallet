@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="cube-textarea-wrap">
     <textarea 
     autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" rows="4" cols="30" 
     :placeholder='placeholder' class='cube-textarea' :value='value' ref="cubetextarea" @input='updateValue()'/>
@@ -27,8 +27,13 @@ export default {
 </script>
 
 <style scoped>
+.cube-textarea-wrap {
+    box-sizing: border-box;
+    
+}
 
 .cube-textarea {
+    box-sizing: border-box;
     width: 100%;
     border: 0;
     outline: 0;

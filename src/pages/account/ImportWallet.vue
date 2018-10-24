@@ -1,24 +1,24 @@
 <template>
   <div id="importkey-app">
-        <x-header :left-options="{showBack: false}" style="background-color:transparent;color:black !important">导入钱包</x-header>
+        <x-header  :left-options="{showBack: false}" style="background-color:transparent;">导入钱包</x-header>
         <div class="container">
             
 
+            -{{eosAccountName}}-
             <div class="importkey">                
     
                 <label>私钥</label>
                 <!-- <x-textarea :max="20"></x-textarea> -->
-                <!-- <cube-textarea v-model="privatekey" placeholder="请输入您的私钥，仅作帐号认证使用，不会被保存"></cube-textarea> -->
+                <cube-textarea v-model="privatekey" placeholder="请输入您的私钥"></cube-textarea>
                 
                 <label>钱包密码</label>
-                <cube-input name="password" v-model="password"></cube-input>               
+                <cube-input class='reversed' name="password" v-model="password"></cube-input>               
                 <label>确认密码</label>
-                <cube-input name="password-confirm" v-model="passwordConfrim"></cube-input>
+                <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input>
             </div>
             
             <div>                
-                <x-button @click.native="onLogin">{{ $t('Login') }}</x-button>
-                <x-button type='primary' link='/register'>{{ $t('Register') }}</x-button>
+                <x-button type='primary' @click.native="onImportEOSAccount">{{ $t('Import EOS Account') }}</x-button>
             </div>
 
             
@@ -29,14 +29,22 @@
   </div>
 </template>
 <i18n>
+Import EOS Account:
+    zh-CN: 导入EOS帐号
 
 </i18n>
-
+<script src=eosjs-ecc.js></script>
 <script>
 import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, XHeader, XTextarea } from 'vux'
+import eosjs from 'eosjs-ecc'
+import { mapState } from 'vuex'
+
 
 import CubeInput from '@/components/CubeInput'
 import CubeTextarea from '@/components/CubeTextarea'
+
+
+const eosURI = 'https://api.eosnewyork.io/v1/history/get_key_accounts'
 
 export default {
 
@@ -54,47 +62,69 @@ export default {
     },
     data: function() {
         return {
-            phone: '',
+            passwordConfirm: '',
             password: '',
             privatekey: ''
         }
     },
+    computed: mapState([
+        // ...
+        'privateKey',
+        'eosAccountName'
+    ]),
     methods: {
-        onLogin: function() {
-            console.log('onLogin')
+        onImportEOSAccount: function() {
+            // var ecc = eosjs_ecc
             
+            if( !eosjs.isValidPrivate(this.privatekey) ) {
+                this.$vux.alert.show({ title: '不合法的私钥' })
+                return
+            }
 
-            this.$http.post('/login',  {
-                phone: this.phone,
-                pass: this.password
-            })
-            .then( (res) => {
-                console.log(res)
+            if( this.password !== this.passwordConfirm ) {
+                this.$vux.alert.show({ title: '两次密码不一致' })
+                return
+            }
+            if( this.password.length < 8) {
+                this.$vux.alert.show({ title: '密码长度不能低于8位' })
+                return
+            }
 
-                if( res.status !== 200  || res.data.code !== 0 ) {
-                    this.$vux.alert.show({
-                        title: '登录失败',
-                        content: res.data.msg ||  res.statusText || '未知错误',
-                    });               
+            const publicKey = eosjs.privateToPublic(this.privatekey ) 
+
+            this.$http.post(eosURI,  {
+                public_key: publicKey
+            }).then( (res)=>{
+                if( res.status !== 200  ) {
+                    this.$vux.alert.show({ title: '导入失败'});                                   
                     return;     
                 }
-                this.$store.commit('setLoggedIn', true)
+                if( res.data.account_names === undefined || res.data.account_names.length <= 0 ) {
+                    this.$vux.alert.show({ title: '导入失败', content: '未找到对应帐户'});                                   
+                    return;        
+                }
+                const eosAccount = res.data.account_names[0]
+                alert(eosAccount)
+
+
+                this.$store.commit('setPrivateKey', this.privatekey)
+                this.$store.commit('setEOSAccountName', eosAccount)
+                this.$store.commit('setWalletPassword', this.password)
+
                 this.$router.replace('/home')
 
-            }, (err)=> {
-                console.log(err)                                
-                this.$vux.alert.show({
-                    title: '登录失败',
-                    content: err.message
-                });   
+
+            }, (err)=>{
+               this.$vux.alert.show({ title: '导入失败', content: err.message });   
             })
+
+            
         }
     }
 }
 </script>
 
-<style scoped>
-
+<style  lang='less'>
 
 label {
     color: black;
@@ -116,7 +146,7 @@ label {
     width: 70%;
 }
 
-.vux-header .vux-header-title {
+h1.vux-header-title {
     color: black !important;
     
 }
