@@ -25,7 +25,7 @@
                 <cube-input v-model='password' name="password"></cube-input>
                 <input type="checkbox"  name="agreeterm"  id="agreeterm" v-model='agreeterm'/>
                 <label for="agreeterm"> 
-                    注册即同意<a class='license' href='/license'>《CUBEWALLET》用户协议</a>
+                    注册即同意<router-link :to="'license'"><a class='license' >《CUBEWALLET》用户协议</a></router-link>
                 </label>
             </div>
             
@@ -33,7 +33,12 @@
                 <x-button @click.native="register">注册</x-button>
             </div>
 
-            <label><a class='gologin' href="/login">已有帐号？去登录</a></label>
+            <label>
+                <router-link :to="'login'">
+                    <a class='gologin' >已有帐号？去登录</a>
+                </router-link>
+                
+            </label>
       </div>
     </div>
 </template>
@@ -141,7 +146,7 @@ export default {
                     return;     
                 }else {
 
-                    this.$store.commit('setLoggedIn', true)
+                    
 
                     var self = this
                     this.$vux.alert.show({ 

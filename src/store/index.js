@@ -43,5 +43,6 @@ export default new Vuex.Store({
     // wallet
   },
   strict: debug,
-  plugins: debug ? [createLogger(),createPersistedState()] : [createPersistedState()]
+//   plugins: debug ? [createLogger(),createPersistedState()] : [createPersistedState()]
+    plugins: debug ? [createLogger()] : []
 })
