@@ -9,7 +9,7 @@
         <div class="container">
 
             <div class="logo">
-                <img id="logo-img" src="../../assets/images/cbt_logo.png"/>
+                <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
             </div>
             <div class="hint">
                 <label id="hint-label">

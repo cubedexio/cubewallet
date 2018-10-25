@@ -80,6 +80,8 @@ en:
   Connector Weight: Connector Weight
   Reserved Balance: Reserved Balance
   Market: Market
+  VerifyCode: VerifyCode
+  Import EOS Account: Import EOS Account
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -103,7 +105,7 @@ zh-CN:
   vux.search.placeholder: 搜索
   vux.x-header.back_text: 返回
   Transfer: 转账
-  Deposit: 收款
+  Deposit: 充值
   Withdraw: 提现
   My Wallet: 资产
   Buy: 买入
@@ -162,3 +164,5 @@ zh-CN:
   Connector Weight: 准备金率
   Reserved Balance: 保留准备金
   Market: 市场
+  VerifyCode: 验证码
+  Import EOS Account: 导入EOS帐号

@@ -15,27 +15,37 @@ import TokenIntro from '@/pages/TokenIntro'
 import Register from '@/pages/account/Register'
 import Login from '@/pages/account/Login'
 import Index from '@/pages/account/Index'
+import ImportWallet from '@/pages/account/ImportWallet'
+
 
 
 import User from '@/pages/wallet/Wallet'
 
+import License from '@/pages/license'
+
+
+
+
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
-  routes: [
-      {
+    // mode:'history',
+    routes: [
+        {
+            path: '/license',
+            name: 'License',
+            component: License,
+        },
+        {
           path: '/',
           name: 'Index',
-          component: Index,
-        //   children: [
-        //       {
-        //           path: 'register',
-        //           name: 'Register',
-        //           component: Register
-        //       }
-        //   ]
-      },
+          component: Index
+        },
+        {
+            path: '/importwallet',
+            name: 'ImportWallet',
+            component: ImportWallet
+        },
 
     {
 

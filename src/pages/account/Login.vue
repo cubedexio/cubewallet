@@ -4,28 +4,30 @@
         <div class="container">
 
             <div class="logo">
-                <img id="logo-img" src="../../assets/images/cbt_logo.png"/>
+                <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
             </div>
-            <div class="login">
-
+            <div class="login">                
+    
                 <!-- <group>
                     <x-input />
                 </group> -->
-
-
+                
                 <label>手机号</label>
-                <cube-input name="phone"></cube-input>
+                <cube-input name="phone" v-model="phone"></cube-input>                
                 <label>密码</label>
-                <cube-input name="password"></cube-input>
+                <cube-input name="password" v-model="password"></cube-input>
+            </div>
+            
+            <div>                
+                <x-button @click.native="onLogin">{{ $t('Login') }}</x-button>
+                <x-button type='primary' link='/register'>{{ $t('Register') }}</x-button>
             </div>
 
-            <div>
-                <x-button >登陆</x-button>
-            </div>
+            
       </div>
 
 
-
+    
   </div>
 </template>
 <i18n>
@@ -43,23 +45,50 @@ import CubeInput from '@/components/CubeInput'
 
 export default {
 
-  components: {
-    Group,
-    XInput,
-    XButton,
-    Cell,
-    Tabbar,
-    CubeInput,
-    TabbarItem
-  },
-//   data () {
-
-//   }
+    components: {
+        Group,
+        XInput,
+        XButton,
+        Cell,
+        Tabbar,
+        CubeInput,
+        TabbarItem
+    },
+    data: function() {
+        return {
+            phone: '',
+            password: ''
+        }
+    },
     methods: {
         onLogin: function() {
             console.log('onLogin')
-            this.$store.commit('setLoggedIn', true)
-            this.$router.replace('/home')
+            
+
+            this.$http.post('/login',  {
+                phone: this.phone,
+                pass: this.password
+            })
+            .then( (res) => {
+                console.log(res)
+
+                if( res.status !== 200  || res.data.code !== 0 ) {
+                    this.$vux.alert.show({
+                        title: '登录失败',
+                        content: res.data.msg ||  res.statusText || '未知错误',
+                    });               
+                    return;     
+                }
+                this.$store.commit('setLoggedIn', true)
+                this.$router.replace('/home')
+
+            }, (err)=> {
+                console.log(err)                                
+                this.$vux.alert.show({
+                    title: '登录失败',
+                    content: err.message
+                });   
+            })
         }
     }
 }
@@ -88,7 +117,7 @@ label {
 }
 
 .login {
-    width: 60%;
+    width: 70%;
 }
 .logo {
     display: flex;
