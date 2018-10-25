@@ -1,7 +1,8 @@
 <template>
     <div id="app">
+      <div>
         <router-view></router-view>
-
+      </div>
         <div v-if="$store.state.loggedIn">
 
             <tabbar class="nav-tab" :v-if="$store.state.loggedIn ">

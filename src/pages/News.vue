@@ -1,5 +1,7 @@
 <template>
+
   <div id="news" class="head-bg-pic">
+    <view-box>
     <x-header class="header-content " :left-options="{showBack: false}">{{ $t('News') }}</x-header>
     <section class="head-bg-lg">
       <swiper class="swiper"  loop height="180px" dots-position="center" dots-class="dots-class" :list="swiperList" ></swiper>
@@ -12,7 +14,7 @@
       </tab>
     </sticky>
     <group>
-      <swiper class="cate-swiper" v-model="i" :show-dots="false">
+      <swiper class="cate-swiper" v-model="i" :show-dots="false" height="20rem">
         <swiper-item v-for="(list,index) in newsList" :key="index">
           <cell-box v-for="item in list" :key="item.id" class="news-item">
             <div class="news-item-left">
@@ -29,6 +31,7 @@
       </swiper>
     </group>
 
+    </view-box>
   </div>
 </template>
 
@@ -44,6 +47,7 @@ Financing:
 </i18n>
 <script>
   import {
+    ViewBox,
     XHeader,
     Sticky,
     Swiper,
@@ -151,6 +155,7 @@ Financing:
       }
     },
     components:{
+      ViewBox,
       XHeader,
       Sticky,
       Swiper,
