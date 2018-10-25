@@ -25,6 +25,15 @@
 }
 
 
+.icon-in:before {
+  content: "\e90a";
+}
+.icon-out:before {
+  content: "\e90b";
+}
+.icon-details:before {
+  content: "\e909";
+}
 .icon-eye-off:before {
   content: "\e908";
 }

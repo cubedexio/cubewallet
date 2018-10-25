@@ -10,20 +10,20 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 
-
 export default new Vuex.Store({
-    state: {
-        count: 0,
-        loggedIn: false
+  state: {
+    count: 0,
+    loggedIn: true
+  },
+  mutations: {
+    increment(state) {
+      state.count++
     },
-    mutations: {
-        increment (state) {
-            state.count++
-        },
-        setLoggedIn (state, login) {
-            state.loggedIn = login
-        }
-    },
+    setLoggedIn(state, login) {
+      state.loggedIn = login
+    }
+
+  },
   modules: {
     // profile,
     // wallet

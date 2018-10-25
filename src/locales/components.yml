@@ -33,6 +33,53 @@ en:
   Exchange: Exchange
   News: News
   I have bottom line: I have bottom line
+  Setting: Setting
+  Change Password: Change Password
+  Export Private Key: Export Private Key
+  Switch Account: Switch Account
+  Language: Language
+  Switch BP: Switch BP
+  Security Test: Security Test
+  About Us: About Us
+  Contact Us: Contact Us
+  Terms: Terms
+  Transaction: Transaction
+  Buy Amount: Buy Amount
+  Transaction Amount: Transaction Amount
+  Sell Amount: Sell Amount
+  Please make sure you read the Terms of Transaction before your transaction: Please make sure you read the Terms of Transaction before your transaction
+  Please enter a number: Please enter a number
+  Please make sure you read: Please make sure you read
+  The Terms of Transaction before your transaction: The Terms of Transaction before your transaction
+  The Terms of Transaction: The Terms of Transaction
+  Please check the terms box: Please check the terms box
+  Please enter a Non-negative number: Please enter a Non-negative number
+  Token: Token
+  Receiver: Receiver
+  Transfer Amount: Transfer Amount
+  Remark: Remark
+  Property: Property
+  Please Enter Account: Please Enter Account
+  Please Enter Amount: Please Enter Amount
+  Please Enter Remark: Please Enter Remark
+  Confirm Transfer: Confirm Transfer
+  Transfer Success: Transfer Success
+  Token Intro: Token Intro
+  All: All
+  Out: Out
+  In: In
+  Failed: Failed
+  New: New
+  Hot: Hot
+  Financing: Financing
+  Transfer Record: Transfer Record
+  Max Supply: Max Supply
+  Exchange Maximum: Exchange Maximum
+  Reserved Supply: Reserved Supply
+  Connector balance: Connector balance
+  Connector Weight: Connector Weight
+  Reserved Balance: Reserved Balance
+  Market: Market
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -56,7 +103,7 @@ zh-CN:
   vux.search.placeholder: 搜索
   vux.x-header.back_text: 返回
   Transfer: 转账
-  Deposit: 充值
+  Deposit: 收款
   Withdraw: 提现
   My Wallet: 资产
   Buy: 买入
@@ -68,3 +115,50 @@ zh-CN:
   Exchange: 兑换
   News: 资讯
   I have bottom line: 我是有底线的
+  Setting: 设置
+  Change Password: 修改密码
+  Export Private Key: 导出私钥
+  Switch Account: 切换账户
+  Language: 多语言
+  Switch BP: 节点设置
+  Security Test: 安全检测
+  About Us: 关于我们
+  Contact Us: 联系客服
+  Terms: 服务条款
+  Transaction: CBT通证兑换
+  Buy Amount: 买入数量
+  Transaction Amount: 兑换数量
+  Sell Amount: 卖出数量
+  Please make sure you read the Terms of Transaction before your transaction: 我已经仔细阅读并同意服务及隐私条款
+  Please enter a number: 请输入非负数
+  Please make sure you read: 我已经仔细阅读并同意
+  The Terms of Transaction before your transaction: 服务及隐私条款
+  The Terms of Transaction: 服务及隐私条款
+  Please check the terms box: 请勾选已阅读隐私及服务条款
+  Please enter a Non-negative number: 请输入非零且非负数字
+  Token: 通证
+  Receiver: 收款人
+  Transfer Amount: 转账数量
+  Remark: 备注
+  Property: 余额
+  Please Enter Account: 请输入账户名称
+  Please Enter Amount: 请输入转账数量
+  Please Enter Remark: 请输入备注
+  Confirm Transfer: 确认转账
+  Transfer Success: 转账成功
+  Token Intro: 通证详情
+  All: 全部
+  Out: 转出
+  In: 转入
+  Failed: 失败
+  New: 最新
+  Hot: 热门
+  Financing: 理财
+  Transfer Record: 转账记录
+  Max Supply: 最大发行量
+  Exchange Maximum: 最大流通数
+  Reserved Supply: 保留通证数
+  Connector balance: 准备金
+  Connector Weight: 准备金率
+  Reserved Balance: 保留准备金
+  Market: 市场

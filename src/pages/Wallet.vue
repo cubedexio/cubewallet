@@ -1,7 +1,8 @@
 <template>
-
   <div id="wallet" class=" head-bg-pic">
-    <x-header class="header-content" :left-options="{showBack: false}">{{ $t('My Wallet') }}</x-header>
+    <view-box>
+
+    <x-header id="header" class="header-content" :left-options="{showBack: false}">{{ $t('My Wallet') }}</x-header>
     <section class="head-box-lg">
       <div class="profile-pic">
         <img :src="profilePic" alt="">
@@ -16,26 +17,30 @@
           <i class="icon-eye" v-if="eyeOn"></i>
           <i class="icon-eye-off" v-if="!eyeOn"></i>
         </span>
-        <p class="property-text" v-if="eyeOn">{{myProperty}} CBT</p>
+        <p class="property-text" v-if="eyeOn">{{propertyComma}} CBT</p>
         <p class="property-text" v-if="!eyeOn">**** CBT</p>
       </div>
       <flexbox class="operation" :gutter="0">
         <flexbox-item :span="2"></flexbox-item>
         <flexbox-item :span="4" class="text-center">
           <div class="transfer">
-            <img src="../assets/images/transfer.png" alt="">
-            <span>{{$t('Transfer')}}</span>
+            <x-button class="operation-btn" plain link="/transfer">
+              <img src="../assets/images/transfer.png" alt="">
+              <span>{{$t('Transfer')}}</span>
+            </x-button>
           </div>
         </flexbox-item>
         <flexbox-item :span="4" class="text-center">
-          <img src="../assets/images/exchange.png" alt="">
-          <span>{{$t('Exchange')}}</span>
+          <x-button plain class="operation-btn" link="/transaction">
+            <img src="../assets/images/exchange.png" alt="">
+            <span>{{$t('Transaction')}}</span>
+          </x-button>
         </flexbox-item>
         <flexbox-item :span="2"></flexbox-item>
       </flexbox>
     </section>
     <group class="property-list">
-      <cell-box v-for="item in properyList" :key="item.id" class="property-item" :border-intent="false">
+      <cell-box v-for="item in properyList" :key="item.id" class="property-item" :border-intent="false" link="/tokendetails">
         <flexbox>
           <flexbox-item :span="2">
             <img :src="item.imgSrc" alt="">
@@ -78,6 +83,7 @@
 
     <!--LoggedIn: {{ $store.state.loggedIn }}-->
 
+    </view-box>
   </div>
 </template>
 
@@ -88,7 +94,7 @@ Transfer:
   zh-CN: 转账
 Deposit:
   zh-CN: 收款
-Exchange:
+Transaction:
   zh-CN: 兑换
 My Wallet:
   zh-CN: 资产
@@ -108,7 +114,10 @@ I have bottom line:
     XHeader,
     ButtonTab,
     ButtonTabItem,
-    Divider
+    Divider,
+    XButton,
+    numberComma,
+    ViewBox
   } from 'vux'
 
 
@@ -168,7 +177,10 @@ I have bottom line:
       XHeader,
       ButtonTab,
       ButtonTabItem,
-      Divider
+      Divider,
+      XButton,
+      numberComma,
+      ViewBox
     },
     data() {
       return {
@@ -179,13 +191,19 @@ I have bottom line:
         properyList: [],
         userName: 'Somebody',
         profilePic:'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg',
-        myProperty:'8,888,888,888.88',
+        myProperty:8888888888.88,
         eyeOn:true,
         msg: 'Hello World!'
       }
     },
     mounted(){
       this.properyList = propertyArr;
+    },
+    computed:{
+      propertyComma(){
+        let num = (this.myProperty).toFixed(4);
+        return numberComma(num)
+      }
     }
   }
 </script>

@@ -4,20 +4,18 @@
 
         <div v-if="$store.state.loggedIn">
 
-
-
             <tabbar class="nav-tab" :v-if="$store.state.loggedIn ">
-            <tabbar-item link="/home" selected>
+            <tabbar-item @click.native="go('home')" selected>
                 <i class="icon-wallet" slot="icon"></i>
             </tabbar-item>
-            <tabbar-item link="/market">
+            <tabbar-item @click.native="go('market')" >
                 <i class="icon-chart" slot="icon"></i>
             </tabbar-item>
-            <tabbar-item link="/news">
+            <tabbar-item @click.native="go('news')" >
                 <i class="icon-compass" slot="icon"></i>
             </tabbar-item>
-            <tabbar-item link="/profile">
-                <i class="icon-user" slot="icon"></i>
+            <tabbar-item  @click.native="go('profile')">
+                <i class="icon-settings" slot="icon"></i>
             </tabbar-item>
             </tabbar>
         </div>
@@ -41,6 +39,11 @@
       Tabbar, XButton,
       TabbarItem,
       Index
+    },
+    methods:{
+      go(str){
+        this.$router.push('/'+str)
+      }
     }
   }
 </script>

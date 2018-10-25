@@ -5,9 +5,12 @@ import Home from '@/pages/Home'
 import Wallet from '@/pages/Wallet'
 
 import Transaction from '@/pages/Transaction'
+import Transfer from '@/pages/Transfer'
 import Market from '@/pages/Market'
 import News from '@/pages/News'
 import Profile from '@/pages/Profile'
+import TokenDetails from '@/pages/TokenDetails'
+import TokenIntro from '@/pages/TokenIntro'
 
 import Register from '@/pages/account/Register'
 import Login from '@/pages/account/Login'
@@ -33,7 +36,7 @@ export default new Router({
         //       }
         //   ]
       },
-      
+
     {
 
       path: '/home',
@@ -56,6 +59,11 @@ export default new Router({
       path: '/transaction',
       name: 'transaction',
       component: Transaction
+    },
+    {
+      path: '/transfer',
+      name: 'transfer',
+      component: Transfer
     },
     {
       path: '/market',
@@ -81,6 +89,16 @@ export default new Router({
         path: '/login',
         name: 'Login',
         component: Login
-      }
+      },
+    {
+      path: '/tokenDetails',
+      name:'TokenDetails',
+      component:TokenDetails
+    },
+    {
+      path:'/tokenintro',
+      name:'TokenIntro',
+      component:TokenIntro
+    }
     ]
 })
