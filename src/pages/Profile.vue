@@ -21,11 +21,35 @@
           <cell class="setting-cell" :border-intent="false" :title="$t('Switch BP')" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Security Test')" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('About Us')" is-link></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('Contact Us')" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Contact Us')" @click.native="show = !show" is-link></cell>
           <x-button class="terms">{{$t('Terms')}}</x-button>
         </div>
       </card>
-
+      <x-dialog v-model="show">
+        <div class="contact-box">
+          <group-title>{{$t('Contact Us')}}</group-title>
+          <br>
+          <h4>E-mail</h4>
+          <p>
+            otonions@cubedex.io
+          </p>
+          <br>
+          <grid class="contact-social" :show-vertical-dividers="false" :show-lr-borders="false" hide-on-blur>
+            <grid-item>
+              <img src="../assets/images/facebook.png" alt="">
+            </grid-item>
+            <grid-item>
+              <img src="../assets/images/twitter.png" alt="">
+            </grid-item>
+            <grid-item>
+              <img src="../assets/images/telegram.png" alt="">
+            </grid-item>
+          </grid>
+          <div @click="show = false">
+            <span class="vux-close"></span>
+          </div>
+        </div>
+      </x-dialog>
     </view-box>
   </div>
 </template>
@@ -60,8 +84,14 @@ Terms:
     Card,
     Group,
     Cell,
-    XButton
+    XButton,
+    XDialog,
+    Divider,
+    Grid,
+    GridItem,
+    GroupTitle
   } from 'vux'
+  import {TransferDomDirective as TransferDom } from 'vux'
 
   export default {
     name:'profile',
@@ -71,16 +101,29 @@ Terms:
       Card,
       Group,
       Cell,
-      XButton
+      XButton,
+      XDialog,
+      Divider,
+      Grid,
+      GridItem,
+      GroupTitle
     },
     data(){
       return{
-        account:'abc123',
+        show:false,
+        account:'',
         profilePic:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540209275264&di=8dcc9aaaff4b30b1a3dba1097a6baae3&imgtype=0&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2015-01-15%2F004214903.jpg',
       }
     },
+    mounted(){
+      let user = this.$store.state.eosAccountName;
+      if(!user){
+        this.account = 'fenghaha';
+      }
+    },
     methods:{
-
+      showContact(){
+      }
     }
   }
 </script>

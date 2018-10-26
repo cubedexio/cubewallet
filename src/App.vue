@@ -54,5 +54,6 @@
 @import '~vux/src/styles/1px.less';
 @import './style/style.less';//引入网页字体
 @import './assets/iconfont/style.css';//引入网页字体
+@import '~vux/src/styles/close.less';
 
 </style>

@@ -125,14 +125,12 @@ I have bottom line:
     {
       imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
       tokenName: 'EOS',
-      tokenAmount: '5000',
-      money: '200'
+      tokenCode:'eosio.token'
     },
     {
-      imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
-      tokenName: 'EOS',
-      tokenAmount: '5000',
-      money: '200'
+      imgSrc: 'http://www.cubecart.io/img/cubecart_logo.2392cac3.png',
+      tokenName: 'CBT',
+      tokenCode:'cbtpub2'
     }
   ]
   export default {
@@ -159,7 +157,7 @@ I have bottom line:
         // preserves its current state and we are modifying
         // its initial state.
         properyList: [],
-        userName: 'Somebody',
+        account: '',
         profilePic:'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg',
         myProperty:8888888888.88,
         eyeOn:true,
@@ -167,12 +165,29 @@ I have bottom line:
       }
     },
     mounted(){
-      this.properyList = propertyArr;
+      this.properyList = propertyArr
+      this.account = this.$store.state.eosAccountName
+      if(!this.account){
+        this.account = 'fenghaha'
+      }
     },
     computed:{
       propertyComma(){
         let num = (this.myProperty).toFixed(4);
         return numberComma(num)
+      },
+      getTokenBalance(code){
+        let user = this.account
+        this.$http.get('/balance',{
+          params:{
+            code:code,
+            scope:user
+          }
+        }).then(res=>{
+          let rows = res.data.data.rows
+          that.balance = that.getBalanceNum(rows[0].balance)
+          return that.balance
+        }).catch()
       }
     }
   }

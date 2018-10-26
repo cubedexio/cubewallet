@@ -14,11 +14,12 @@ import TokenIntro from '@/pages/TokenIntro'
 
 import Register from '@/pages/account/Register'
 import Login from '@/pages/account/Login'
+import Forgot from '@/pages/account/Forgot'
+
 import Index from '@/pages/account/Index'
 import ImportWallet from '@/pages/account/ImportWallet'
 
 import ComingSoon from '@/pages/ComingSoon'
-
 
 
 import User from '@/pages/wallet/Wallet'
@@ -102,6 +103,11 @@ export default new Router({
         name: 'Login',
         component: Login
       },
+    {
+        path: '/forgot',
+        name: 'Forgot',
+        component: Forgot
+    },      
     {
       path: '/tokendetails',
       name:'TokenDetails',

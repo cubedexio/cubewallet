@@ -16,7 +16,7 @@ import createPersistedState from 'vuex-persistedstate'
 export default new Vuex.Store({
     state: {
         count: 0,
-        loggedIn: false,
+        loggedIn: true,
         privateKey: undefined,
         eosAccountName: undefined,
         walletPassword: undefined
