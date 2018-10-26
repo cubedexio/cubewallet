@@ -187,7 +187,10 @@ I have bottom line:
           let rows = res.data.data.rows
           that.balance = that.getBalanceNum(rows[0].balance)
           return that.balance
-        }).catch()
+        }).catch(res=>{
+          console.log('获取余额失败，失败原因：'+res)
+          return 0
+        })
       }
     }
   }
