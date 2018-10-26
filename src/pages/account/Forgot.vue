@@ -1,6 +1,6 @@
 <template>
 
-    <flexbox id="register-app" orient="vertical" justify="space-around">
+    <flexbox id="forgot-app" orient="vertical" justify="space-around">
         <flexbox-item :span="1/4" class="flex-item" >
             
                 <img class="logo" src="@/assets/images/cbt_logo.png"/>
@@ -8,7 +8,7 @@
         </flexbox-item>
         <flexbox-item :span="1/2" class="flex-item">
 
-            <div class="register">                    
+            <div class="forgot">                    
 
                 <!-- <label>名字</label>
                 <cube-input name="name"></cube-input>                    -->
@@ -23,12 +23,8 @@
                         {{ countdown == -1 ? $t("VerifyCode") : countdown+"s" }}
                     </x-button>                
                 </div>
-                <label>密码</label>
-                <cube-input v-model='password' name="password"></cube-input>
-                <input type="checkbox"  name="agreeterm"  id="agreeterm" v-model='agreeterm'/>
-                <label for="agreeterm"> 
-                    注册即同意<router-link :to="'license'"><a class='license' >《CUBEWALLET》用户协议</a></router-link>
-                </label>
+                <label>新密码</label>
+                <cube-input v-model='newpassword' name="newpassword"></cube-input>
             </div>
             
 
@@ -36,17 +32,15 @@
         <flexbox-item :span="1/12" class="flex-item">      
 
             <div>                       
-                <x-button @click.native="register">注册</x-button>
+                <x-button @click.native="forgot">重置密码</x-button>
             </div>
         </flexbox-item>
 
         <flexbox-item :span="1/12" class="flex-item">     
-
            <label>
-                <router-link :to="'login'">
-                    <a class='gologin' >已有帐号？去登录</a>
+                <router-link :to="'Login'">
+                    <a class='gologin' >返回</a>
                 </router-link>
-                
             </label>
         </flexbox-item>
     </flexbox>
@@ -83,7 +77,7 @@ export default {
         return {
             agreeterm: false,
             phone: '',
-            password: '',
+            newpassword: '',
             sms: '',
             countdown: -1
         }
@@ -109,7 +103,7 @@ export default {
         requestVerifyCode: function() {
             
             this.$http.post('/send_sms',  {
-                type: 'register',
+                type: 'forgot',
                 phone: this.phone,                
             })
             .then( (res) => {
@@ -128,50 +122,40 @@ export default {
             })
 
         },
-        register: function() {
+        forgot: function() {
             if( this.phone.length !== 11) {
                 this.$vux.alert.show({ title: '手机号格式不正确' });  
                 return;
             } 
-            if( this.password.length < 8 ) {
+            if( this.newpassword.length < 8 ) {
                 this.$vux.alert.show({ title: '密码最少8位' });  
                 return ;
-            }
-            if(!this.agreeterm){
-                this.$vux.alert.show({ title: '请先同意协议' });  
-                return;
-            }            
+            }     
             
-            
-            this.$http.post('/register',  {
+            this.$http.post('/forgot',  {
                 phone: this.phone,    
-                pass: this.password,
+                pass: this.newpassword,
                 sms: this.sms            
             })
             .then( (res) => {
                 console.log(res)
                 
                 if( res.status !== 200  || res.data.code !== 0 ) {
-                    this.$vux.alert.show({ title: '注册失败', content: res.data.msg ||  res.statusText || '未知错误', });               
+                    this.$vux.alert.show({ title: '重置失败', content: res.data.msg ||  res.statusText || '未知错误', });               
                     return;     
                 }else {
-
-                    
-
                     var self = this
                     this.$vux.alert.show({ 
-                        title: '注册成功', 
+                        title: '重置成功', 
                         onHide () {
-                            self.$router.replace('/importwallet')
+                            self.$router.replace('/login')
                         }    
                     });               
-                    
-
                 }
 
             }, (err)=> {
                 console.log(err)                                
-                this.$vux.alert.show({ title: '注册失败',content: err.message });   
+                this.$vux.alert.show({ title: '重置失败',content: err.message });   
             }) 
         }
     }
@@ -203,7 +187,7 @@ label a {
     color: white;
 }
 
-#register-app {
+#forgot-app {
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in.jpg")  no-repeat ;
@@ -221,7 +205,7 @@ button[disabled]{
   color: #666666;
 }
 
-.register {
+.forgot {
     text-align: left;
     width: 75%;
 }

@@ -1,30 +1,28 @@
 <template>
-  <div id="importkey-app">
+    <div id="importkey-app">
+
         <x-header  :left-options="{showBack: false}" style="background-color:transparent;">导入钱包</x-header>
-        <div class="container">
-            
-            <div class="importkey">                
-    
-                <label>私钥</label>
-                <!-- <x-textarea :max="20"></x-textarea> -->
-                <cube-textarea v-model="privatekey" placeholder="请输入您的私钥"></cube-textarea>
-                
-                <!-- <label>钱包密码</label>
-                <cube-input class='reversed' name="password" v-model="password"></cube-input>               
-                <label>确认密码</label>
-                <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input> -->
-            </div>
-            
-            <div>                
-                <x-button type='primary' @click.native="onImportEOSAccount">{{ $t('Import EOS Account') }}</x-button>
-            </div>
+        <flexbox id="flexbox" orient="vertical" justify="space-around">
 
+            <flexbox-item :span="1/2" class="flex-item">            
+                <div class="importkey">                
+                    <label>私钥</label>
+                    <cube-textarea v-model="privatekey" placeholder="请输入您的私钥"></cube-textarea>
+                    
+                    <!-- <label>钱包密码</label>
+                    <cube-input class='reversed' name="password" v-model="password"></cube-input>               
+                    <label>确认密码</label>
+                    <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input> -->
+                </div>
+            </flexbox-item>
+            <flexbox-item :span="1/4" class="flex-item">      
+                    <x-button type='primary' @click.native="onImportEOSAccount">{{ $t('Import EOS Account') }}</x-button>
+            </flexbox-item>
+        </flexbox>
             
-      </div>
 
-
-    
-  </div>
+        
+    </div>
 </template>
 <i18n>
 Import EOS Account:
@@ -33,7 +31,7 @@ Import EOS Account:
 </i18n>
 <script src=eosjs-ecc.js></script>
 <script>
-import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, XHeader, XTextarea } from 'vux'
+import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, XHeader, XTextarea, Flexbox, FlexboxItem  } from 'vux'
 import eosjs from 'eosjs-ecc'
 import { mapState } from 'vuex'
 
@@ -56,7 +54,7 @@ export default {
         CubeTextarea,
         TabbarItem,
         XHeader,
-        XTextarea,
+        XTextarea, Flexbox, FlexboxItem 
     },
     data: function() {
         return {
@@ -138,12 +136,13 @@ label {
     height: 100%;    
     background-color: white;
     background-size: 100%;
-}
-.container {
-    height: 100%;    
-}
-.container .importkey {
-    width: 70%;
+
+    #flexbox {
+        height: 100%;
+    }
+    .flex-item {
+        width: 75%;
+    }
 }
 
 h1.vux-header-title {
