@@ -44,7 +44,7 @@ Vue.use(LoadingPlugin)
 
 
 // FOR TEST ONLY
-AjaxPlugin.$http.defaults.baseURL = 'http://54.183.7.222:3000'
+AjaxPlugin.$http.defaults.baseURL = 'http://localhost:3000'
 
 
 const nowLocale = Vue.locale.get()

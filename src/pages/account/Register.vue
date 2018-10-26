@@ -1,11 +1,13 @@
 <template>
-    <div id="register-app">
 
-        <div class="container">
+    <flexbox id="register-app" orient="vertical" justify="space-around">
+        <flexbox-item :span="1/4" class="flex-item" >
+            
+                <img class="logo" src="@/assets/images/cbt_logo.png"/>
+            
+        </flexbox-item>
+        <flexbox-item :span="1/2" class="flex-item">
 
-            <div class="logo">
-                <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
-            </div>
             <div class="register">                    
 
                 <!-- <label>名字</label>
@@ -29,18 +31,25 @@
                 </label>
             </div>
             
-            <div>                
+
+        </flexbox-item>
+        <flexbox-item :span="1/12" class="flex-item">      
+
+            <div>                       
                 <x-button @click.native="register">注册</x-button>
             </div>
+        </flexbox-item>
 
-            <label>
+        <flexbox-item :span="1/12" class="flex-item">     
+
+           <label>
                 <router-link :to="'login'">
                     <a class='gologin' >已有帐号？去登录</a>
                 </router-link>
                 
             </label>
-      </div>
-    </div>
+        </flexbox-item>
+    </flexbox>
 </template>
 <i18n>
 Login:
@@ -53,7 +62,7 @@ VerifyCode:
 </i18n>
 
 <script>
-import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
+import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem } from 'vux'
 
 import CubeInput from '@/components/CubeInput'
 import { setInterval, setTimeout } from 'timers';
@@ -67,7 +76,7 @@ export default {
         Cell,
         Tabbar,
         CubeInput,
-        TabbarItem
+        TabbarItem, Flexbox, FlexboxItem
     },
 
     data: function(){
@@ -169,6 +178,18 @@ export default {
 </script>
 
 <style scoped lang="less">
+
+.flex-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    align-items: center;
+
+    text-align: center;
+    background-clip: padding-box;
+}
+
 .license {
     color: #F5A623;
 }
@@ -181,35 +202,12 @@ label a {
     color: white;
 }
 
-.to-hide {
-    display: none;
-}
-
 #register-app {
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in.jpg")  no-repeat ;
     background-size: 100%;
 }
-.container {
-    height: 100%;
-}
-
-.register {
-    width: 70%;
-}
-.logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-input {
-    border-bottom: 1px solid white;
-}
-
-
 .custom-default {
   border-radius: 99px!important;
   border-color: white!important;
@@ -220,6 +218,11 @@ button[disabled]{
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+}
+
+.register {
+    text-align: left;
+    width: 75%;
 }
 
 </style>
