@@ -78,7 +78,7 @@
       </cell-box>
     </group>
 
-    <divider>{{ $t('I have bottom line') }}</divider>
+    <!--<divider>{{ $t('I have bottom line') }}</divider>-->
 
 
     <!--LoggedIn: {{ $store.state.loggedIn }}-->
@@ -122,36 +122,6 @@ I have bottom line:
 
 
   const propertyArr = [
-    {
-      imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
-      tokenName: 'EOS',
-      tokenAmount: '5000',
-      money: '200'
-    },
-    {
-      imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
-      tokenName: 'EOS',
-      tokenAmount: '5000',
-      money: '200'
-    },
-    {
-      imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
-      tokenName: 'EOS',
-      tokenAmount: '5000',
-      money: '200'
-    },
-    {
-      imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
-      tokenName: 'EOS',
-      tokenAmount: '5000',
-      money: '200'
-    },
-    {
-      imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
-      tokenName: 'EOS',
-      tokenAmount: '5000',
-      money: '200'
-    },
     {
       imgSrc: 'https://static2.digifinex.com/Public/Uploads/2018-06-19/5b28e2ec09d6b.png',
       tokenName: 'EOS',

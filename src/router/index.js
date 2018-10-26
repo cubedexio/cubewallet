@@ -17,6 +17,8 @@ import Login from '@/pages/account/Login'
 import Index from '@/pages/account/Index'
 import ImportWallet from '@/pages/account/ImportWallet'
 
+import ComingSoon from '@/pages/ComingSoon'
+
 
 
 import User from '@/pages/wallet/Wallet'
@@ -101,7 +103,7 @@ export default new Router({
         component: Login
       },
     {
-      path: '/tokenDetails',
+      path: '/tokendetails',
       name:'TokenDetails',
       component:TokenDetails
     },
@@ -109,6 +111,11 @@ export default new Router({
       path:'/tokenintro',
       name:'TokenIntro',
       component:TokenIntro
-    }
+    },
+      {
+        path:'/comingsoon',
+        name:'ComingSoon',
+        component:ComingSoon
+      }
     ]
 })

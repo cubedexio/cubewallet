@@ -15,9 +15,6 @@ import store from './store'
 import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
-import {ToastPlugin} from 'vux'
-
-Vue.use(ToastPlugin)
 
 Vue.use(Vuex)
 
@@ -38,14 +35,16 @@ for (let i in finalLocales) {
   Vue.i18n.add(i, finalLocales[i])
 }
 
-import { LocalePlugin, AjaxPlugin, AlertPlugin } from "vux"
+import { LocalePlugin, AjaxPlugin, AlertPlugin ,ToastPlugin, LoadingPlugin} from "vux"
 Vue.use(LocalePlugin)
 Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
+Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
 
 
 // FOR TEST ONLY
-AjaxPlugin.$http.defaults.baseURL = 'http://localhost:3000'
+AjaxPlugin.$http.defaults.baseURL = 'http://54.183.7.222:3000'
 
 
 const nowLocale = Vue.locale.get()

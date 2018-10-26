@@ -82,6 +82,9 @@ en:
   Market: Market
   VerifyCode: VerifyCode
   Import EOS Account: Import EOS Account
+  Balance: Balance
+  Please Enter A Number: Please Enter A Number
+  Please Enter Amount Number: Please Enter Amount Number
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -166,3 +169,6 @@ zh-CN:
   Market: 市场
   VerifyCode: 验证码
   Import EOS Account: 导入EOS帐号
+  Balance: 余额
+  Please Enter A Number: 请输入数字
+  Please Enter Amount Number: 请输入金额数字

@@ -6,30 +6,33 @@
     <section class="head-bg-lg">
       <swiper class="swiper"  loop height="180px" dots-position="center" dots-class="dots-class" :list="swiperList" ></swiper>
     </section>
-    <sticky>
-      <tab :line-with="1" custom-bar-width="60px" v-model="i" active-color="#651FFF">
-        <tab-item selected @on-item-click="switchTab">{{ $t('New') }}</tab-item>
-        <tab-item @on-item-click="switchTab">{{ $t('Hot') }}</tab-item>
-        <tab-item @on-item-click="switchTab" >{{ $t('Financing') }}</tab-item>
-      </tab>
-    </sticky>
-    <group>
-      <swiper class="cate-swiper" v-model="i" :show-dots="false" height="20rem">
-        <swiper-item v-for="(list,index) in newsList" :key="index">
-          <cell-box v-for="item in list" :key="item.id" class="news-item">
-            <div class="news-item-left">
-              <img :src="item.cover" alt="" class="news-cover">
-              <p>{{item.rate}}</p>
-            </div>
-            <div class="news-item-right">
-              <b class="news-title">{{item.title}}</b>
-              <p class="news-details">{{item.details}}</p>
-              <p class="news-time text-right">{{item.time}}</p>
-            </div>
-          </cell-box>
-        </swiper-item>
-      </swiper>
-    </group>
+      <div class="tab-content">
+        <sticky>
+          <tab :line-with="1" custom-bar-width="60px" v-model="i" active-color="#651FFF">
+            <tab-item selected @on-item-click="switchTab">{{ $t('New') }}</tab-item>
+            <tab-item @on-item-click="switchTab">{{ $t('Hot') }}</tab-item>
+            <tab-item @on-item-click="switchTab" >{{ $t('Financing') }}</tab-item>
+          </tab>
+        </sticky>
+        <group class="cate-group">
+          <swiper class="cate-swiper" v-model="i" :show-dots="false" height="28rem">
+            <swiper-item v-for="(list,index) in newsList" :key="index">
+              <cell-box v-for="item in list" :key="item.id" class="news-item">
+                <div class="news-item-left">
+                  <img :src="item.cover" alt="" class="news-cover">
+                  <p>{{item.rate}}</p>
+                </div>
+                <div class="news-item-right">
+                  <p class="news-title">{{item.title}}</p>
+                  <p class="news-details">{{item.details}}</p>
+                  <p class="news-time text-right">{{item.time}}</p>
+                </div>
+              </cell-box>
+            </swiper-item>
+          </swiper>
+        </group>
+
+      </div>
 
     </view-box>
   </div>

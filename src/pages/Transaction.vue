@@ -193,7 +193,7 @@ Please check the terms box:
             })
             return
           }
-          //eos兑换cbt
+
           console.log('eos兑换cbt')
         }else{
           //cbt兑换eos
