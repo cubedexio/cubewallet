@@ -1,34 +1,34 @@
 <template>
-  <div id="login-app">
 
-        <div class="container">
-
-            <div class="logo">
-                <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
-            </div>
+    <flexbox id="login-app" orient="vertical" justify="space-around">
+        <flexbox-item :span="1/4" class="flex-item" >
+            
+                <img class="logo" src="@/assets/images/cbt_logo.png"/>
+            
+        </flexbox-item>
+        <flexbox-item :span="1/2" class="flex-item">
             <div class="login">                
-    
-                <!-- <group>
-                    <x-input />
-                </group> -->
-                
                 <label>手机号</label>
                 <cube-input name="phone" v-model="phone"></cube-input>                
                 <label>密码</label>
                 <cube-input name="password" v-model="password"></cube-input>
             </div>
             
+
+        </flexbox-item>
+        <flexbox-item :span="1/4" class="flex-item">      
+
             <div>                
-                <x-button @click.native="onLogin">{{ $t('Login') }}</x-button>
-                <x-button type='primary' link='/register'>{{ $t('Register') }}</x-button>
+                <x-button type='primary' @click.native="onLogin">{{ $t('Login') }}</x-button>
+                <x-button  link='/register'>{{ $t('Register') }}</x-button>
             </div>
+        </flexbox-item>
+
+    </flexbox>
 
             
-      </div>
 
 
-    
-  </div>
 </template>
 <i18n>
 Login:
@@ -39,7 +39,7 @@ Register:
 </i18n>
 
 <script>
-import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
+import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem  } from 'vux'
 
 import CubeInput from '@/components/CubeInput'
 
@@ -52,7 +52,7 @@ export default {
         Cell,
         Tabbar,
         CubeInput,
-        TabbarItem
+        TabbarItem, Flexbox, FlexboxItem 
     },
     data: function() {
         return {
@@ -96,42 +96,34 @@ export default {
 
 <style scoped>
 
+#login-app {
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
+    background-size: 100%;
+}
+
+.flex-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    align-items: center;
+
+    text-align: center;
+    background-clip: padding-box;
+}
+
 label {
     color: white;
     line-height: 3.2em;
     height: 3.2em;
 }
 
-.to-hide {
-    display: none;
-}
-
-#login-app {
-    width: 100%;
-    height: 100%;
-    background: url("../../assets/images/sign_in.jpg")  no-repeat ;
-    background-size: 100%;
-}
-.container {
-    height: 100%;
-}
-
 .login {
-    width: 70%;
-}
-.logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    text-align: left;
+    width: 75%;
 }
 
-input {
-    border-bottom: 1px solid white;
-}
-
-.weui-cells {
-    background: transparent;
-}
 
 </style>

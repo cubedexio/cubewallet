@@ -9,10 +9,10 @@
                 <!-- <x-textarea :max="20"></x-textarea> -->
                 <cube-textarea v-model="privatekey" placeholder="请输入您的私钥"></cube-textarea>
                 
-                <label>钱包密码</label>
+                <!-- <label>钱包密码</label>
                 <cube-input class='reversed' name="password" v-model="password"></cube-input>               
                 <label>确认密码</label>
-                <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input>
+                <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input> -->
             </div>
             
             <div>                

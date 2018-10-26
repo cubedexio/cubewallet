@@ -1,30 +1,27 @@
 <template>
-  <div id="index-app">
-        <!-- <transition name="fade">
-            <div class="start" ref="start" v-if="show">
-            <img src="../../assets/images/start.jpg" alt="">
-            </div>
-        </transition> -->
-
-        <div class="container">
-
-            <div class="logo">
+  
+    <flexbox id="index-app" orient="vertical" justify="space-around">
+        <flexbox-item :span="1/4" class="flex-item" >
+            
                 <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
-            </div>
-            <div class="hint">
+            
+        </flexbox-item>
+        <flexbox-item :span="1/4" class="flex-item">
                 <label id="hint-label">
                     创建<br/>/<br/>登陆帐号
                 </label>
-            </div>
+        </flexbox-item>
+        <flexbox-item :span="1/4" class="flex-item">      
 
-            <div>
                 <x-button type='primary' link="/register">创建帐号</x-button>
                 <x-button link="/login">登陆帐号</x-button>
-            </div>
-      </div>
+
+        </flexbox-item>
+    </flexbox>
 
 
-  </div>
+
+
 </template>
 <i18n>
 Login:
@@ -35,7 +32,7 @@ Register:
 </i18n>
 
 <script>
-import { Group, XButton, XInput, Cell, Tabbar, TabbarItem } from 'vux'
+import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem } from 'vux'
 
 
 
@@ -47,7 +44,9 @@ export default {
     XButton,
     Cell,
     Tabbar,
-    TabbarItem
+    TabbarItem,
+    Flexbox,
+    FlexboxItem
   },
   data () {
     return{
@@ -63,19 +62,6 @@ export default {
 </script>
 
 <style scoped>
-.logo, .hint {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.hint {
-    text-align: center;
-    color: white;
-    font-size: 1.2rem;
-    font-weight:bold;
-}
 
 #index-app {
     width: 100%;
@@ -83,18 +69,24 @@ export default {
     background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
     background-size: 100%;
 }
-.container {
-    height: 100%;
+
+.flex-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    align-items: center;
+
+    text-align: center;
+    background-clip: padding-box;
 }
 
 
+label#hint-label {
+    color: #fff;
+    font-size: 1.2em;
+}
 
 
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-  }
 
 </style>

@@ -46,6 +46,9 @@ Vue.use(AlertPlugin)
 
 // FOR TEST ONLY
 AjaxPlugin.$http.defaults.baseURL = 'http://localhost:3000'
+AjaxPlugin.$http.defaults.baseURL = 'http://192.168.32.59:3000'
+
+
 
 
 const nowLocale = Vue.locale.get()

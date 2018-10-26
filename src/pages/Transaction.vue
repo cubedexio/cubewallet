@@ -99,6 +99,12 @@ Please check the terms box:
 </i18n>
 
 <script>
+
+import {Api, JsonRpc, JsSignatureProvider, RpcError } from 'eosjs'
+
+const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs"; // useraaaaaaaa
+// const rpc = new eosjs_jsonrpc.JsonRpc('http://127.0.0.1:8000');
+
   import {
     Group,
     Cell,
@@ -216,11 +222,73 @@ Please check the terms box:
           }
           //cbt兑换eos
           console.log('cbt兑换eos')
+
         }
+
+
+
+        this.transaction()
+
+
       },
       switchTab(index){
         this.i = index;
+      },
+
+      async transaction() {
+
+        const rpc = new JsonRpc('https://eos.greymass.com');
+        const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
+        const api = new Api({ rpc, signatureProvider });
+        
+
+          let textContent = ''
+
+
+
+        // async () => {
+            try {
+                console.log('sb1')
+                const result = await api.transact({
+                    actions: [{
+                        account: 'eosio.token',
+                        name: 'transfer',
+                        authorization: [{
+                            actor: 'alexchan1234',
+                            permission: 'active',
+                        }],
+                        data: {
+                            from: 'alexchan1234',
+                            to: 'skyhigh12345',
+                            quantity: '0.0001 EOS',
+                            memo: '',
+                        },
+                    }]
+                }, {
+                    blocksBehind: 3,
+                    expireSeconds: 30,
+                });
+            
+                textContent += '\n\nTransaction pushed!\n\n' + JSON.stringify(result, null, 2);
+                alert('sb2')
+            } catch (e) {
+                textContent = '\nCaught exception: ' + e;
+                console.log(textContent);
+                
+                if (e instanceof RpcError)
+                    textContent += '\n\n' + JSON.stringify(e.json, null, 2);
+            }
+            console.log(textContent)
+            alert(textContent)
+        // }
       }
+    },
+    mounted() {
+
+
+        console.log('sb0')
+
+
     }
   }
 </script>
