@@ -109,6 +109,7 @@ export default {
         requestVerifyCode: function() {
             
             this.$http.post('/send_sms',  {
+                type: 'register',
                 phone: this.phone,                
             })
             .then( (res) => {

@@ -21,7 +21,13 @@
             <div>                
                 <x-button type='primary' @click.native="onLogin">{{ $t('Login') }}</x-button>
                 <x-button  link='/register'>{{ $t('Register') }}</x-button>
+
+                <br/>
+                <router-link :to="'Forgot'">
+                    <a class='gologin' >忘记密码</a>
+                </router-link>
             </div>
+
         </flexbox-item>
 
     </flexbox>
