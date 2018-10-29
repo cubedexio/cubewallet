@@ -14,7 +14,8 @@
     ViewBox,
     Flexbox,
     FlexboxItem
-  }from 'vux'
+  } from 'vux'
+
   export default {
     name:'comingSoon',
     components:{
