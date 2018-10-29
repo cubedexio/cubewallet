@@ -19,6 +19,8 @@ import Forgot from '@/pages/account/Forgot'
 import Index from '@/pages/account/Index'
 import ImportWallet from '@/pages/account/ImportWallet'
 
+// import ComingSoon from '@/pages/ComingSoon'
+
 
 import User from '@/pages/wallet/Wallet'
 
@@ -116,5 +118,11 @@ export default new Router({
       name:'TokenIntro',
       component:TokenIntro
     }
+    // ,
+    //   {
+    //     path:'/comingsoon',
+    //     name:'ComingSoon',
+    //     component:ComingSoon
+    //   }
     ]
 })
