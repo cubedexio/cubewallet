@@ -1,5 +1,6 @@
 <template>
   <transition name="slide">
+      
   <div id="transaction">
     <view-box>
 
@@ -96,6 +97,8 @@ The Terms of Transaction:
   zh-CN: 服务及隐私条款
 Please check the terms box:
   zh-CN: 请勾选已阅读隐私及服务条款
+Transaction completed:
+  zh-CN: 兑换完成  
 </i18n>
 
 <script>
@@ -122,11 +125,14 @@ import {Api, JsonRpc, JsSignatureProvider, RpcError } from 'eosjs'
     Swiper,
     SwiperItem,
     CheckIcon,
-    Toast
+    Toast,
+    Loading
   } from 'vux'
 
-import { setInterval } from 'timers';
+import { setInterval, setTimeout } from 'timers';
 import { mapState } from 'vuex'
+
+import { officialEosAccount, eosEndpoint } from '@/config'
 
 let interval = undefined
 
@@ -149,7 +155,8 @@ let interval = undefined
       SwiperItem,
       ViewBox,
       CheckIcon,
-      Toast
+      Toast,
+      Loading
     },
     data() {
       return {
@@ -270,7 +277,16 @@ let interval = undefined
 
       async transaction() {
 
-        const rpc = new JsonRpc('https://eos.greymass.com');
+
+        this.$vux.loading.show({
+            text: 'Processing..'
+        })
+
+        setTimeout(()=>{
+            this.$vux.loading.hide()
+        }, 10 * 1000)
+
+        const rpc = new JsonRpc(eosEndpoint);
         const signatureProvider = new JsSignatureProvider([this.privateKey]);
         const api = new Api({ rpc, signatureProvider });
         
@@ -279,7 +295,6 @@ let interval = undefined
 
             let quanity = (new Number(this.amount)).toFixed(4) + ' EOS'
             try {
-                console.log('sb1')
                 const result = await api.transact({
                     actions: [{
                         account: 'eosio.token',
@@ -290,7 +305,7 @@ let interval = undefined
                         }],
                         data: {
                             from: this.eosAccountName,
-                            to: 'skyhigh12345',
+                            to: officialEosAccount,
                             quantity: quanity,
                             memo: '',
                         },
@@ -300,18 +315,31 @@ let interval = undefined
                     expireSeconds: 30,
                 });
             
+                this.$vux.loading.hide()
                 textContent += '\n\nTransaction pushed!\n\n' + JSON.stringify(result, null, 2);
 
-                
+                if( result.transaction_id ) {
+                    this.$vux.toast.show({
+                        text:this.$t('Transaction completed'),
+                        type:'text',
+                        width:'16rem',
+                        position:'middle'
+                    })
+                }
+
             } catch (e) {
+                this.$vux.loading.hide()
                 textContent = '\nCaught exception: ' + e;
-                console.log(textContent);
+                this.$vux.alert.show({
+                    title: '兑换失败',
+                    content: e.toString()
+                });  
                 
                 if (e instanceof RpcError)
                     textContent += '\n\n' + JSON.stringify(e.json, null, 2);
             }
             console.log(textContent)
-            alert(textContent)
+            // alert(textContent)
         // }
       }
     },
@@ -320,14 +348,12 @@ let interval = undefined
     },
     mounted() {
 
-
-        console.log('sb0')
-
         this.getPrice();
 
         interval = setInterval(()=>{
             this.getPrice();
         }, 1 * 60 * 1000) // 每分钟更新一次价格
+
 
     }
   }
