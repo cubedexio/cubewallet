@@ -217,7 +217,8 @@ let interval = undefined
             return
           }
 
-          console.log('eos兑换cbt')
+            console.log('eos兑换cbt')
+            this.eos2cbt()
         }else{
           //cbt兑换eos
           if(this.CBTAmount === 0 || this.CBTAmount == ''){
@@ -238,14 +239,11 @@ let interval = undefined
             return
           }
           //cbt兑换eos
+          this.cbt2eos()
+
           console.log('cbt兑换eos')
 
         }
-
-
-
-        this.transaction()
-
 
       },
       switchTab(index){
@@ -270,12 +268,49 @@ let interval = undefined
                 console.log(err)                                
                 this.$vux.alert.show({
                     title: '查询价格失败',
-                    content: err.message
+                    content: err.msg
                 });   
             })
       },
 
-      async transaction() {
+        cbt2eos() {
+            this.$vux.loading.show({
+                text: 'Processing..'
+            })
+            setTimeout(()=>{    
+                this.$vux.loading.hide()
+            }, 10 * 1000)
+                        
+            this.$http.get('/sell', {
+                params: {
+                    from: this.eosAccountName,
+                    quant: this.amount
+                }
+            }).then(res=>{
+                this.$vux.loading.hide()
+                if( res.status !== 200  || res.data.code !== 0 ) {
+                    this.$vux.alert.show({
+                        title: '兑换失败',
+                        content: res.data.msg ||  res.statusText || '未知错误',
+                    });               
+                    return;  
+                }
+
+                this.$vux.toast.show({
+                    text:this.$t('Transaction completed'),
+                    type:'text',
+                    width:'16rem',
+                    position:'middle'
+                })
+
+            }, err=>{
+                this.$vux.loading.hide()
+                this.$vux.alert.show({ title: '注册失败',content: err.msg });   
+            })
+
+      },
+
+      async eos2cbt() {
 
 
         this.$vux.loading.show({
