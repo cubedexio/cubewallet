@@ -6,7 +6,7 @@
     <section class="head-box-lg">
       <div class="profile-pic">
         <img :src="profilePic" alt="">
-        <span class="user-name">{{userName}}</span>
+        <span class="user-name">{{account}}</span>
         <!--<div class="plus">-->
           <!--<i class="icon-plus"></i>-->
         <!--</div>-->
