@@ -93,11 +93,15 @@ export default {
 
                 this.$store.commit('setPrivateKey', this.privatekey)
                 this.$store.commit('setEOSAccountName', eosAccount)
-                this.$store.commit('setWalletPassword', this.password)
                 this.$store.commit('setLoggedIn', true)
 
-                this.$router.replace('/home')
-
+                let self = this;
+                this.$vux.alert.show({ 
+                    title: '导入成功', 
+                    onHide () {
+                        self.$router.replace('/home')
+                    }    
+                });  
 
             }, (err)=>{
                this.$vux.alert.show({ title: '导入失败', content: err.message });   
@@ -111,26 +115,7 @@ export default {
 
 <style  lang='less' scoped>
 
-label {
-    color: black;
-    line-height: 3.2em;
-    height: 3.2em;
-}
 
-
-#importkey-app {
-    width: 100%;
-    height: 100%;    
-    background-color: white;
-    background-size: 100%;
-
-    #flexbox {
-        height: 100%;
-    }
-    .flex-item {
-        width: 75%;
-    }
-}
 </style>
 <style type="less">
 #importkey-app h1.vux-header-title {

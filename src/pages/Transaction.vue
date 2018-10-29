@@ -26,7 +26,7 @@
             <x-input type='text' class="c-input" placeholder="请输入数量" v-model='amount'></x-input>
           </group>
           <group class="transaction-symbol text-center">
-            <span>1 EOS = 12 CBT (≈￥ {{eosRmb}})</span>
+            <span>1 EOS ≈ {{ exchangeRate_divided_by_1 }} CBT (≈￥ {{eosRmb}})</span>
             <p>
               <img src="../assets/images/arrow_down.png" alt="">
             </p>
@@ -42,7 +42,7 @@
             <x-input type='text' class="c-input" :placeholder="$t('Please enter a number')" v-model='CBTAmount'/>
           </group>
           <group class="transaction-symbol text-center">
-            <span>1 EOS = 12 CBT (≈￥ {{eosRmb}})</span>
+            <span>1 EOS  ≈ {{ exchangeRate_divided_by_1 }} CBT (≈￥ {{eosRmb}})</span>
             <p>
               <img src="../assets/images/arrow_down.png" alt="">
             </p>
@@ -102,7 +102,6 @@ Please check the terms box:
 
 import {Api, JsonRpc, JsSignatureProvider, RpcError } from 'eosjs'
 
-const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs"; // useraaaaaaaa
 // const rpc = new eosjs_jsonrpc.JsonRpc('http://127.0.0.1:8000');
 
   import {
@@ -126,6 +125,10 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
     Toast
   } from 'vux'
 
+import { setInterval } from 'timers';
+import { mapState } from 'vuex'
+
+let interval = undefined
 
   export default {
     components: {
@@ -150,7 +153,7 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
     },
     data() {
       return {
-        exchangeRate: 0.5,
+        exchangeRate: 1,
         amount: 0,
         CBTAmount: 0,
         eosRmb: 36,
@@ -159,15 +162,22 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
       }
     },
     computed: {
-      amountOut() {
-        return this.amount * this.exchangeRate
-      },
-      transactionCBT() {
-        return this.amount * 12;
-      },
-      transactionEos(){
-        return this.CBTAmount / 12;
-      }
+        exchangeRate_divided_by_1() {
+            return  (new Number(1 / this.exchangeRate)).toFixed(1)
+        },
+        amountOut() {
+            return this.amount * this.exchangeRate
+        },
+        transactionCBT() {
+            return this.amount / this.exchangeRate ;
+        },
+        transactionEos(){
+            return this.CBTAmount * this.exchangeRate ;
+        },
+        ...mapState([
+            'privateKey',
+            'eosAccountName'
+        ]),
     },
     methods:{
       doTransaction(){
@@ -235,18 +245,39 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
         this.i = index;
       },
 
+    getPrice() {
+        console.log('getprice')
+        this.$http.get('/get_price')
+            .then( (res) => {
+                console.log(res.data)
+                if( res.status !== 200  || res.data.code !== 0 ) {
+                    this.$vux.alert.show({
+                        title: '查询价格失败',
+                        content: res.data.msg ||  res.statusText || '未知错误',
+                    });               
+                    return;     
+                }
+                const data = res.data.data;
+                this.exchangeRate = data.price
+            }, (err)=> {
+                console.log(err)                                
+                this.$vux.alert.show({
+                    title: '查询价格失败',
+                    content: err.message
+                });   
+            })
+      },
+
       async transaction() {
 
         const rpc = new JsonRpc('https://eos.greymass.com');
-        const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
+        const signatureProvider = new JsSignatureProvider([this.privateKey]);
         const api = new Api({ rpc, signatureProvider });
         
 
           let textContent = ''
 
-
-
-        // async () => {
+            let quanity = (new Number(this.amount)).toFixed(4) + ' EOS'
             try {
                 console.log('sb1')
                 const result = await api.transact({
@@ -254,13 +285,13 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
                         account: 'eosio.token',
                         name: 'transfer',
                         authorization: [{
-                            actor: 'alexchan1234',
+                            actor: this.eosAccountName,
                             permission: 'active',
                         }],
                         data: {
-                            from: 'alexchan1234',
+                            from: this.eosAccountName,
                             to: 'skyhigh12345',
-                            quantity: '0.0001 EOS',
+                            quantity: quanity,
                             memo: '',
                         },
                     }]
@@ -270,7 +301,8 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
                 });
             
                 textContent += '\n\nTransaction pushed!\n\n' + JSON.stringify(result, null, 2);
-                alert('sb2')
+
+                
             } catch (e) {
                 textContent = '\nCaught exception: ' + e;
                 console.log(textContent);
@@ -283,11 +315,19 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
         // }
       }
     },
+    beforeDestroy() {
+        clearInterval(interval)
+    },
     mounted() {
 
 
         console.log('sb0')
 
+        this.getPrice();
+
+        interval = setInterval(()=>{
+            this.getPrice();
+        }, 1 * 60 * 1000) // 每分钟更新一次价格
 
     }
   }
