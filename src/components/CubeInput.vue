@@ -34,7 +34,7 @@ export default {
     font-size: inherit;
     color: white;
     height: 3.2em;
-    line-height: 2.2em;
+    /* line-height: 2.2em; */
     border-bottom: solid 1px white;
     border-radius: 0;
 }

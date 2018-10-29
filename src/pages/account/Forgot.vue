@@ -14,7 +14,8 @@
                 <cube-input name="name"></cube-input>                    -->
                 <label>手机号</label>
                 <!-- {{ phone }} -->
-                <cube-input v-model="phone" name="phone" type='number'></cube-input>                
+                <cube-input v-model="phone" name="phone" type='number'></cube-input>     
+                <br/>           
                 <label>验证码</label>
                 <div style="display:flex">
                     <cube-input v-model="sms" name="verifycode" style="flex:3"/>
@@ -23,6 +24,7 @@
                         {{ countdown == -1 ? $t("VerifyCode") : countdown+"s" }}
                     </x-button>                
                 </div>
+                <br/>
                 <label>新密码</label>
                 <cube-input v-model='newpassword' name="newpassword"></cube-input>
             </div>
@@ -179,9 +181,10 @@ export default {
     color: #F5A623;
 }
 label {
+    display: inline-block;
     color: white;
-    line-height: 3.2em;
-    height: 3.2em;
+    line-height: 2.2em;
+    height: 2.2em;
 }
 label a {
     color: white;
@@ -201,8 +204,8 @@ label a {
 button:disabled,
 button[disabled]{
   border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
+  background-color: rgba(102  , 102, 102, 0.4);
+
 }
 
 .forgot {

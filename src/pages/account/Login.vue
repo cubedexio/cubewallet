@@ -9,7 +9,8 @@
         <flexbox-item :span="1/2" class="flex-item">
             <div class="login">                
                 <label>手机号</label>
-                <cube-input name="phone" v-model="phone"></cube-input>                
+                <cube-input name="phone" v-model="phone"></cube-input>        
+                <br/>        
                 <label>密码</label>
                 <cube-input name="password" v-model="password"></cube-input>
             </div>
@@ -121,9 +122,10 @@ export default {
 }
 
 label {
+    display: block;
     color: white;
-    line-height: 3.2em;
-    height: 3.2em;
+    line-height: 2.2em;
+    height: 2.2em;
 }
 
 .login {
