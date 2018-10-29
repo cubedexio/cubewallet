@@ -19,7 +19,7 @@ import Forgot from '@/pages/account/Forgot'
 import Index from '@/pages/account/Index'
 import ImportWallet from '@/pages/account/ImportWallet'
 
-import ComingSoon from '@/pages/ComingSoon'
+// import ComingSoon from '@/pages/ComingSoon'
 
 
 import User from '@/pages/wallet/Wallet'
@@ -32,7 +32,7 @@ import License from '@/pages/license'
 Vue.use(Router)
 
 export default new Router({
-    mode:'history',
+    // mode:'history',
     routes: [
         {
             path: '/license',
@@ -117,11 +117,12 @@ export default new Router({
       path:'/tokenintro',
       name:'TokenIntro',
       component:TokenIntro
-    },
-      {
-        path:'/comingsoon',
-        name:'ComingSoon',
-        component:ComingSoon
-      }
+    }
+    // ,
+    //   {
+    //     path:'/comingsoon',
+    //     name:'ComingSoon',
+    //     component:ComingSoon
+    //   }
     ]
 })
