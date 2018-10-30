@@ -55,7 +55,7 @@
                     {{properyList[0].balance}}
                   </p>
                   <span class="money">
-              $200
+              $0
             </span>
                 </flexbox-item>
               </flexbox>
@@ -73,7 +73,7 @@
                     {{properyList[1].balance}}
                   </p>
                   <span class="money">
-              $200
+              $0
             </span>
                 </flexbox-item>
               </flexbox>
@@ -171,7 +171,7 @@ I have bottom line:
           {
             tokenName: 'CBT',
             tokenCode:'cbtban1',
-            balance:1
+            balance:0
           }
         ],
         account: '',
@@ -201,12 +201,15 @@ I have bottom line:
         for (let i = 0; i<balanceArr.length;i++){
           let code = balanceArr[i].tokenCode.toString()
           this.asyncGetBalance(code).then(res=>{
-            let b = res.data.data[0].balance
-            let n = common.getNumByBalance(b)
-            this.properyList[i].balance = n
-            // setTimeout(()=>{
-              this.isLoaded = true
-            // },1000)
+              
+                if( res.length > 0 ) {
+                    let b = res.data.data[0].balance
+                    let n = common.getNumByBalance(b)
+                    this.properyList[i].balance = n
+                }
+                // setTimeout(()=>{
+                this.isLoaded = true
+                // },1000)
           }).catch(res=>{
             console.log('获取数据出错：' + res)
           })
