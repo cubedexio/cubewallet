@@ -44,7 +44,30 @@
     methods:{
       go(str){
         this.$router.push('/'+str)
+      },
+
+      refreshToken() {
+          self = this
+        const instance = this.$http.create({
+            headers: {'Authorization': 'Bearer ' + self.$store.state.refreshToken }
+        });
+
+        instance.post('/refresh_token').then(res=>{
+            if( res.status === 200 && res.data.code === 0 ) {
+                this.$store.commit('setAccessToken', res.data.data.accessToken)
+                this.$store.commit('setRefreshToken', res.data.data.refreshToken)
+            }
+        }, err=>{
+            console.error(err)
+        })
+        
       }
+    }
+    ,
+    created() {
+        // 每次启动刷新token
+        console.log("created")
+        this.refreshToken()
     }
   }
 </script>

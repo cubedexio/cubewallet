@@ -19,6 +19,8 @@ export default new Vuex.Store({
         loggedIn: false,
         privateKey: undefined,
         eosAccountName: undefined,
+        accessToken: undefined,
+        refreshToken: undefined
     },
     mutations: {
         increment (state) {
@@ -32,6 +34,12 @@ export default new Vuex.Store({
         },
         setEOSAccountName (state, name) {
             state.eosAccountName = name
+        },
+        setAccessToken (state, token) {
+            state.accessToken = token
+        },
+        setRefreshToken (state, token) {
+            state.refreshToken = token
         }
     },
   modules: {
