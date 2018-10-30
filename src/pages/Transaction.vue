@@ -1,5 +1,6 @@
 <template>
   <transition name="slide">
+      
   <div id="transaction">
     <view-box>
 
@@ -26,7 +27,7 @@
             <x-input type='text' class="c-input" placeholder="请输入数量" v-model='amount'></x-input>
           </group>
           <group class="transaction-symbol text-center">
-            <span>1 EOS = 12 CBT (≈￥ {{eosRmb}})</span>
+            <span>1 EOS ≈ {{ exchangeRate_divided_by_1 }} CBT (≈￥ {{eosRmb}})</span>
             <p>
               <img src="../assets/images/arrow_down.png" alt="">
             </p>
@@ -42,7 +43,7 @@
             <x-input type='text' class="c-input" :placeholder="$t('Please enter a number')" v-model='CBTAmount'/>
           </group>
           <group class="transaction-symbol text-center">
-            <span>1 EOS = 12 CBT (≈￥ {{eosRmb}})</span>
+            <span>1 EOS  ≈ {{ exchangeRate_divided_by_1 }} CBT (≈￥ {{eosRmb}})</span>
             <p>
               <img src="../assets/images/arrow_down.png" alt="">
             </p>
@@ -96,13 +97,14 @@ The Terms of Transaction:
   zh-CN: 服务及隐私条款
 Please check the terms box:
   zh-CN: 请勾选已阅读隐私及服务条款
+Transaction completed:
+  zh-CN: 兑换完成  
 </i18n>
 
 <script>
 
 import {Api, JsonRpc, JsSignatureProvider, RpcError } from 'eosjs'
 
-const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs"; // useraaaaaaaa
 // const rpc = new eosjs_jsonrpc.JsonRpc('http://127.0.0.1:8000');
 
   import {
@@ -123,9 +125,16 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
     Swiper,
     SwiperItem,
     CheckIcon,
-    Toast
+    Toast,
+    Loading
   } from 'vux'
 
+import { setInterval, setTimeout } from 'timers';
+import { mapState } from 'vuex'
+
+import { officialEosAccount, eosEndpoint } from '@/config'
+
+let interval = undefined
 
   export default {
     components: {
@@ -146,11 +155,12 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
       SwiperItem,
       ViewBox,
       CheckIcon,
-      Toast
+      Toast,
+      Loading
     },
     data() {
       return {
-        exchangeRate: 0.5,
+        exchangeRate: 1,
         amount: 0,
         CBTAmount: 0,
         eosRmb: 36,
@@ -159,15 +169,22 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
       }
     },
     computed: {
-      amountOut() {
-        return this.amount * this.exchangeRate
-      },
-      transactionCBT() {
-        return this.amount * 12;
-      },
-      transactionEos(){
-        return this.CBTAmount / 12;
-      }
+        exchangeRate_divided_by_1() {
+            return  (new Number(1 / this.exchangeRate)).toFixed(1)
+        },
+        amountOut() {
+            return this.amount * this.exchangeRate
+        },
+        transactionCBT() {
+            return this.amount / this.exchangeRate ;
+        },
+        transactionEos(){
+            return this.CBTAmount * this.exchangeRate ;
+        },
+        ...mapState([
+            'privateKey',
+            'eosAccountName'
+        ]),
     },
     methods:{
       doTransaction(){
@@ -200,7 +217,8 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
             return
           }
 
-          console.log('eos兑换cbt')
+            console.log('eos兑换cbt')
+            this.eos2cbt()
         }else{
           //cbt兑换eos
           if(this.CBTAmount === 0 || this.CBTAmount == ''){
@@ -221,46 +239,109 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
             return
           }
           //cbt兑换eos
+          this.cbt2eos()
+
           console.log('cbt兑换eos')
 
         }
-
-
-
-        this.transaction()
-
 
       },
       switchTab(index){
         this.i = index;
       },
 
-      async transaction() {
+    getPrice() {
+        console.log('getprice')
+        this.$http.get('/get_price')
+            .then( (res) => {
+                console.log(res.data)
+                if( res.status !== 200  || res.data.code !== 0 ) {
+                    this.$vux.alert.show({
+                        title: '查询价格失败',
+                        content: res.data.msg ||  res.statusText || '未知错误',
+                    });               
+                    return;     
+                }
+                const data = res.data.data;
+                this.exchangeRate = data.price
+            }, (err)=> {
+                console.log(err)                                
+                this.$vux.alert.show({
+                    title: '查询价格失败',
+                    content: err.msg
+                });   
+            })
+      },
 
-        const rpc = new JsonRpc('https://eos.greymass.com');
-        const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
+        cbt2eos() {
+            this.$vux.loading.show({
+                text: 'Processing..'
+            })
+            setTimeout(()=>{    
+                this.$vux.loading.hide()
+            }, 10 * 1000)
+                        
+            this.$http.get('/sell', {
+                params: {
+                    from: this.eosAccountName,
+                    quant: this.amount
+                }
+            }).then(res=>{
+                this.$vux.loading.hide()
+                if( res.status !== 200  || res.data.code !== 0 ) {
+                    this.$vux.alert.show({
+                        title: '兑换失败',
+                        content: res.data.msg ||  res.statusText || '未知错误',
+                    });               
+                    return;  
+                }
+
+                this.$vux.toast.show({
+                    text:this.$t('Transaction completed'),
+                    type:'text',
+                    width:'16rem',
+                    position:'middle'
+                })
+
+            }, err=>{
+                this.$vux.loading.hide()
+                this.$vux.alert.show({ title: '注册失败',content: err.msg });   
+            })
+
+      },
+
+      async eos2cbt() {
+
+
+        this.$vux.loading.show({
+            text: 'Processing..'
+        })
+
+        setTimeout(()=>{
+            this.$vux.loading.hide()
+        }, 10 * 1000)
+
+        const rpc = new JsonRpc(eosEndpoint);
+        const signatureProvider = new JsSignatureProvider([this.privateKey]);
         const api = new Api({ rpc, signatureProvider });
         
 
           let textContent = ''
 
-
-
-        // async () => {
+            let quanity = (new Number(this.amount)).toFixed(4) + ' EOS'
             try {
-                console.log('sb1')
                 const result = await api.transact({
                     actions: [{
                         account: 'eosio.token',
                         name: 'transfer',
                         authorization: [{
-                            actor: 'alexchan1234',
+                            actor: this.eosAccountName,
                             permission: 'active',
                         }],
                         data: {
-                            from: 'alexchan1234',
-                            to: 'skyhigh12345',
-                            quantity: '0.0001 EOS',
+                            from: this.eosAccountName,
+                            to: officialEosAccount,
+                            quantity: quanity,
                             memo: '',
                         },
                     }]
@@ -269,24 +350,44 @@ const defaultPrivateKey = "5KZNpuPN8NVnsSyhg4u8HBf7qjo6vnVK3MA2SF1EkoFo95VPCgs";
                     expireSeconds: 30,
                 });
             
+                this.$vux.loading.hide()
                 textContent += '\n\nTransaction pushed!\n\n' + JSON.stringify(result, null, 2);
-                alert('sb2')
+
+                if( result.transaction_id ) {
+                    this.$vux.toast.show({
+                        text:this.$t('Transaction completed'),
+                        type:'text',
+                        width:'16rem',
+                        position:'middle'
+                    })
+                }
+
             } catch (e) {
+                this.$vux.loading.hide()
                 textContent = '\nCaught exception: ' + e;
-                console.log(textContent);
+                this.$vux.alert.show({
+                    title: '兑换失败',
+                    content: e.toString()
+                });  
                 
                 if (e instanceof RpcError)
                     textContent += '\n\n' + JSON.stringify(e.json, null, 2);
             }
             console.log(textContent)
-            alert(textContent)
+            // alert(textContent)
         // }
       }
     },
+    beforeDestroy() {
+        clearInterval(interval)
+    },
     mounted() {
 
+        this.getPrice();
 
-        console.log('sb0')
+        interval = setInterval(()=>{
+            this.getPrice();
+        }, 1 * 60 * 1000) // 每分钟更新一次价格
 
 
     }

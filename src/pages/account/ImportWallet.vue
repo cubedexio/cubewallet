@@ -58,8 +58,6 @@ export default {
     },
     data: function() {
         return {
-            passwordConfirm: '',
-            password: '',
             privatekey: ''
         }
     },
@@ -74,15 +72,6 @@ export default {
             
             if( !eosjs.isValidPrivate(this.privatekey) ) {
                 this.$vux.alert.show({ title: '不合法的私钥' })
-                return
-            }
-
-            if( this.password !== this.passwordConfirm ) {
-                this.$vux.alert.show({ title: '两次密码不一致' })
-                return
-            }
-            if( this.password.length < 8) {
-                this.$vux.alert.show({ title: '密码长度不能低于8位' })
                 return
             }
 
@@ -104,13 +93,15 @@ export default {
 
                 this.$store.commit('setPrivateKey', this.privatekey)
                 this.$store.commit('setEOSAccountName', eosAccount)
-                this.$store.commit('setWalletPassword', this.password)
                 this.$store.commit('setLoggedIn', true)
 
-                this.$router.replace('/home')
-
-
-
+                let self = this;
+                this.$vux.alert.show({ 
+                    title: '导入成功', 
+                    onHide () {
+                        self.$router.replace('/home')
+                    }    
+                });  
 
             }, (err)=>{
                this.$vux.alert.show({ title: '导入失败', content: err.message });   
@@ -122,31 +113,14 @@ export default {
 }
 </script>
 
-<style  lang='less'>
-
-label {
-    color: black;
-    line-height: 3.2em;
-    height: 3.2em;
-}
+<style  lang='less' scoped>
 
 
-#importkey-app {
-    width: 100%;
-    height: 100%;    
-    background-color: white;
-    background-size: 100%;
-
-    #flexbox {
-        height: 100%;
-    }
-    .flex-item {
-        width: 75%;
-    }
-}
-
-h1.vux-header-title {
+</style>
+<style type="less">
+#importkey-app h1.vux-header-title {
     color: black !important;
-    
+
 }
 </style>
+

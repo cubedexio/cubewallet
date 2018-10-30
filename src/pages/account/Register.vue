@@ -14,7 +14,8 @@
                 <cube-input name="name"></cube-input>                    -->
                 <label>手机号</label>
                 <!-- {{ phone }} -->
-                <cube-input v-model="phone" name="phone" type='number'></cube-input>                
+                <cube-input v-model="phone" name="phone" type='number'></cube-input>          
+                <br/>
                 <label>验证码</label>
                 <div style="display:flex">
                     <cube-input v-model="sms" name="verifycode" style="flex:3"/>
@@ -23,12 +24,16 @@
                         {{ countdown == -1 ? $t("VerifyCode") : countdown+"s" }}
                     </x-button>                
                 </div>
+                <br/>
                 <label>密码</label>
                 <cube-input v-model='password' name="password"></cube-input>
+                
+                <div>
                 <input type="checkbox"  name="agreeterm"  id="agreeterm" v-model='agreeterm'/>
-                <label for="agreeterm"> 
+                <label for="agreeterm" class='agreeterm'> 
                     注册即同意<router-link :to="'license'"><a class='license' >《CUBEWALLET》用户协议</a></router-link>
                 </label>
+                </div>
             </div>
             
 
@@ -195,12 +200,17 @@ export default {
     color: #F5A623;
 }
 label {
+    display: inline-block;
     color: white;
-    line-height: 3.2em;
-    height: 3.2em;
+    line-height: 2.2em;
+    height: 2.2em;
 }
 label a {
     color: white;
+}
+
+label.agreeterm {
+    font-size: 14px;
 }
 
 #register-app {
@@ -217,7 +227,8 @@ label a {
 button:disabled,
 button[disabled]{
   border: 1px solid #999999;
-  background-color: #cccccc;
+
+    background-color: rgba(102  , 102, 102, 0.4);
   color: #666666;
 }
 

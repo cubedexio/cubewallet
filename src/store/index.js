@@ -19,7 +19,6 @@ export default new Vuex.Store({
         loggedIn: false,
         privateKey: undefined,
         eosAccountName: undefined,
-        walletPassword: undefined
     },
     mutations: {
         increment (state) {
@@ -33,9 +32,6 @@ export default new Vuex.Store({
         },
         setEOSAccountName (state, name) {
             state.eosAccountName = name
-        },
-        setWalletPassword (state, name) {
-            state.walletPassword = name
         }
     },
   modules: {
@@ -43,6 +39,6 @@ export default new Vuex.Store({
     // wallet
   },
   strict: debug,
-//   plugins: debug ? [createLogger(),createPersistedState()] : [createPersistedState()]
-    plugins: debug ? [createLogger()] : []
+  plugins: debug ? [createLogger(),createPersistedState()] : [createPersistedState()]
+    // plugins: debug ? [createLogger()] : []
 })
