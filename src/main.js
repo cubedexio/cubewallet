@@ -49,8 +49,9 @@ AjaxPlugin.$http.defaults.baseURL = 'http://54.183.7.222:3000'
 
 
 
-AjaxPlugin.$http.interceptors.request.use(request => {    
-    if (store.state.accessToken && (request.headers['Authorization'] == undefined ) ) {
+AjaxPlugin.$http.interceptors.request.use(request => {        
+    if (store.state.accessToken && (request.headers['Authorization'] == undefined) 
+            && request.url.startsWith(AjaxPlugin.$http.defaults.baseURL) ) {
         request.headers['Authorization'] =`Bearer ${store.state.accessToken}`;
     }
     return request;
