@@ -269,7 +269,7 @@ let interval = undefined
         this.$http.get('/memo')
             .then( res=>{
                 if( res.status === 200 && res.data.code === 0) {
-                    this.memo = res.data.data.memo
+                    this.memo = res.data.data
                 }
             }, err=>{
                 console.error(err.toString())
