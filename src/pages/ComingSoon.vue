@@ -1,9 +1,9 @@
 <template>
   <div id="coming-soon">
     <view-box>
-      <flexbox class="">
+      <flexbox>
         <flexbox-item>
-          <img src="../assets/images/coming-soon.png" alt="">
+          <img src="@/assets/images/coming-soon.png" alt="">
         </flexbox-item>
       </flexbox>
     </view-box>
@@ -14,9 +14,9 @@
     ViewBox,
     Flexbox,
     FlexboxItem
-  }from 'vux'
+  } from 'vux'
   export default {
-    name:'comingSoon',
+    name:'coming-soon',
     components:{
       ViewBox,
       Flexbox,

@@ -109,7 +109,7 @@ export default new Router({
         component: Forgot
     },
     {
-      path: '/tokendetails',
+      path: '/tokendetails/:code',
       name:'TokenDetails',
       component:TokenDetails
     },

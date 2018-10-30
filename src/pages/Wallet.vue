@@ -40,42 +40,49 @@
       </flexbox>
     </section>
     <group class="property-list">
-      <cell-box v-for="item in properyList" :key="item.id" class="property-item" :border-intent="false" link="/tokendetails">
-        <flexbox>
-          <flexbox-item :span="2">
-            <img :src="item.imgSrc" alt="">
-          </flexbox-item>
-          <flexbox-item :span="5" class="text-left">
-            <span class="token-name">{{item.tokenName}}</span>
-          </flexbox-item>
-          <flexbox-item :span="5" class="text-right property-num">
-            <p class="amount">
-              {{item.tokenAmount}}
-            </p>
-            <span class="money">
-              ₵ {{item.money}}
-            </span>
-          </flexbox-item>
-        </flexbox>
-      </cell-box>
-      <cell-box class="property-item" :border-intent="false">
-        <flexbox>
-          <flexbox-item :span="2">
-            <img src="../assets/images/cbt_logo.png" alt="">
-          </flexbox-item>
-          <flexbox-item :span="5" class="text-left">
-            <span class="token-name">EOS</span>
-          </flexbox-item>
-          <flexbox-item :span="5" class="text-right property-num">
-            <p class="amount">
-              24000
-            </p>
-            <span class="money">
+      <transition name="fade">
+      <div v-if="isLoaded">
+            <cell-box class="property-item" :border-intent="false" link="/tokendetails/eosio.token">
+              <flexbox>
+                <flexbox-item :span="2">
+                  <img src="@/assets/images/eos.png" alt="">
+                </flexbox-item>
+                <flexbox-item :span="5" class="text-left">
+                  <span class="token-name">EOS</span>
+                </flexbox-item>
+                <flexbox-item :span="5" class="text-right property-num">
+                  <p class="amount">
+                    {{properyList[0].balance}}
+                  </p>
+                  <span class="money">
               $200
             </span>
-          </flexbox-item>
-        </flexbox>
-      </cell-box>
+                </flexbox-item>
+              </flexbox>
+            </cell-box>
+            <cell-box class="property-item" :border-intent="false" link="/tokendetails/cbtban1">
+              <flexbox>
+                <flexbox-item :span="2">
+                  <img src="@/assets/images/cbt_logo.png" alt="">
+                </flexbox-item>
+                <flexbox-item :span="5" class="text-left">
+                  <span class="token-name">CBT</span>
+                </flexbox-item>
+                <flexbox-item :span="5" class="text-right property-num">
+                  <p class="amount">
+                    {{properyList[1].balance}}
+                  </p>
+                  <span class="money">
+              $200
+            </span>
+                </flexbox-item>
+              </flexbox>
+            </cell-box>
+      </div>
+      <div v-else class="loading">
+        <inline-loading></inline-loading>
+      </div>
+      </transition>
     </group>
 
     <!--<divider>{{ $t('I have bottom line') }}</divider>-->
@@ -117,8 +124,10 @@ I have bottom line:
     Divider,
     XButton,
     numberComma,
-    ViewBox
+    ViewBox,
+    InlineLoading
   } from 'vux'
+  import common from '@/js/commonUtils'
 
 
   const propertyArr = [
@@ -130,7 +139,7 @@ I have bottom line:
     {
       imgSrc: 'http://www.cubecart.io/img/cubecart_logo.2392cac3.png',
       tokenName: 'CBT',
-      tokenCode:'cbtpub2'
+      tokenCode:'cbtban1'
     }
   ]
   export default {
@@ -148,53 +157,97 @@ I have bottom line:
       Divider,
       XButton,
       numberComma,
-      ViewBox
+      ViewBox,
+      InlineLoading
     },
     data() {
       return {
-        // note: changing this line won't causes changes
-        // with hot-reload because the reloaded component
-        // preserves its current state and we are modifying
-        // its initial state.
-        properyList: [],
+        properyList: [
+          {
+            tokenName: 'EOS',
+            tokenCode:'eosio.token',
+            balance:0
+          },
+          {
+            tokenName: 'CBT',
+            tokenCode:'cbtban1',
+            balance:1
+          }
+        ],
         account: '',
+        balance:0,
         profilePic:'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg',
-        myProperty:8888888888.88,
         eyeOn:true,
-        msg: 'Hello World!'
+        msg: 'Hello World!',
+        isLoaded:false
       }
     },
-    mounted(){
-      this.properyList = propertyArr
+    created(){
       this.account = this.$store.state.eosAccountName
       if(!this.account){
         this.account = 'fenghaha'
       }
+      this.initBalance()
     },
     computed:{
       propertyComma(){
-        let num = (this.myProperty).toFixed(4);
+        let num = (this.balance).toFixed(4);
         return numberComma(num)
       },
-      getTokenBalance(code){
-        let user = this.account
-        this.$http.get('/balance',{
-          params:{
-            code:code,
-            scope:user
+    },
+    methods:{
+      initBalance(){
+        let balanceArr = this.properyList
+        for (let i = 0; i<balanceArr.length;i++){
+          let code = balanceArr[i].tokenCode.toString()
+          this.asyncGetBalance(code).then(res=>{
+            let b = res.data.data[0].balance
+            let n = common.getNumByBalance(b)
+            this.properyList[i].balance = n
+            // setTimeout(()=>{
+              this.isLoaded = true
+            // },1000)
+          }).catch(res=>{
+            console.log('获取数据出错：' + res)
+          })
+        }
+      },
+      async asyncGetBalance(code){
+        let res = await this.$http.get('/balance',{
+            params:{
+              code:code,
+              scope:this.account
+            }
+          })
+        console.log(res)
+        return new Promise((resolve,reject)=>{
+          if(res.data.code == 0){
+            resolve(res)
+          }else{
+            reject(res)
           }
-        }).then(res=>{
-          let rows = res.data.data.rows
-          that.balance = that.getBalanceNum(rows[0].balance)
-          return that.balance
-        }).catch(res=>{
-          console.log('获取余额失败，失败原因：'+res)
-          return 0
         })
       }
     }
   }
 </script>
 
-<style>
+<style >
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+  .slide-in-enter-active {
+  transition: all .3s ease;
+}
+.slide-in-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-in-enter, .slide-in-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translatey(10px);
+  opacity: 0;
+}
 </style>

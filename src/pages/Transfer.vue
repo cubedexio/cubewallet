@@ -153,7 +153,7 @@ Transfer Success:
             scope:userName
           }
         }).then(res=>{
-          let rows = res.data.data.rows;
+          let rows = res.data.data;
           let b = that.getBalanceNum(rows[0].balance);
           that.balance = b;
         }).catch(res=>{
