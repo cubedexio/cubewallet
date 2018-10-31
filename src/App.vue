@@ -21,11 +21,6 @@
             </tabbar>
         </div>
 
-        <div v-else>
-
-
-        </div>
-
     </div>
 
 </template>
@@ -60,7 +55,7 @@
         }, err=>{
             console.error(err)
         })
-        
+
       }
     }
     ,

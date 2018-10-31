@@ -10,7 +10,7 @@
 export default {
     props: ['value'],
     components: {
-        
+
     },
     data:  function() {
         return {
@@ -33,7 +33,7 @@ export default {
     background-color: transparent;
     font-size: inherit;
     color: white;
-    height: 3.2em;
+    height: 3em;
     /* line-height: 2.2em; */
     border-bottom: solid 1px white;
     border-radius: 0;

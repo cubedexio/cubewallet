@@ -86,6 +86,11 @@ en:
   Please Enter A Number: Please Enter A Number
   Please Enter Amount Number: Please Enter Amount Number
   Transaction completed: Transaction completed
+  'Get Memo failed, try to re-entry this page': 'Get Memo failed, try to re-entry this page'
+  'Switch account will logout, Are you sure?': 'Switch account will logout, Are you sure?'
+  Confirm: Confirm
+  Cancel: Cancel
+  Insufficient Balance!: Insufficient Balance!
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -109,7 +114,7 @@ zh-CN:
   vux.search.placeholder: 搜索
   vux.x-header.back_text: 返回
   Transfer: 转账
-  Deposit: 收款
+  Deposit: 充值
   Withdraw: 提现
   My Wallet: 资产
   Buy: 买入
@@ -131,7 +136,7 @@ zh-CN:
   About Us: 关于我们
   Contact Us: 联系客服
   Terms: 服务条款
-  Transaction: CBT通证兑换
+  Transaction: 兑换
   Buy Amount: 买入数量
   Transaction Amount: 兑换数量
   Sell Amount: 卖出数量
@@ -174,3 +179,8 @@ zh-CN:
   Please Enter A Number: 请输入数字
   Please Enter Amount Number: 请输入金额数字
   Transaction completed: 兑换完成
+  'Get Memo failed, try to re-entry this page': 获取Memo失败，请尝试重新进入此页面
+  'Switch account will logout, Are you sure?': 切换账号将会退出登陆
+  Confirm: 确认
+  Cancel: 取消
+  Insufficient Balance!: 余额不足

@@ -1,44 +1,42 @@
 <template>
 
     <flexbox id="forgot-app" orient="vertical" justify="space-around">
-        <flexbox-item :span="1/4" class="flex-item" >
-            
-                <img class="logo" src="@/assets/images/cbt_logo.png"/>
-            
-        </flexbox-item>
-        <flexbox-item :span="1/2" class="flex-item">
+        <flexbox-item :span="3/12" class="flex-item flex-logo" >
 
-            <div class="forgot">                    
+                <img class="logo" src="@/assets/images/cbt_logo.png"/>
+
+        </flexbox-item>
+        <flexbox-item :span="6/12" class="flex-item flex-input">
+
+            <div class="forgot">
 
                 <!-- <label>名字</label>
                 <cube-input name="name"></cube-input>                    -->
                 <label>手机号</label>
                 <!-- {{ phone }} -->
-                <cube-input v-model="phone" name="phone" type='number'></cube-input>     
-                <br/>           
+                <cube-input v-model="phone" name="phone" type='number'></cube-input>
+                <br/>
                 <label>验证码</label>
                 <div style="display:flex">
                     <cube-input v-model="sms" name="verifycode" style="flex:3"/>
                     <x-button  :disabled="disablePhoneNumber" plain type='default' class="custom-default" action-type='button' style="flex:1;height:80%" @click.native="requestVerifyCode">
-                        
+
                         {{ countdown == -1 ? $t("VerifyCode") : countdown+"s" }}
-                    </x-button>                
+                    </x-button>
                 </div>
                 <br/>
                 <label>新密码</label>
                 <cube-input v-model='newpassword' name="newpassword"></cube-input>
             </div>
-            
+
 
         </flexbox-item>
-        <flexbox-item :span="1/12" class="flex-item">      
+        <flexbox-item :span="3/12" class="flex-item flex-btn">
 
-            <div>                       
+            <div>
                 <x-button @click.native="forgot">重置密码</x-button>
             </div>
-        </flexbox-item>
-
-        <flexbox-item :span="1/12" class="flex-item">     
+          <br>
            <label>
                 <router-link :to="'Login'">
                     <a class='gologin' >返回</a>
@@ -53,7 +51,7 @@ Login:
 Register:
     zh-CN: 注册
 VerifyCode:
-    zh-CN: 验证码    
+    zh-CN: 验证码
 
 </i18n>
 
@@ -64,7 +62,7 @@ import CubeInput from '@/components/CubeInput'
 import { setInterval, setTimeout } from 'timers';
 
 export default {
-    
+
     components: {
         Group,
         XInput,
@@ -85,10 +83,10 @@ export default {
         }
     },
     computed: {
-        disablePhoneNumber: function() {                      
+        disablePhoneNumber: function() {
             console.log(this.phone)
             return this.phone.length !== 11 || this.countdown !== -1
-        }  
+        }
     },
 
     methods: {
@@ -96,69 +94,69 @@ export default {
         countdownSMS: function(cd) {
             this.countdown = cd
             setTimeout( ()=> {
-                if( cd >= 0) {                    
+                if( cd >= 0) {
                     this.countdownSMS(cd-1)
-                }                            
+                }
             }, 1000)
         },
 
         requestVerifyCode: function() {
-            
+
             this.$http.post('/send_sms',  {
                 type: 'forgot',
-                phone: this.phone,                
+                phone: this.phone,
             })
             .then( (res) => {
                 console.log(res)
-                
+
                 this.countdownSMS(60)
 
                 if( res.status !== 200  || res.data.code !== 0 ) {
-                    this.$vux.alert.show({ title: '发送失败', content: res.data.msg ||  res.statusText || '未知错误', });               
-                    return;     
-                }              
+                    this.$vux.alert.show({ title: '发送失败', content: res.data.msg ||  res.statusText || '未知错误', });
+                    return;
+                }
 
             }, (err)=> {
-                console.log(err)                                
-                this.$vux.alert.show({ title: '发送失败', content: err.message });   
+                console.log(err)
+                this.$vux.alert.show({ title: '发送失败', content: err.message });
             })
 
         },
         forgot: function() {
             if( this.phone.length !== 11) {
-                this.$vux.alert.show({ title: '手机号格式不正确' });  
+                this.$vux.alert.show({ title: '手机号格式不正确' });
                 return;
-            } 
+            }
             if( this.newpassword.length < 8 ) {
-                this.$vux.alert.show({ title: '密码最少8位' });  
+                this.$vux.alert.show({ title: '密码最少8位' });
                 return ;
-            }     
-            
+            }
+
             this.$http.post('/forgot',  {
-                phone: this.phone,    
+                phone: this.phone,
                 pass: this.newpassword,
-                sms: this.sms            
+                sms: this.sms
             })
             .then( (res) => {
                 console.log(res)
-                
+
                 if( res.status !== 200  || res.data.code !== 0 ) {
-                    this.$vux.alert.show({ title: '重置失败', content: res.data.msg ||  res.statusText || '未知错误', });               
-                    return;     
+                    this.$vux.alert.show({ title: '重置失败', content: res.data.msg ||  res.statusText || '未知错误', });
+                    return;
                 }else {
                     var self = this
-                    this.$vux.alert.show({ 
-                        title: '重置成功', 
+                    this.$vux.alert.show({
+                        title: '重置成功',
                         onHide () {
                             self.$router.replace('/login')
-                        }    
-                    });               
+                        }
+                    });
                 }
 
             }, (err)=> {
-                console.log(err)                                
-                this.$vux.alert.show({ title: '重置失败',content: err.message });   
-            }) 
+                console.log(err)
+                this.$vux.alert.show({ title: '重置失败',content: err.message });
+            })
         }
     }
 }

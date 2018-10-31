@@ -11,6 +11,7 @@ import News from '@/pages/News'
 import Profile from '@/pages/Profile'
 import TokenDetails from '@/pages/TokenDetails'
 import TokenIntro from '@/pages/TokenIntro'
+import About from '@/pages/About'
 
 import Register from '@/pages/account/Register'
 import Login from '@/pages/account/Login'
@@ -117,6 +118,11 @@ export default new Router({
       path:'/tokenintro/:code',
       name:'TokenIntro',
       component:TokenIntro
+    },
+    {
+      path:'/about',
+      name:About,
+      component:About
     }
     // ,
     //   {

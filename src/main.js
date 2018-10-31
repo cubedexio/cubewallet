@@ -15,6 +15,9 @@ import store from './store'
 import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
+import api from './js/api'
+
+Vue.prototype.$api = api
 
 Vue.use(Vuex)
 
@@ -35,12 +38,13 @@ for (let i in finalLocales) {
   Vue.i18n.add(i, finalLocales[i])
 }
 
-import { LocalePlugin, AjaxPlugin, AlertPlugin ,ToastPlugin, LoadingPlugin} from "vux"
+import { LocalePlugin, AjaxPlugin, AlertPlugin ,ToastPlugin, LoadingPlugin, ConfirmPlugin} from "vux"
 Vue.use(LocalePlugin)
 Vue.use(AjaxPlugin)
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
+Vue.use(ConfirmPlugin)
 
 
 // FOR TEST ONLY
@@ -49,8 +53,8 @@ AjaxPlugin.$http.defaults.baseURL = 'http://54.183.7.222:3000'
 
 
 
-AjaxPlugin.$http.interceptors.request.use(request => {        
-    if (store.state.accessToken && (request.headers['Authorization'] == undefined) 
+AjaxPlugin.$http.interceptors.request.use(request => {
+    if (store.state.accessToken && (request.headers['Authorization'] == undefined)
             && request.url.startsWith(AjaxPlugin.$http.defaults.baseURL) ) {
         request.headers['Authorization'] =`Bearer ${store.state.accessToken}`;
     }

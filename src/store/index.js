@@ -20,7 +20,8 @@ export default new Vuex.Store({
         privateKey: undefined,
         eosAccountName: undefined,
         accessToken: undefined,
-        refreshToken: undefined
+        refreshToken: undefined,
+        userAvatar:'m1'
     },
     mutations: {
         increment (state) {
@@ -40,7 +41,10 @@ export default new Vuex.Store({
         },
         setRefreshToken (state, token) {
             state.refreshToken = token
-        }
+        },
+      SETUSERAVATAR (state, val) {
+          state.userAvatar = val
+      }
     },
   modules: {
     // profile,

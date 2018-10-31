@@ -1,31 +1,31 @@
 <template>
 
     <flexbox id="login-app" orient="vertical" justify="space-around">
-        <flexbox-item :span="1/4" class="flex-item" >
-            
+        <flexbox-item :span="3/12" class="flex-item flex-logo" >
+
                 <img class="logo" src="@/assets/images/cbt_logo.png"/>
-            
+
         </flexbox-item>
-        <flexbox-item :span="1/2" class="flex-item">
-            <div class="login">                
+        <flexbox-item :span="4/12" class="flex-item flex-input">
+            <div class="login">
                 <label>手机号</label>
-                <cube-input name="phone" v-model="phone"></cube-input>        
-                <br/>        
+                <cube-input name="phone" v-model="phone"></cube-input>
+                <br/>
                 <label>密码</label>
                 <cube-input name="password" v-model="password"></cube-input>
             </div>
-            
+
 
         </flexbox-item>
-        <flexbox-item :span="1/4" class="flex-item">      
+        <flexbox-item :span="5/12" class="flex-item flex-btn">
 
-            <div>                
+            <div>
                 <x-button type='primary' @click.native="onLogin">{{ $t('Login') }}</x-button>
+              <br/>
                 <x-button  link='/register'>{{ $t('Register') }}</x-button>
-
                 <br/>
-                <router-link :to="'Forgot'">
-                    <a class='gologin' >忘记密码</a>
+                <router-link class='gologin' :to="'Forgot'">
+                    忘记密码
                 </router-link>
             </div>
 
@@ -33,7 +33,7 @@
 
     </flexbox>
 
-            
+
 
 
 </template>
@@ -59,7 +59,7 @@ export default {
         Cell,
         Tabbar,
         CubeInput,
-        TabbarItem, Flexbox, FlexboxItem 
+        TabbarItem, Flexbox, FlexboxItem
     },
     data: function() {
         return {
@@ -70,7 +70,7 @@ export default {
     methods: {
         onLogin: function() {
             console.log('onLogin')
-            
+
 
             this.$http.post('/login',  {
                 phone: this.phone,
@@ -83,8 +83,8 @@ export default {
                     this.$vux.alert.show({
                         title: '登录失败',
                         content: res.data.msg ||  res.statusText || '未知错误',
-                    });               
-                    return;     
+                    });
+                    return;
                 }
                 this.$store.commit('setLoggedIn', true)
                 this.$store.commit('setAccessToken', res.data.data.accessToken)
@@ -94,27 +94,27 @@ export default {
                     this.$router.replace('/home')
                 }, 500)
 
-                
+
 
             }, (err)=> {
-                console.log(err)                                
+                console.log(err)
                 this.$vux.alert.show({
                     title: '登录失败',
                     content: err.message
-                });   
+                });
             })
         }
     }
 }
 </script>
 
-<style scoped>
+<style type="text/less" scoped>
 
 #login-app {
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
-    background-size: 100%;
+    background-size: 100% 100% ;
 }
 
 .flex-item {
@@ -126,6 +126,7 @@ export default {
 
     text-align: center;
     background-clip: padding-box;
+
 }
 
 label {
@@ -139,6 +140,9 @@ label {
     text-align: left;
     width: 75%;
 }
+  .gologin{
+    color: #fff;
+  }
 
 
 </style>

@@ -104,7 +104,7 @@ MyProperty:
 Transfer:
   zh-CN: 转账
 Deposit:
-  zh-CN: 收款
+  zh-CN: 充值
 Transaction:
   zh-CN: 兑换
 My Wallet:
@@ -180,7 +180,7 @@ I have bottom line:
         ],
         account: '',
         balance:0,
-        profilePic:'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg',
+        profilePic:'./static/imgs/man_avatar.png',
         eyeOn:true,
         msg: 'Hello World!',
         isLoaded:false
@@ -192,6 +192,7 @@ I have bottom line:
         this.account = 'fenghaha'
       }
       this.initBalance()
+
     },
     computed:{
       propertyComma(){

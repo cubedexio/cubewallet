@@ -14,13 +14,13 @@
       </card>
       <card class="profile-card">
         <div slot="content">
-          <cell class="setting-cell" :border-intent="false" :title="$t('Change Password')" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Change Password')" is-link link="/forgot"></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Export Private Key')" @click.native="showComingSoon = true" is-link></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('Switch Account')" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Switch Account')" is-link @click.native="logout"></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Language')" @click.native="showLang = !showLang" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Switch BP')" @click.native="showComingSoon = true" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Security Test')" @click.native="showComingSoon = true" is-link></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('About Us')" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('About Us')" is-link link="/about"></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Contact Us')" @click.native="show = !show" is-link></cell>
           <x-button class="terms" link="/license">{{$t('Terms')}}</x-button>
         </div>
@@ -99,6 +99,12 @@ Contact Us:
   zh-CN: 联系客服
 Terms:
   zh-CN: 服务条款
+Switch account will logout, Are you sure?:
+  zh-CN: 切换账号将会退出登陆
+Confirm:
+  zh-CN: 确认
+Cancel:
+  zh-CN: 取消
 </i18n>
 <script>
   import {
@@ -116,7 +122,6 @@ Terms:
     Flexbox,
     FlexboxItem
   } from 'vux'
-  import {TransferDomDirective as TransferDom } from 'vux'
 
   export default {
     name:'profile',
@@ -154,6 +159,18 @@ Terms:
       switchLang(lang){
         this.$i18n.set(lang)
         this.showLang = false
+      },
+      logout(){
+        let that = this
+        this.$vux.confirm.show({
+          content:this.$t('Switch account will logout, Are you sure?'),
+          onConfirm(){
+            that.$store.commit('setAccessToken', undefined)
+            that.$store.commit('setLoggedIn', false)
+            that.$router.replace('/login')
+          },
+          onCancel(){}
+        })
       }
     }
   }

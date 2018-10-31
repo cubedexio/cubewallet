@@ -72,6 +72,8 @@ Confirm Transfer:
   zh-CN: 确认转账
 Transfer Success:
   zh-CN: 转账成功
+Insufficient Balance!:
+  zh-CN: 余额不足
 </i18n>
 <script>
   const menuList = [
@@ -166,10 +168,14 @@ Transfer Success:
             this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
             return;
           }
-          let rows = res.data.data;
-          let b = that.getBalanceNum(rows[0].balance)
+          // console.log(res)
+          if(res.data.data.length > 0){
+            let rows = res.data.data;
+            let b = that.getBalanceNum(rows[0].balance)
+            that.balance = b
+          }
           this.isBalanceLoaded = true
-          that.balance = b
+
         }).catch(res=>{
           console.log('获取余额失败，失败原因',res)
         })
@@ -189,6 +195,17 @@ Transfer Success:
         this.remark = ''
       },
       doTransfer(){
+
+        //如果账号余额为零则阻止操作
+        if(!this.balance){
+          this.$vux.toast.show({
+            text:this.$t('Insufficient Balance!'),
+            type:'text',
+            width:'16rem',
+            position:'middle'
+          })
+          return
+        }
         //校验收款账号不为空
         if(!this.receiver){
           this.$vux.toast.show({
