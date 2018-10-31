@@ -87,7 +87,14 @@ export default {
                     return;     
                 }
                 this.$store.commit('setLoggedIn', true)
-                this.$router.replace('/home')
+                this.$store.commit('setAccessToken', res.data.data.accessToken)
+                this.$store.commit('setRefreshToken', res.data.data.refreshToken)
+
+                setTimeout(()=>{
+                    this.$router.replace('/home')
+                }, 500)
+
+                
 
             }, (err)=> {
                 console.log(err)                                

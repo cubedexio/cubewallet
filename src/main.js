@@ -45,7 +45,30 @@ Vue.use(LoadingPlugin)
 
 // FOR TEST ONLY
 AjaxPlugin.$http.defaults.baseURL = 'http://54.183.7.222:3000'
+// AjaxPlugin.$http.defaults.baseURL = 'http://localhost:3000'
 
+
+
+AjaxPlugin.$http.interceptors.request.use(request => {        
+    if (store.state.accessToken && (request.headers['Authorization'] == undefined) 
+            && request.url.startsWith(AjaxPlugin.$http.defaults.baseURL) ) {
+        request.headers['Authorization'] =`Bearer ${store.state.accessToken}`;
+    }
+    return request;
+});
+
+AjaxPlugin.$http.interceptors.response.use(  (response)=> {
+        // Do something with response data
+        return response;
+    },  (error) => {
+        const errRes = error.response;
+        if (errRes.status === 401) {
+            store.commit('setAccessToken', undefined)
+            store.commit('setLoggedIn', false)
+            router.replace('/login')
+        }
+        return Promise.reject(error);
+});
 
 const nowLocale = Vue.locale.get()
 if (/zh/.test(nowLocale)) {

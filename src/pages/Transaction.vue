@@ -99,6 +99,8 @@ Please check the terms box:
   zh-CN: 请勾选已阅读隐私及服务条款
 Transaction completed:
   zh-CN: 兑换完成  
+Get Memo failed, try to re-entry this page:
+  zh-CN: 获取Memo失败，请尝试重新进入此页面  
 </i18n>
 
 <script>
@@ -165,7 +167,8 @@ let interval = undefined
         CBTAmount: 0,
         eosRmb: 36,
         i:0,
-        checkTerms:false
+        checkTerms:false,
+        memo: undefined
       }
     },
     computed: {
@@ -216,6 +219,15 @@ let interval = undefined
             })
             return
           }
+          if( this.memo === undefined ) {
+            this.$vux.toast.show({
+              text:this.$t('Get Memo failed, try to re-entry this page'),
+              type:'text',
+              width:'16rem',
+              position:'middle'
+            })
+            return              
+          }
 
             console.log('eos兑换cbt')
             this.eos2cbt()
@@ -249,6 +261,20 @@ let interval = undefined
       switchTab(index){
         this.i = index;
       },
+
+
+    getMemo() {
+        console.log('getMemo')
+
+        this.$http.get('/memo')
+            .then( res=>{
+                if( res.status === 200 && res.data.code === 0) {
+                    this.memo = res.data.data
+                }
+            }, err=>{
+                console.error(err.toString())
+            })
+    },
 
     getPrice() {
         console.log('getprice')
@@ -342,7 +368,7 @@ let interval = undefined
                             from: this.eosAccountName,
                             to: officialEosAccount,
                             quantity: quanity,
-                            memo: '',
+                            memo: this.memo,
                         },
                     }]
                 }, {
@@ -384,9 +410,10 @@ let interval = undefined
     mounted() {
 
         this.getPrice();
+        this.getMemo();
 
         interval = setInterval(()=>{
-            this.getPrice();
+            // this.getPrice(); 
         }, 1 * 60 * 1000) // 每分钟更新一次价格
 
 

@@ -169,14 +169,13 @@ export default {
                         onHide () {
                             self.$router.replace('/importwallet')
                         }    
-                    });               
-                    
-
+                    });                                   
                 }
 
             }, (err)=> {
                 console.log(err)                                
-                this.$vux.alert.show({ title: '注册失败',content: err.message });   
+                this.$vux.alert.show({ title: '注册失败',content: err.message });  
+                 
             }) 
         }
     }

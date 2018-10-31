@@ -175,7 +175,7 @@ I have bottom line:
           {
             tokenName: 'CBT',
             tokenCode:'cbtban1',
-            balance:1
+            balance:0
           }
         ],
         account: '',
@@ -188,7 +188,6 @@ I have bottom line:
     },
     created(){
       this.account = this.$store.state.eosAccountName
-      // console.log(this.account)
       if(!this.account){
         this.account = 'fenghaha'
       }
@@ -203,13 +202,6 @@ I have bottom line:
     methods:{
       initBalance(){
         let balanceArr = this.properyList
-        // this.$http.all(balanceArr.map(code=>{
-        //   this.asyncGetBalance(code)
-        // })).then(
-        //   this.$http.spread((...res)=>{
-        //
-        //   })
-        // )
         for (let i = 0; i<balanceArr.length;i++){
           let code = balanceArr[i].tokenCode.toString()
           this.asyncGetBalance(code).then(res=>{
@@ -218,12 +210,13 @@ I have bottom line:
               this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
               return;
             }
-            let b = res.data.data[0].balance
-            let n = common.getNumByBalance(b)
-            this.properyList[i].balance = n
-            // setTimeout(()=>{
+            if( res.length > 0 ) {
+              let b = res.data.data[0].balance
+              let n = common.getNumByBalance(b)
+              this.properyList[i].balance = n
+            }
+
               this.isLoaded = true
-            // },1000)
           }).catch(res=>{
             console.log('获取数据出错：' + res)
           })
