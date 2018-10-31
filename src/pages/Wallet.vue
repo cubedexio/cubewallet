@@ -17,7 +17,11 @@
           <i class="icon-eye" v-if="eyeOn"></i>
           <i class="icon-eye-off" v-if="!eyeOn"></i>
         </span>
-        <p class="property-text" v-if="eyeOn">{{propertyComma}} CBT</p>
+        <p class="property-text" v-if="eyeOn">
+
+          <span v-if="isLoaded">{{propertyComma}}</span>
+          <inline-loading v-else></inline-loading>
+          CBT</p>
         <p class="property-text" v-if="!eyeOn">**** CBT</p>
       </div>
       <flexbox class="operation" :gutter="0">
@@ -42,7 +46,7 @@
     <group class="property-list">
       <transition name="fade">
       <div v-if="isLoaded">
-            <cell-box class="property-item" :border-intent="false" link="/tokendetails/eosio.token">
+            <cell-box class="property-item" :border-intent="false" :link="'/tokendetails/'+properyList[0].tokenCode">
               <flexbox>
                 <flexbox-item :span="2">
                   <img src="@/assets/images/eos.png" alt="">
@@ -55,12 +59,12 @@
                     {{properyList[0].balance}}
                   </p>
                   <span class="money">
-              $200
+              ₵{{(properyList[0].balance * 12).toFixed(4)}}
             </span>
                 </flexbox-item>
               </flexbox>
             </cell-box>
-            <cell-box class="property-item" :border-intent="false" link="/tokendetails/cbtban1">
+            <cell-box class="property-item" :border-intent="false" :link="'/tokendetails/'+properyList[1].tokenCode">
               <flexbox>
                 <flexbox-item :span="2">
                   <img src="@/assets/images/cbt_logo.png" alt="">
@@ -73,7 +77,7 @@
                     {{properyList[1].balance}}
                   </p>
                   <span class="money">
-              $200
+              ₵{{properyList[1].balance}}
             </span>
                 </flexbox-item>
               </flexbox>
@@ -184,6 +188,7 @@ I have bottom line:
     },
     created(){
       this.account = this.$store.state.eosAccountName
+      // console.log(this.account)
       if(!this.account){
         this.account = 'fenghaha'
       }
@@ -198,9 +203,21 @@ I have bottom line:
     methods:{
       initBalance(){
         let balanceArr = this.properyList
+        // this.$http.all(balanceArr.map(code=>{
+        //   this.asyncGetBalance(code)
+        // })).then(
+        //   this.$http.spread((...res)=>{
+        //
+        //   })
+        // )
         for (let i = 0; i<balanceArr.length;i++){
           let code = balanceArr[i].tokenCode.toString()
           this.asyncGetBalance(code).then(res=>{
+
+            if( res.status !== 200  || res.data.code !== 0 ) {
+              this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
+              return;
+            }
             let b = res.data.data[0].balance
             let n = common.getNumByBalance(b)
             this.properyList[i].balance = n
@@ -219,7 +236,6 @@ I have bottom line:
               scope:this.account
             }
           })
-        console.log(res)
         return new Promise((resolve,reject)=>{
           if(res.data.code == 0){
             resolve(res)

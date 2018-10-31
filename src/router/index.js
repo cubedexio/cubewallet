@@ -114,7 +114,7 @@ export default new Router({
       component:TokenDetails
     },
     {
-      path:'/tokenintro',
+      path:'/tokenintro/:code',
       name:'TokenIntro',
       component:TokenIntro
     }

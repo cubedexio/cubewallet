@@ -19,7 +19,12 @@
       <div class="transfer-amount input-box">
         <div class="property">
           <p class="text-right">{{$t('Balance')}}</p>
-          <p class="text-right">{{balanceNum}}</p>
+          <p class="text-right">
+            <span v-if="isBalanceLoaded">
+            {{balanceNum}}
+            </span>
+            <inline-loading v-else></inline-loading>
+          </p>
         </div>
         <label>{{$t('Transfer Amount')}}</label>
         <x-input :placeholder="$t('Please Enter Amount')" v-model="transferAmount" class="input-black" name="transferAmount"></x-input>
@@ -77,7 +82,7 @@ Transfer Success:
       amount: 300.2565
     },
     {
-      token_code:'cbtpub2',
+      token_code:'cbtban1',
       token_name: 'CBT',
       token_img: 'http://www.cubecart.io/img/cubecart_logo.2392cac3.png',
       amount:12003.004
@@ -90,6 +95,7 @@ Transfer Success:
     Popup,
     XInput,
     XButton,
+    InlineLoading,
     numberComma
   } from 'vux'
   import CubeInput from '@/components/CubeInput'
@@ -104,6 +110,7 @@ Transfer Success:
       CubeInput,
       XInput,
       XButton,
+      InlineLoading,
       numberComma
     },
     data() {
@@ -117,45 +124,52 @@ Transfer Success:
         showMenu: false,
         receiver:'',
         transferAmount:'',
-        remark:''
+        remark:'',
+        isBalanceLoaded:false
       }
     },
     mounted(){
-      this.account = this.$store.state.eosAccountName;
+      this.account = this.$store.state.eosAccountName
       if(!this.account){
-        this.account = 'fenghaha';
+        this.account = 'fenghaha'
       }
-      this.getTokenBalance(this.code);
+      this.getTokenBalance(this.code)
     },
     computed: {
       balanceNum() {
-        let num = this.balance.toFixed(4);
-        return numberComma(num);
+        let num = this.balance.toFixed(4)
+        return numberComma(num)
       }
     },
     methods: {
       switchMenu(item) {
-        let code = item.token_code;
-        let token = item.token_name;
-        let img = item.token_img;
-        this.getTokenBalance(code);
-        this.code = code;
-        this.selected = token;
-        this.selectedImg = img;
-        this.showMenu = false;
+        this.isBalanceLoaded = false
+        let code = item.token_code
+        let token = item.token_name
+        let img = item.token_img
+        this.getTokenBalance(code)
+        this.code = code
+        this.selected = token
+        this.selectedImg = img
+        this.showMenu = false
       },
       getTokenBalance(code){
-        let userName = this.account;
-        let that = this;
+        let userName = this.account
+        let that = this
         this.$http.get('/balance',{
           params:{
             code:code,
             scope:userName
           }
         }).then(res=>{
+          if( res.status !== 200  || res.data.code !== 0 ) {
+            this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
+            return;
+          }
           let rows = res.data.data;
-          let b = that.getBalanceNum(rows[0].balance);
-          that.balance = b;
+          let b = that.getBalanceNum(rows[0].balance)
+          this.isBalanceLoaded = true
+          that.balance = b
         }).catch(res=>{
           console.log('获取余额失败，失败原因',res)
         })
@@ -163,16 +177,16 @@ Transfer Success:
       getBalanceNum(str){
         console.log(str)
         if(str){
-          let n = str.split(' ');
-          return parseFloat(n[0]);
+          let n = str.split(' ')
+          return parseFloat(n[0])
         }else {
           return 0
         }
       },
       resetInput(){
-        this.receiver = '';
-        this.transferAmount = '';
-        this.remark = '';
+        this.receiver = ''
+        this.transferAmount = ''
+        this.remark = ''
       },
       doTransfer(){
         //校验收款账号不为空

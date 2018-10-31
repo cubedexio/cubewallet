@@ -15,18 +15,18 @@
       <card class="profile-card">
         <div slot="content">
           <cell class="setting-cell" :border-intent="false" :title="$t('Change Password')" is-link></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('Export Private Key')" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Export Private Key')" @click.native="showComingSoon = true" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Switch Account')" is-link></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('Language')" is-link></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('Switch BP')" is-link></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('Security Test')" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Language')" @click.native="showLang = !showLang" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Switch BP')" @click.native="showComingSoon = true" is-link></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Security Test')" @click.native="showComingSoon = true" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('About Us')" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Contact Us')" @click.native="show = !show" is-link></cell>
-          <x-button class="terms">{{$t('Terms')}}</x-button>
+          <x-button class="terms" link="/license">{{$t('Terms')}}</x-button>
         </div>
       </card>
       <x-dialog v-model="show">
-        <div class="contact-box">
+        <div class="dialog-box">
           <group-title>{{$t('Contact Us')}}</group-title>
           <br>
           <h4>E-mail</h4>
@@ -48,6 +48,29 @@
           <div @click="show = false">
             <span class="vux-close"></span>
           </div>
+        </div>
+      </x-dialog>
+      <x-dialog v-model="showLang">
+        <div class="dialog-box">
+          <flexbox class="lang-box">
+            <flexbox-item class="text-center" @click.native="switchLang('zh-CN')">
+              <b>中文</b>
+            </flexbox-item>
+            <flexbox-item class="text-center" @click.native="switchLang('en')">
+              <b>EN</b>
+            </flexbox-item>
+          </flexbox>
+          <div @click="showLang = false">
+            <span class="vux-close"></span>
+          </div>
+        </div>
+      </x-dialog>
+      <x-dialog v-model="showComingSoon">
+        <div class="dialog-box coming-soon">
+          <img class="" src="@/assets/images/coming-soon.png" alt="">
+        </div>
+        <div @click="showComingSoon = false">
+          <span class="vux-close"></span>
         </div>
       </x-dialog>
     </view-box>
@@ -89,7 +112,9 @@ Terms:
     Divider,
     Grid,
     GridItem,
-    GroupTitle
+    GroupTitle,
+    Flexbox,
+    FlexboxItem
   } from 'vux'
   import {TransferDomDirective as TransferDom } from 'vux'
 
@@ -106,11 +131,15 @@ Terms:
       Divider,
       Grid,
       GridItem,
-      GroupTitle
+      GroupTitle,
+      Flexbox,
+      FlexboxItem
     },
     data(){
       return{
         show:false,
+        showLang:false,
+        showComingSoon:false,
         account:'',
         profilePic:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540209275264&di=8dcc9aaaff4b30b1a3dba1097a6baae3&imgtype=0&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2015-01-15%2F004214903.jpg',
       }
@@ -122,7 +151,9 @@ Terms:
       }
     },
     methods:{
-      showContact(){
+      switchLang(lang){
+        this.$i18n.set(lang)
+        this.showLang = false
       }
     }
   }

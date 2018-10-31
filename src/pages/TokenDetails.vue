@@ -15,7 +15,7 @@
         </p>
       </section>
       <group class="token-intro">
-        <cell is-link link="/tokenintro">
+        <cell is-link :link="'/tokenintro/'+code">
           <span slot="title" is-link>
             <i class="icon-details"></i>
             <span style="vertical-align:middle;">{{ $t('Token Intro') }}</span>
@@ -209,9 +209,13 @@ Transfer Record:
             scope:this.myAddress
           }
         }).then(res=>{
+          if( res.status !== 200  || res.data.code !== 0 ) {
+            this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
+            return;
+          }
           let str = res.data.data[0].balance
           let b = common.getNumByBalance(str)
-          console.log(res.data.data[0].balance)
+          // console.log(res.data.data[0].balance)
           this.tokenAmount = b
           this.isLoaded = true
         }).catch(res=>{
@@ -225,17 +229,19 @@ Transfer Record:
             code:this.code
           }
         }).then(res=>{
+          if( res.status !== 200  || res.data.code !== 0 ) {
+            this.$vux.alert.show({ title: '获取转账数据失败', content: res.data.msg ||  res.statusText || '未知错误', });
+            return;
+          }
           this.trans = res.data.data
+          console.log(res.data)
           // setTimeout(()=>{
             this.isTransLoaded = true
           // },1000)
-          console.log(JSON.parse(JSON.stringify(this.transfers)))
+          // console.log(JSON.parse(JSON.stringify(this.transfers)))
         }).catch(res=>{
           console.log('获取转账数据失败：'+ res)
         })
-      },
-      getAllTrans(){
-
       },
       getTime(time){
         let t = time.split('T')
