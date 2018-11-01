@@ -12,6 +12,9 @@ import {XHeader} from 'vux'
 export default {
   components:{
     XHeader
+  },
+  mounted(){
+    this.$common.fixStatusBarByHeader('c-header')
   }
 }
 </script>

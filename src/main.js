@@ -15,6 +15,7 @@ import store from './store'
 import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
+import api from './js/api'
 import common from './js/commonUtils'
 
 Vue.prototype.$common = common

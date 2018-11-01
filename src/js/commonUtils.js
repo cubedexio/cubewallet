@@ -13,6 +13,27 @@ let common = {
     return this.num;
   },
 
+  /**
+   * 移动设备顶部状态适配
+   * @param header string
+  **/
+  fixStatusBarByHeader(header){
+    if(!header) return;
+    let h = $api.byId(header);
+    if(!h) return;
+    $api.fixStatusBar(h);
+  },
+
+  /**
+   * 移动设备底部导航栏适配
+   * @param nav string
+  **/
+  fixTabBarByNav(nav){
+    if(!nav) return;
+    let n = $api.byId(nav);
+    if(!n) return;
+    $api.fixTabBar(n);
+  }
 }
 
 

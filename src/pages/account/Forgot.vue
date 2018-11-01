@@ -94,12 +94,8 @@ export default {
     },
     methods: {
       hideTabbar(show){
-        // console.log(show)
-        let tabbar = document.getElementById('c-nav-tab')
-        // console.log(tabbar)
-        if(tabbar){
-          tabbar.style.display = show
-        }
+        let tabbar = $api.byId('c-nav-tab')
+        tabbar.style.display = show
       },
         countdownSMS: function(cd) {
             this.countdown = cd

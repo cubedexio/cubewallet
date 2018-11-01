@@ -16,18 +16,5 @@
     <div id="app-box"></div>
     <!-- built files will be auto injected -->
 
-    <!--引入apijs-->
-    <script type="text/javascript" src="script/api.js"></script>
-    <script>
-      apiready = function () {
-        console.log('hello api')
-        var header = $api.byId('c-header');
-        var nav = $api.byId('c-nav-tab');
-
-        $api.fixStatusBar(header)
-        $api.fixTabBar(nav)
-      }
-    </script>
   </body>
-
 </html>

@@ -135,7 +135,8 @@ Insufficient Balance!:
         isBalanceLoaded: false
       }
     },
-    mounted() {
+    mounted(){
+      this.$common.fixStatusBarByHeader('c-header')
       this.account = this.$store.state.eosAccountName
       if (!this.account) {
         this.account = 'fenghaha'

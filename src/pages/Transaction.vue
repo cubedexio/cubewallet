@@ -407,6 +407,7 @@ let interval = undefined
     },
     mounted() {
 
+      this.$common.fixStatusBarByHeader('c-header')
 
         this.getPrice();
         this.getMemo();

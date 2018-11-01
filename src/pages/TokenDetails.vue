@@ -33,24 +33,24 @@
       <!--</swiper>-->
       <panel :header="$t('Transfer Record')" class="transfer-record">
         <div v-if="isTransLoaded" slot="body">
-          <div v-for="item in trans" class="record-item" :key="item.acc_seq">
+          <div v-for="item in trans" class="record-item" :key="item.seq">
             <flexbox slot="title">
               <flexbox-item :span="2" class="text-center">
-                <i class="icon-out item-icon" v-if="item.action.data.from == myAddress"></i>
+                <i class="icon-out item-icon" v-if="item.data.from == myAddress"></i>
                 <i class="icon-in item-icon" v-else></i>
               </flexbox-item>
               <flexbox-item :span="6">
                 <div class="record-intro">
-                  <p v-if="item.action.data.from == myAddress">{{item.action.data.to}}</p>
-                  <p v-else>{{item.action.data.from}}</p>
+                  <p v-if="item.data.from == myAddress">{{item.data.to}}</p>
+                  <p v-else>{{item.data.from}}</p>
                   <span class="record-time">
                   {{getTime(item.time)}}
                 </span>
                 </div>
               </flexbox-item>
               <flexbox-item class="balance-box" :span="4">
-              <span :class="{ 'record-balance':true, 'balance-out': item.action.data.from == myAddress, 'balance-in': item.action.data.from !== myAddress}">
-                {{getQuantity(item.action.data.quantity)}}
+              <span :class="{ 'record-balance':true, 'balance-out': item.data.from == myAddress, 'balance-in': item.data.from !== myAddress}">
+                {{getQuantity(item.data.quantity)}}
               </span>
               </flexbox-item>
             </flexbox>
@@ -183,7 +183,9 @@ Transfer Record:
         this.myAddress = 'fenghaha'
       }
       this.code = this.$route.params.code
-      this.initPage()
+      this.setTokenName()
+      this.getBalance()
+      this.getTransList()
     },
     computed: {
       amount() {
@@ -193,9 +195,6 @@ Transfer Record:
     },
     methods:{
       initPage(){
-        this.setTokenName()
-        this.getBalance()
-        this.getTransList()
       },
       setTokenName(){
         if(this.code){
@@ -209,17 +208,24 @@ Transfer Record:
             scope:this.myAddress
           }
         }).then(res=>{
+          // console.log(Boolean(res.data.data))
           if( res.status !== 200  || res.data.code !== 0 ) {
             this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
             return;
           }
-          let str = res.data.data[0].balance
-          let b = common.getNumByBalance(str)
-          // console.log(res.data.data[0].balance)
-          this.tokenAmount = b
+          if(res.data.data.length > 0){
+            let str = res.data.data[0].balance
+            let b = common.getNumByBalance(str)
+            this.tokenAmount = b
+          }
+
           this.isLoaded = true
         }).catch(res=>{
-          console.log("获取余额出错："+res)
+          // console.log(res)
+          this.$vux.alert.show({
+            title:this.$t('Get Balance fail'),
+            content:res.msg
+          })
         })
       },
       getTransList(){
@@ -230,14 +236,12 @@ Transfer Record:
           }
         }).then(res=>{
           if( res.status !== 200  || res.data.code !== 0 ) {
-            this.$vux.alert.show({ title: '获取转账记录失败', content: res.data.msg ||  res.statusText || '未知错误', });
+            this.$vux.alert.show({ title: '获取转账记录失败', content: res.msg ||  res.statusText || '未知错误', });
             return;
           }
           this.trans = res.data.data
-          console.log(res.data)
-          // setTimeout(()=>{
-            this.isTransLoaded = true
-          // },1000)
+          this.isTransLoaded = true
+          // console.log(res,res.data.data)
           // console.log(JSON.parse(JSON.stringify(this.transfers)))
         }).catch(res=>{
           console.log('获取转账数据失败：'+ res)
