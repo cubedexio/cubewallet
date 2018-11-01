@@ -12,10 +12,10 @@
 
                 <!-- <label>名字</label>
                 <cube-input name="name"></cube-input>                    -->
-                <label>手机号</label>
+                <label>{{$t('Phone Number')}}</label>
                 <!-- {{ phone }} -->
                 <cube-input v-model="phone" name="phone" type='number'></cube-input>
-                <label>验证码</label>
+                <label>{{$t('VerifyCode')}}</label>
                 <div style="display:flex">
                     <cube-input v-model="sms" name="verifycode" style="flex:3"/>
                     <x-button  :disabled="disablePhoneNumber" plain type='default' class="custom-default" action-type='button' style="flex:1;height:80%" @click.native="requestVerifyCode">
@@ -23,13 +23,13 @@
                         {{ countdown == -1 ? $t("VerifyCode") : countdown+"s" }}
                     </x-button>
                 </div>
-                <label>密码</label>
+                <label>{{$t('Password')}}</label>
                 <cube-input v-model='password' name="password"></cube-input>
 
                 <div>
                 <!--<input type="checkbox"  name="agreeterm"  id="agreeterm" v-model='agreeterm'/>-->
                 <label class='agreeterm'>
-                    注册即同意<router-link :to="'license'"><a class='license' >《CUBEWALLET》用户协议</a></router-link>
+                    {{$t('Please Read The')}}<router-link :to="'license'"><a class='license' >{{$t('User Agreement Of CubeWallet')}}</a></router-link>
                 </label>
                 </div>
             </div>
@@ -39,12 +39,12 @@
         <flexbox-item :span="3/12" class="flex-item flex-btn">
 
             <div>
-                <x-button @click.native="register">注册</x-button>
+                <x-button @click.native="register">{{$t('Register')}}</x-button>
             </div>
           <br>
            <label>
                 <router-link :to="'login'">
-                    <a class='gologin' >已有帐号？去登录</a>
+                    <a class='gologin' >{{$t('Go To Login')}}</a>
                 </router-link>
 
             </label>
@@ -52,13 +52,30 @@
     </flexbox>
 </template>
 <i18n>
+Phone Number:
+  zh-CN: 手机号码
+Password:
+  zh-CN: 密码
 Login:
     zh-CN: 登录
 Register:
     zh-CN: 注册
 VerifyCode:
     zh-CN: 验证码
-
+Please Read The:
+  zh-CN: 注册即同意
+Please enter a valid phone number:
+  zh-CN: 手机号格式不正确
+Password minimum 8 digits:
+  zh-CN: 密码最少8位
+Go To Login:
+  zh-CN: 已有帐号？去登录
+User Agreement Of CubeWallet:
+  zh-CN: 《CUBEWALLET》用户协议
+Please check the user agreement:
+  zh-CN: 请先同意用户协议
+Please enter verify code:
+  zh-CN: 请输入验证码
 </i18n>
 
 <script>
@@ -130,17 +147,42 @@ export default {
         },
         register: function() {
             if( this.phone.length !== 11) {
-                this.$vux.alert.show({ title: '手机号格式不正确' });
+              this.$vux.toast.show({
+                text:this.$t('Please enter a valid phone number'),
+                type:'text',
+                width:'16rem',
+                position:'middle'
+              })
                 return;
             }
             if( this.password.length < 8 ) {
-                this.$vux.alert.show({ title: '密码最少8位' });
+              this.$vux.toast.show({
+                text:this.$t('Password minimum 8 digits'),
+                type:'text',
+                width:'16rem',
+                position:'middle'
+              })
                 return ;
             }
-            if(!this.agreeterm){
-                this.$vux.alert.show({ title: '请先同意协议' });
-                return;
+            if(!this.sms){
+              this.$vux.toast.show({
+                text:this.$t('Please enter verify code'),
+                type:'text',
+                width:'16rem',
+                position:'middle'
+              })
+              return;
             }
+            // if(!this.agreeterm){
+            //   this.$vux.toast.show({
+            //     text:this.$t('Please check the user agreement'),
+            //     type:'text',
+            //     width:'16rem',
+            //     position:'middle'
+            //   })
+            //     // this.$vux.alert.show({ title: '请先同意协议' });
+            //     return;
+            // }
 
 
             this.$http.post('/register',  {
@@ -210,8 +252,8 @@ label.agreeterm {
 #register-app {
     width: 100%;
     height: 100%;
-    background: url("../../assets/images/sign_in.jpg")  no-repeat ;
-    background-size: 100%;
+    background: url("../../assets/images/sign_in.jpg") center 0  no-repeat ;
+  background-size: auto 100%;
 }
 .custom-default {
   border-radius: 99px!important;

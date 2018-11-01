@@ -10,7 +10,10 @@
       </x-header>
       <section class="head-box-lg text-center">
         <span>{{tokenName}}</span>
-        <p class="token-amount"><b>{{tokenAmount}}</b></p>
+        <p class="token-amount">
+          <b v-if="isLoaded">{{tokenAmount}}</b>
+          <inline-loading v-else></inline-loading>
+        </p>
       </section>
       <group>
         <div v-if="tokenName == 'CBT'">
@@ -49,6 +52,7 @@ Reserved Balance:
     XHeader,
     Group,
     Cell,
+    InlineLoading,
     numberComma
   } from 'vux'
   export default {
@@ -58,6 +62,7 @@ Reserved Balance:
       XHeader,
       Group,
       Cell,
+      InlineLoading,
       numberComma
     },
     data(){
@@ -71,7 +76,8 @@ Reserved Balance:
         connectorWeight:'10.97%',
         reservedBalance:6000000000,
         code:'cbtban1',
-        account:''
+        account:'',
+        isLoaded:false
       }
     },
     created(){
@@ -97,8 +103,15 @@ Reserved Balance:
             scope:this.account
           }
         }).then(res=>{
-          console.log(res)
-          this.tokenAmount = res.data.data[0].balance
+          if( res.status !== 200  || res.data.code !== 0 ) {
+            this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
+            return;
+          }
+          if(res.data.data.length > 0){
+            // console.log(res)
+            this.tokenAmount = res.data.data[0].balance
+          }
+          this.isLoaded = true
         }).catch(res=>{
           console.log("获取余额失败："+res)
         })

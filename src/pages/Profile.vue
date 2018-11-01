@@ -7,14 +7,14 @@
       <card class="profile-card">
         <div slot="content">
           <div class="profile-pic">
-            <img :src="profilePic" alt="">
+            <img src="@/assets/images/default_avatar.png" alt="">
           </div>
           <p class="account text-center">{{account}}</p>
         </div>
       </card>
       <card class="profile-card">
         <div slot="content">
-          <cell class="setting-cell" :border-intent="false" :title="$t('Change Password')" is-link link="/forgot"></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Change Password')" is-link @click.native="goForgot()"></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Export Private Key')" @click.native="showComingSoon = true" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Switch Account')" is-link @click.native="logout"></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Language')" @click.native="showLang = !showLang" is-link></cell>
@@ -171,6 +171,10 @@ Cancel:
           },
           onCancel(){}
         })
+      },
+      goForgot(){
+        // this.$store.commit('setLoggedIn',false)
+        this.$router.replace('forgot')
       }
     }
   }

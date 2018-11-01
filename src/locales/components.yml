@@ -91,6 +91,17 @@ en:
   Confirm: Confirm
   Cancel: Cancel
   Insufficient Balance!: Insufficient Balance!
+  Please enter phone number!: Please enter phone number!
+  Please enter password!: Please enter password!
+  Please enter a valid phone number: Please enter a valid phone number
+  Password minimum 8 digits: Password minimum 8 digits
+  Please Read The: Please Read The
+  Go To Login: Go To Login
+  User Agreement Of CubeWallet: User Agreement Of CubeWallet
+  Phone Number: Phone Number
+  Password: Password
+  Please check the user agreement: Please check the user agreement
+  Please enter verify code: Please enter verify code
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -184,3 +195,14 @@ zh-CN:
   Confirm: 确认
   Cancel: 取消
   Insufficient Balance!: 余额不足
+  Please enter phone number!: 手机号码不能为空！
+  Please enter password!: 密码不能为空！
+  Please enter a valid phone number: 手机号格式不正确
+  Password minimum 8 digits: 密码最少8位
+  Please Read The: 注册即同意
+  Go To Login: 已有帐号？去登录
+  User Agreement Of CubeWallet: 《CUBEWALLET》用户协议
+  Phone Number: 手机号码
+  Password: 密码
+  Please check the user agreement: 请先同意用户协议
+  Please enter verify code: 请输入验证码

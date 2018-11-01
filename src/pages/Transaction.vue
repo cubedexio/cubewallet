@@ -1,10 +1,10 @@
 <template>
   <transition name="slide">
-      
+
   <div id="transaction">
     <view-box>
 
-      <x-header class="header-content-sm" :left-options="{backText:''}">{{ $t('Transaction') }}</x-header>
+      <x-header id="c-header" class="header-content-sm" :left-options="{backText:''}">{{ $t('Transaction') }}</x-header>
 
       <br/>
 
@@ -58,9 +58,11 @@
         <check-icon class="checkTerms" :value.sync="checkTerms" >
           {{ $t('Please make sure you read') }}
         </check-icon>
-        <a href="#" class="terms-text">
-          《{{$t('The Terms of Transaction')}}》
-        </a>
+        <router-link to="/license">
+          <a class="terms-text">
+            《{{$t('The Terms of Transaction')}}》
+          </a>
+        </router-link>
       </p>
 
 
@@ -98,9 +100,9 @@ The Terms of Transaction:
 Please check the terms box:
   zh-CN: 请勾选已阅读隐私及服务条款
 Transaction completed:
-  zh-CN: 兑换完成  
+  zh-CN: 兑换完成
 Get Memo failed, try to re-entry this page:
-  zh-CN: 获取Memo失败，请尝试重新进入此页面  
+  zh-CN: 获取Memo失败，请尝试重新进入此页面
 </i18n>
 
 <script>
@@ -226,7 +228,7 @@ let interval = undefined
               width:'16rem',
               position:'middle'
             })
-            return              
+            return
           }
 
             console.log('eos兑换cbt')
@@ -261,8 +263,6 @@ let interval = undefined
       switchTab(index){
         this.i = index;
       },
-
-
     getMemo() {
         console.log('getMemo')
 
@@ -275,7 +275,6 @@ let interval = undefined
                 console.error(err.toString())
             })
     },
-
     getPrice() {
         console.log('getprice')
         this.$http.get('/get_price')
@@ -285,17 +284,17 @@ let interval = undefined
                     this.$vux.alert.show({
                         title: '查询价格失败',
                         content: res.data.msg ||  res.statusText || '未知错误',
-                    });               
-                    return;     
+                    });
+                    return;
                 }
                 const data = res.data.data;
                 this.exchangeRate = data.price
             }, (err)=> {
-                console.log(err)                                
+                console.log(err)
                 this.$vux.alert.show({
                     title: '查询价格失败',
                     content: err.msg
-                });   
+                });
             })
       },
 
@@ -303,10 +302,10 @@ let interval = undefined
             this.$vux.loading.show({
                 text: 'Processing..'
             })
-            setTimeout(()=>{    
+            setTimeout(()=>{
                 this.$vux.loading.hide()
             }, 10 * 1000)
-                        
+
             this.$http.get('/sell', {
                 params: {
                     from: this.eosAccountName,
@@ -318,8 +317,8 @@ let interval = undefined
                     this.$vux.alert.show({
                         title: '兑换失败',
                         content: res.data.msg ||  res.statusText || '未知错误',
-                    });               
-                    return;  
+                    });
+                    return;
                 }
 
                 this.$vux.toast.show({
@@ -331,11 +330,10 @@ let interval = undefined
 
             }, err=>{
                 this.$vux.loading.hide()
-                this.$vux.alert.show({ title: '注册失败',content: err.msg });   
+                this.$vux.alert.show({ title: '注册失败',content: err.msg });
             })
 
-      },
-
+  },
       async eos2cbt() {
 
 
@@ -350,7 +348,7 @@ let interval = undefined
         const rpc = new JsonRpc(eosEndpoint);
         const signatureProvider = new JsSignatureProvider([this.privateKey]);
         const api = new Api({ rpc, signatureProvider });
-        
+
 
           let textContent = ''
 
@@ -375,7 +373,7 @@ let interval = undefined
                     blocksBehind: 3,
                     expireSeconds: 30,
                 });
-            
+
                 this.$vux.loading.hide()
                 textContent += '\n\nTransaction pushed!\n\n' + JSON.stringify(result, null, 2);
 
@@ -394,8 +392,8 @@ let interval = undefined
                 this.$vux.alert.show({
                     title: '兑换失败',
                     content: e.toString()
-                });  
-                
+                });
+
                 if (e instanceof RpcError)
                     textContent += '\n\n' + JSON.stringify(e.json, null, 2);
             }
@@ -409,11 +407,13 @@ let interval = undefined
     },
     mounted() {
 
+      this.$common.fixStatusBarByHeader('c-header')
+
         this.getPrice();
         this.getMemo();
 
         interval = setInterval(()=>{
-            // this.getPrice(); 
+            // this.getPrice();
         }, 1 * 60 * 1000) // 每分钟更新一次价格
 
 

@@ -8,15 +8,13 @@
 <script>
 
 import {XHeader} from 'vux'
+
 export default {
   components:{
     XHeader
   },
   mounted(){
-  //   let cheader = $api.byId("c-header")
-  //   // let cheader = document.getElementById("c-header")
-  //   console.log($api.isElement(cheader))
-  //   $api.fixStatusBar(cheader)
+    this.$common.fixStatusBarByHeader('c-header')
   }
 }
 </script>

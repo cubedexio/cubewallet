@@ -38,9 +38,10 @@
             </div>
           <br>
            <label>
-                <router-link :to="'Login'">
-                    <a class='gologin' >返回</a>
-                </router-link>
+                <!--<router-link :to="'Login'">-->
+                    <!--<a class='gologin' >返回</a>-->
+                <!--</router-link>-->
+             <a class='gologin' @click="goback">返回</a>
             </label>
         </flexbox-item>
     </flexbox>
@@ -82,15 +83,20 @@ export default {
             countdown: -1
         }
     },
+  mounted(){
+      this.hideTabbar('none')
+  },
     computed: {
         disablePhoneNumber: function() {
             console.log(this.phone)
             return this.phone.length !== 11 || this.countdown !== -1
         }
     },
-
     methods: {
-
+      hideTabbar(show){
+        let tabbar = $api.byId('c-nav-tab')
+        tabbar.style.display = show
+      },
         countdownSMS: function(cd) {
             this.countdown = cd
             setTimeout( ()=> {
@@ -123,14 +129,43 @@ export default {
 
         },
         forgot: function() {
-            if( this.phone.length !== 11) {
-                this.$vux.alert.show({ title: '手机号格式不正确' });
-                return;
-            }
-            if( this.newpassword.length < 8 ) {
-                this.$vux.alert.show({ title: '密码最少8位' });
-                return ;
-            }
+
+          if( this.phone.length !== 11) {
+            this.$vux.toast.show({
+              text:this.$t('Please enter a valid phone number'),
+              type:'text',
+              width:'16rem',
+              position:'middle'
+            })
+            return;
+          }
+          if( this.newpassword.length < 8 ) {
+            this.$vux.toast.show({
+              text:this.$t('Password minimum 8 digits'),
+              type:'text',
+              width:'16rem',
+              position:'middle'
+            })
+            return ;
+          }
+          if(!this.sms){
+            this.$vux.toast.show({
+              text:this.$t('Please enter verify code'),
+              type:'text',
+              width:'16rem',
+              position:'middle'
+            })
+            return;
+          }
+
+            // if( this.phone.length !== 11) {
+            //     this.$vux.alert.show({ title: '手机号格式不正确' });
+            //     return;
+            // }
+            // if( this.newpassword.length < 8 ) {
+            //     this.$vux.alert.show({ title: '密码最少8位' });
+            //     return ;
+            // }
 
             this.$http.post('/forgot',  {
                 phone: this.phone,
@@ -157,7 +192,11 @@ export default {
                 console.log(err)
                 this.$vux.alert.show({ title: '重置失败',content: err.message });
             })
-        }
+        },
+      goback(){
+        this.hideTabbar('flex')
+        this.$router.go(-1)
+      }
     }
 }
 </script>
@@ -191,8 +230,8 @@ label a {
 #forgot-app {
     width: 100%;
     height: 100%;
-    background: url("../../assets/images/sign_in.jpg")  no-repeat ;
-    background-size: 100%;
+    background: url("../../assets/images/sign_in.jpg") center 0  no-repeat ;
+  background-size: auto 100%;
 }
 .custom-default {
   border-radius: 99px!important;

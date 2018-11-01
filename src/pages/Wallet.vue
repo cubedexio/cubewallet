@@ -5,7 +5,7 @@
     <x-header id="header" class="header-content" :left-options="{showBack: false}">{{ $t('My Wallet') }}</x-header>
     <section class="head-box-lg">
       <div class="profile-pic">
-        <img :src="profilePic" alt="">
+        <img src="@/assets/images/default_avatar.png" alt="">
         <span class="user-name">{{account}}</span>
         <!--<div class="plus">-->
           <!--<i class="icon-plus"></i>-->

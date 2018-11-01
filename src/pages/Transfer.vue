@@ -2,7 +2,7 @@
   <transition name="slide">
   <div id="transfer">
     <view-box>
-      <x-header id="header" class="header-content-sm" :left-options="{backText:''}">{{ $t('Transfer') }}</x-header>
+      <x-header id="c-header" class="header-content-sm" :left-options="{backText:''}">{{ $t('Transfer') }}</x-header>
       <group :title="$t('Token')" class="options-trigger">
         <div class="token-options" @click="showMenu = !showMenu">
           <i class="token-icon">
@@ -131,6 +131,7 @@ Insufficient Balance!:
       }
     },
     mounted(){
+      this.$common.fixStatusBarByHeader('c-header')
       this.account = this.$store.state.eosAccountName
       if(!this.account){
         this.account = 'fenghaha'

@@ -42,6 +42,10 @@ Login:
     zh-CN: 登录
 Register:
     zh-CN: 注册
+Please enter phone number!:
+    zh-CN: 手机号码不能为空！
+Please enter password!:
+    zh-CN: 密码不能为空！
 
 </i18n>
 
@@ -71,6 +75,24 @@ export default {
         onLogin: function() {
             console.log('onLogin')
 
+          if(!this.phone){
+            this.$vux.toast.show({
+              text:this.$t('Please enter phone number!'),
+              type:'text',
+              width:'16rem',
+              position:'middle'
+            })
+            return
+          }
+          if(!this.password){
+            this.$vux.toast.show({
+              text:this.$t('Please enter password!'),
+              type:'text',
+              width:'16rem',
+              position:'middle'
+            })
+            return
+          }
 
             this.$http.post('/login',  {
                 phone: this.phone,
@@ -113,8 +135,8 @@ export default {
 #login-app {
     width: 100%;
     height: 100%;
-    background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
-    background-size: 100% 100% ;
+    background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
+  background-size: auto 100%;
 }
 
 .flex-item {

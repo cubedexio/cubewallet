@@ -1,17 +1,17 @@
 <template>
-  
+
     <flexbox id="index-app" orient="vertical" justify="space-around">
-        <flexbox-item :span="1/4" class="flex-item" >
-            
+        <flexbox-item :span="3/12" class="flex-item flex-logo" >
+
                 <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
-            
+
         </flexbox-item>
-        <flexbox-item :span="1/4" class="flex-item">
+        <flexbox-item :span="4/12" class="flex-item">
                 <label id="hint-label">
                     创建<br/>/<br/>登陆帐号
                 </label>
         </flexbox-item>
-        <flexbox-item :span="1/4" class="flex-item">      
+        <flexbox-item :span="5/12" class="flex-item">
 
                 <x-button type='primary' link="/register">创建帐号</x-button>
                 <x-button link="/login">登陆帐号</x-button>
@@ -66,8 +66,8 @@ export default {
 #index-app {
     width: 100%;
     height: 100%;
-    background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
-    background-size: 100%;
+    background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
+    background-size: auto 100%;
 }
 
 .flex-item {

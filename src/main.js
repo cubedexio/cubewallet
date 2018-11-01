@@ -16,8 +16,9 @@ import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
 import api from './js/api'
+import common from './js/commonUtils'
 
-Vue.prototype.$api = api
+Vue.prototype.$common = common
 
 Vue.use(Vuex)
 
@@ -94,6 +95,7 @@ const init = () => {
     new Vue({
         router,
         store,
+        common,
         render: h => h(App)
     }).$mount('#app-box')
 };

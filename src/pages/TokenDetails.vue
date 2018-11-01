@@ -230,7 +230,7 @@ Transfer Record:
           }
         }).then(res=>{
           if( res.status !== 200  || res.data.code !== 0 ) {
-            this.$vux.alert.show({ title: '获取转账数据失败', content: res.data.msg ||  res.statusText || '未知错误', });
+            this.$vux.alert.show({ title: '获取转账记录失败', content: res.data.msg ||  res.statusText || '未知错误', });
             return;
           }
           this.trans = res.data.data
