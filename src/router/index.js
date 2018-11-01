@@ -17,7 +17,11 @@ import Login from '@/pages/account/Login'
 import Forgot from '@/pages/account/Forgot'
 
 import Index from '@/pages/account/Index'
-import ImportWallet from '@/pages/account/ImportWallet'
+import ImportWallet from '@/pages/eos/ImportWallet'
+import CreateWallet from '@/pages/eos/CreateWallet'
+import CreateWalletPay from '@/pages/eos/CreateWalletPay'
+import CreateWalletCompleted from '@/pages/eos/CreateWalletCompleted'
+import EOSIndex from '@/pages/eos/Index'
 
 // import ComingSoon from '@/pages/ComingSoon'
 
@@ -49,6 +53,21 @@ export default new Router({
             name: 'ImportWallet',
             component: ImportWallet
         },
+        {
+            path: '/createwallet',
+            name: 'CreateWallet',
+            component: CreateWallet
+        },
+        {
+            path: '/createwalletPay',
+            name: 'CreateWalletPay',
+            component: CreateWalletPay
+        },    
+        {
+            path: '/createwalletcompleted',
+            name: 'CreateWalletCompleted',
+            component: CreateWalletCompleted
+        },                     
 
     {
 
@@ -117,7 +136,12 @@ export default new Router({
       path:'/tokenintro/:code',
       name:'TokenIntro',
       component:TokenIntro
-    }
+    },
+    {
+        path: '/eosindex',
+        name: 'EOSIndex',
+        component: EOSIndex
+      },    
     // ,
     //   {
     //     path:'/comingsoon',
