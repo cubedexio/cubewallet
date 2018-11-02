@@ -168,6 +168,7 @@ Cancel:
             that.$store.commit('setAccessToken', undefined)
             that.$store.commit('setLoggedIn', false)
             that.$router.replace('/login')
+            console.log(this.$store.state.loggedIn)
           },
           onCancel(){}
         })
