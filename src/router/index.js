@@ -21,7 +21,7 @@ import Index from '@/pages/account/Index'
 import ImportWallet from '@/pages/eos/ImportWallet'
 import CreateWallet from '@/pages/eos/CreateWallet'
 import CreateWalletPay from '@/pages/eos/CreateWalletPay'
-import CreateWalletCompleted from '@/pages/eos/CreateWalletCompleted'
+import CreateWalletDone from '@/pages/eos/CreateWalletDone'
 import EOSIndex from '@/pages/eos/Index'
 
 // import ComingSoon from '@/pages/ComingSoon'
@@ -65,9 +65,9 @@ export default new Router({
             component: CreateWalletPay
         },
         {
-            path: '/createwalletcompleted',
-            name: 'CreateWalletCompleted',
-            component: CreateWalletCompleted
+            path: '/createwalletdone',
+            name: 'CreateWalletDone',
+            component: CreateWalletDone
         },
 
     {

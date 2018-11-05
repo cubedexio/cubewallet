@@ -1,16 +1,16 @@
 <template>
   
-    <div id="createwalletpay-app">
+    <div id="createwalletdone-app">
     <x-header>支付</x-header>
     <flexbox  orient="vertical" justify="space-around">
         <flexbox-item :span="1/4" class="flex-item">
-            <group>
-                <label>请支付一定金额用于创建EOS钱包帐号</label>
-            </group>
+
+
 
             <group>
-                <label>36$</label>
+                创建帐号完成，请务必保存好您的私钥
 
+                {{ $route.query.prvkey }}
 
                 
             </group>
@@ -18,9 +18,6 @@
                 
                 
             </group>
-
-            {{ moment().format('YYYY-MM-DD HH:mm:ss') }}
-
             
         </flexbox-item>
         <flexbox-item :span="1/4" class="flex-item">      
@@ -125,7 +122,6 @@ export default {
                 }).then(res=>{
                     if( res.status === 200 && res.data.code === 0 ) {
                         this.$store.commit('setEOSAccountName', this.$http.query.eosname)
-                        this.$store.commit('setPrivateKey', this.$http.query.prvkey)
 
                         this.router.replace({
                             path: "/createwalletdone", 
