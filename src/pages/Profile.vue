@@ -1,7 +1,7 @@
 <template>
   <div id="profile">
     <view-box>
-      <x-header class="header-content head-bg-md" :left-options="{showBack: false}">
+      <x-header id="c-header" class="header-content head-bg-md" :left-options="{showBack: false}">
         {{$t('Setting')}}
       </x-header>
       <card class="profile-card">
@@ -14,7 +14,7 @@
       </card>
       <card class="profile-card">
         <div slot="content">
-          <cell class="setting-cell" :border-intent="false" :title="$t('Change Password')" is-link @click.native="goForgot()"></cell>
+          <cell class="setting-cell" :border-intent="false" :title="$t('Change Password')" is-link link="/forgot"></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Export Private Key')" @click.native="showComingSoon = true" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Switch Account')" is-link @click.native="logout"></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Language')" @click.native="showLang = !showLang" is-link></cell>
@@ -168,14 +168,9 @@ Cancel:
             that.$store.commit('setAccessToken', undefined)
             that.$store.commit('setLoggedIn', false)
             that.$router.replace('/login')
-            console.log(this.$store.state.loggedIn)
           },
           onCancel(){}
         })
-      },
-      goForgot(){
-        // this.$store.commit('setLoggedIn',false)
-        this.$router.replace('forgot')
       }
     }
   }

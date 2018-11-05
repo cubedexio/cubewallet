@@ -2,7 +2,7 @@
   <div id="wallet" class=" head-bg-pic">
     <view-box>
 
-    <x-header id="header" class="header-content" :left-options="{showBack: false}">{{ $t('My Wallet') }}</x-header>
+    <x-header id="c-header" class="header-content" :left-options="{showBack: false}">{{ $t('My Wallet') }}</x-header>
     <section class="head-box-lg">
       <div class="profile-pic">
         <img src="@/assets/images/default_avatar.png" alt="">
@@ -77,7 +77,7 @@
                     {{properyList[1].balance}}
                   </p>
                   <span class="money">
-              ₵{{properyList[1].balance}}
+              ₵{{(properyList[1].balance).toFixed(4)}}
             </span>
                 </flexbox-item>
               </flexbox>

@@ -53,6 +53,12 @@ export default {
       show:true
     }
   },
+  beforeCreate(){
+    console.log()
+    if(this.$store.state.loggedIn){
+      this.$router.replace('/home')
+    }
+  },
   mounted(){
     setTimeout(()=>{
       this.show = false;

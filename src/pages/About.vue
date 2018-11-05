@@ -1,7 +1,7 @@
 <template>
   <div id="about">
     <view-box>
-      <x-header class="header-content-sm" :left-options="{backText:''}">{{ $t('About Us') }}</x-header>
+      <x-header id="c-header" class="header-content-sm" :left-options="{backText:''}">{{ $t('About Us') }}</x-header>
       <flexbox class="about-flex" orient="vertical">
         <flexbox-item :span="2/5" class="flex-item">
           <br>
@@ -15,7 +15,7 @@
           <group>
             <cell>
               <span slot="title">Website</span>
-              <span slot><a href="http://www.cubecart.io">www.cubecart.io</a></span>
+              <span slot><a>www.cubecart.io</a></span>
             </cell>
             <cell>
               <span slot="title">Email</span>

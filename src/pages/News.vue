@@ -7,7 +7,7 @@
     <div id="news" class="head-bg-pic">
       <view-box>
 
-        <x-header class="header-content " :left-options="{showBack: false}">{{ $t('News') }}</x-header>
+        <x-header id="c-header" class="header-content " :left-options="{showBack: false}">{{ $t('News') }}</x-header>
         <section class="head-bg-lg">
           <swiper class="swiper"  loop height="180px" dots-position="center" dots-class="dots-class" :list="swiperList" ></swiper>
         </section>

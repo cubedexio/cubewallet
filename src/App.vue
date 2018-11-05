@@ -66,9 +66,6 @@
         // 每次启动刷新token
         console.log("created")
         this.refreshToken()
-    },
-    mounted(){
-      this.$common.fixTabBarByNav('c-nav-tab')
     }
   }
 </script>

@@ -15,7 +15,6 @@ import store from './store'
 import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
-import api from './js/api'
 import common from './js/commonUtils'
 
 Vue.prototype.$common = common
@@ -100,15 +99,17 @@ const init = () => {
     }).$mount('#app-box')
 };
 
-  // Wait for the deviceready event to start the render
-document.addEventListener("deviceready", () => {
-    // eslint-disable-next-line
-    console.log("Ready, Render the App");
-    init();
-});
+init();
 
-// If we are not in Cordova, manually trigger the deviceready event
-const isCordovaApp = (typeof window.cordova !== "undefined");
-if (!isCordovaApp){
-    document.dispatchEvent(new CustomEvent("deviceready", {}));
-}
+  // Wait for the deviceready event to start the render
+// document.addEventListener("deviceready", () => {
+//     // eslint-disable-next-line
+//     console.log("Ready, Render the App");
+//     init();
+// });
+//
+// // If we are not in Cordova, manually trigger the deviceready event
+// const isCordovaApp = (typeof window.cordova !== "undefined");
+// if (!isCordovaApp){
+//     document.dispatchEvent(new CustomEvent("deviceready", {}));
+// }

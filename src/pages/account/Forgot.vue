@@ -88,14 +88,18 @@ export default {
   },
     computed: {
         disablePhoneNumber: function() {
-            console.log(this.phone)
+            // console.log(this.phone)
             return this.phone.length !== 11 || this.countdown !== -1
         }
     },
     methods: {
       hideTabbar(show){
-        let tabbar = $api.byId('c-nav-tab')
-        tabbar.style.display = show
+        // console.log(show)
+        let tabbar = document.getElementById('c-nav-tab')
+        // console.log(tabbar)
+        if(tabbar){
+          tabbar.style.display = show
+        }
       },
         countdownSMS: function(cd) {
             this.countdown = cd
@@ -195,7 +199,7 @@ export default {
         },
       goback(){
         this.hideTabbar('flex')
-        this.$router.go(-1)
+        this.$router.back()
       }
     }
 }

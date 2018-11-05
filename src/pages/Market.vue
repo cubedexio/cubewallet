@@ -1,19 +1,23 @@
 <template>
   <div id="market" class="head-sm-pic">
     <view-box>
-      <x-header :left-options="{showBack: false}" class="header-content">{{$t('Market')}}</x-header>
+      <x-header id="c-header" :left-options="{showBack: false}" class="header-content">{{$t('Market')}}</x-header>
       <x-table class="token-table" :cell-bordered="false">
         <thead>
         <tr>
           <th class="number">#</th>
           <th class="text-left">Name</th>
           <th></th>
-          <th ref="sortPrice" class="sort-price text-left">$ <i><img src="../assets/images/options-arrow.png" alt=""></i> </th>
-          <th ref="sortRange">24H <i><img src="../assets/images/options-arrow.png" alt=""></i></th>
+          <th ref="sortPrice" class="sort-price text-left">$
+            <!--<i><img src="../assets/images/options-arrow.png" alt=""></i> -->
+          </th>
+          <th ref="sortRange">24H
+            <!--<i><img src="../assets/images/options-arrow.png" alt=""></i>-->
+          </th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(item,index) in tokenList" :key="item.id">
+        <tr v-for="(item,index) in tokenList" :key="item.id" @click="goTransaction">
           <td>{{index}}</td>
           <td class="text-left">
             <i class="token-img"><img :src="item.tokenImg" alt=""></i>
@@ -40,7 +44,7 @@ Market:
       tokenName:'EOS',
       price:6.6,
       name:'Eos',
-      tokenImg:'http://www.bizhuren.com/d/file/201806/43afce7dfb6ab33f14c52d963631b15c.png',
+      tokenImg:'../static/imgs/eos.png',
       range:'-2.46'
     },
     {
@@ -48,24 +52,8 @@ Market:
       tokenName:'CBT',
       price:0.5,
       name:'CubeCart',
-      tokenImg:'http://www.bizhuren.com/d/file/201806/43afce7dfb6ab33f14c52d963631b15c.png',
+      tokenImg:'../static/imgs/cbt.png',
       range:'+3.46'
-    },
-    {
-      id:3,
-      tokenName:'LTC',
-      price:312.5,
-      name:'Litecoin',
-      tokenImg:'http://www.bizhuren.com/d/file/201806/43afce7dfb6ab33f14c52d963631b15c.png',
-      range:'-2.46'
-    },
-    {
-      id:4,
-      tokenName:'XLM',
-      price:1.38,
-      name:'Stellar',
-      tokenImg:'http://www.bizhuren.com/d/file/201806/43afce7dfb6ab33f14c52d963631b15c.png',
-      range:'+2.46'
     },
   ]
   import {
@@ -84,6 +72,33 @@ Market:
     data(){
       return{
         tokenList:tokens
+      }
+    },
+    mounted(){
+      this.getPriceByCodePerSec()
+    },
+    methods:{
+      goTransaction(){
+        this.$router.push('/transaction')
+      },
+      getPriceByCodePerSec(code){
+        // this.$http.get('/bqi/ticker',{
+        //   params:{
+        //     code:code
+        //   }
+        // }).then(res=>{
+        //   console.log(res)
+        //   if(res.length > 0){
+        //
+        //   }
+        // })
+        // setInterval(()=>{
+        // },10000)
+
+      },
+      nextIntegerHour(){
+        let data = new Date()
+
       }
     }
   }
