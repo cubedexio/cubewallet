@@ -6,6 +6,7 @@ platforms/
 npm-debug.log
 yarn-error.log
 /test/unit/coverage/
+script/
 
 # Editor directories and files
 .idea

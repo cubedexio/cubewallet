@@ -1,52 +1,55 @@
 <template>
   <transition name="slide">
-  <div id="transfer">
-    <view-box>
-      <x-header id="c-header" class="header-content-sm" :left-options="{backText:''}">{{ $t('Transfer') }}</x-header>
-      <group :title="$t('Token')" class="options-trigger">
-        <div class="token-options" @click="showMenu = !showMenu">
-          <i class="token-icon">
-            <img :src="selectedImg" alt="">
-          </i>
-          <span class="token-name">{{selected}}</span>
-          <span class="options-arrow"></span>
+    <div id="transfer">
+      <view-box>
+        <x-header id="c-header" class="header-content-sm" :left-options="{backText:''}">{{ $t('Transfer') }}</x-header>
+        <group :title="$t('Token')" class="options-trigger">
+          <div class="token-options" @click="showMenu = !showMenu">
+            <i class="token-icon">
+              <img :src="selectedImg" alt="">
+            </i>
+            <span class="token-name">{{selected}}</span>
+            <span class="options-arrow"></span>
+          </div>
+        </group>
+        <div class="receiver input-box">
+          <label>{{$t('Receiver')}}</label>
+          <x-input :placeholder="$t('Please Enter Account')" v-model="receiver" class="input-black"
+                   name="receiver"></x-input>
         </div>
-      </group>
-      <div class="receiver input-box">
-        <label>{{$t('Receiver')}}</label>
-        <x-input :placeholder="$t('Please Enter Account')" v-model="receiver" class="input-black" name="receiver"></x-input>
-      </div>
-      <div class="transfer-amount input-box">
-        <div class="property">
-          <p class="text-right">{{$t('Balance')}}</p>
-          <p class="text-right">
+        <div class="transfer-amount input-box">
+          <div class="property">
+            <p class="text-right">{{$t('Balance')}}</p>
+            <p class="text-right">
             <span v-if="isBalanceLoaded">
             {{balanceNum}}
             </span>
-            <inline-loading v-else></inline-loading>
-          </p>
+              <inline-loading v-else></inline-loading>
+            </p>
+          </div>
+          <label>{{$t('Transfer Amount')}}</label>
+          <x-input :placeholder="$t('Please Enter Amount')" v-model="transferAmount" class="input-black"
+                   name="transferAmount"></x-input>
         </div>
-        <label>{{$t('Transfer Amount')}}</label>
-        <x-input :placeholder="$t('Please Enter Amount')" v-model="transferAmount" class="input-black" name="transferAmount"></x-input>
-      </div>
-      <div class="remark input-box">
-        <label>{{$t('Remark')}}</label>
-        <x-input :placeholder="$t('Please Enter Remark')" v-model="remark" class="input-black" name="remark"></x-input>
-      </div>
-      <x-button type='primary' @click.native="doTransfer">{{ $t('Confirm Transfer') }}</x-button>
-      <div class="show-popup">
-        <popup v-model="showMenu">
-          <div class="menu-item" v-for="item in menus" @click="switchMenu(item)">
-            <i class="item-icon"><img :src="item.token_img" alt=""></i>
-            <span class="item-name">
+        <div class="remark input-box">
+          <label>{{$t('Remark')}}</label>
+          <x-input :placeholder="$t('Please Enter Remark')" v-model="remark" class="input-black"
+                   name="remark"></x-input>
+        </div>
+        <x-button type='primary' @click.native="doTransfer">{{ $t('Confirm Transfer') }}</x-button>
+        <div class="show-popup">
+          <popup v-model="showMenu">
+            <div class="menu-item" v-for="item in menus" @click="switchMenu(item)">
+              <i class="item-icon"><img :src="item.token_img" alt=""></i>
+              <span class="item-name">
               {{item.token_name}}
             </span>
-          </div>
-        </popup>
-      </div>
+            </div>
+          </popup>
+        </div>
 
-    </view-box>
-  </div>
+      </view-box>
+    </div>
   </transition>
 </template>
 <i18n>
@@ -72,6 +75,8 @@ Confirm Transfer:
   zh-CN: 确认转账
 Transfer Success:
   zh-CN: 转账成功
+Transfer Fail:
+  zh-CN: 转账失败
 Insufficient Balance!:
   zh-CN: 余额不足
 </i18n>
@@ -84,10 +89,10 @@ Insufficient Balance!:
       amount: 300.2565
     },
     {
-      token_code:'cbtban1',
+      token_code: 'cbtban1',
       token_name: 'CBT',
       token_img: 'http://www.cubecart.io/img/cubecart_logo.2392cac3.png',
-      amount:12003.004
+      amount: 12003.004
     }
   ];
   import {
@@ -117,22 +122,22 @@ Insufficient Balance!:
     },
     data() {
       return {
-        code:'eosio.token',
+        code: 'eosio.token',
         selected: 'EOS',
         selectedImg: 'http://www.bizhuren.com/d/file/201806/43afce7dfb6ab33f14c52d963631b15c.png',
-        account:'',
+        account: '',
         balance: 0,
         menus: menuList,
         showMenu: false,
-        receiver:'',
-        transferAmount:'',
-        remark:'',
-        isBalanceLoaded:false
+        receiver: '',
+        transferAmount: '',
+        remark: '',
+        isBalanceLoaded: false
       }
     },
-    mounted(){
+    mounted() {
       this.account = this.$store.state.eosAccountName
-      if(!this.account){
+      if (!this.account) {
         this.account = 'fenghaha'
       }
       this.getTokenBalance(this.code)
@@ -155,84 +160,84 @@ Insufficient Balance!:
         this.selectedImg = img
         this.showMenu = false
       },
-      getTokenBalance(code){
+      getTokenBalance(code) {
         let userName = this.account
         let that = this
-        this.$http.get('/balance',{
-          params:{
-            code:code,
-            scope:userName
+        this.$http.get('/balance', {
+          params: {
+            code: code,
+            scope: userName
           }
-        }).then(res=>{
-          if( res.status !== 200  || res.data.code !== 0 ) {
-            this.$vux.alert.show({ title: '获取余额失败', content: res.data.msg ||  res.statusText || '未知错误', });
+        }).then(res => {
+          if (res.status !== 200 || res.data.code !== 0) {
+            this.$vux.alert.show({title: '获取余额失败', content: res.data.msg || res.statusText || '未知错误',});
             return;
           }
           // console.log(res)
-          if(res.data.data.length > 0){
+          if (res.data.data.length > 0) {
             let rows = res.data.data;
             let b = that.getBalanceNum(rows[0].balance)
             that.balance = b
           }
           this.isBalanceLoaded = true
 
-        }).catch(res=>{
-          console.log('获取余额失败，失败原因',res)
+        }).catch(res => {
+          console.log('获取余额失败，失败原因', res)
         })
       },
-      getBalanceNum(str){
+      getBalanceNum(str) {
         console.log(str)
-        if(str){
+        if (str) {
           let n = str.split(' ')
           return parseFloat(n[0])
-        }else {
+        } else {
           return 0
         }
       },
-      resetInput(){
+      resetInput() {
         this.receiver = ''
         this.transferAmount = ''
         this.remark = ''
       },
-      doTransfer(){
+      doTransfer() {
 
         //如果账号余额为零则阻止操作
-        if(!this.balance){
+        if (!this.balance) {
           this.$vux.toast.show({
-            text:this.$t('Insufficient Balance!'),
-            type:'text',
-            width:'16rem',
-            position:'middle'
+            text: this.$t('Insufficient Balance!'),
+            type: 'text',
+            width: '16rem',
+            position: 'middle'
           })
           return
         }
         //校验收款账号不为空
-        if(!this.receiver){
+        if (!this.receiver) {
           this.$vux.toast.show({
-            text:this.$t('Please Enter Account'),
-            type:'text',
-            width:'16rem',
-            position:'middle'
+            text: this.$t('Please Enter Account'),
+            type: 'text',
+            width: '16rem',
+            position: 'middle'
           })
           return
         }
         //校验金额不为空
-        if(!this.transferAmount){
+        if (!this.transferAmount) {
           this.$vux.toast.show({
-            text:this.$t('Please Enter Amount Number'),
-            type:'text',
-            width:'16rem',
-            position:'middle'
+            text: this.$t('Please Enter Amount Number'),
+            type: 'text',
+            width: '16rem',
+            position: 'middle'
           })
           return
         }
         //校验金额为数字
-        if(!/^\d+(\.\d+)?$/.test(this.transferAmount)){
+        if (!/^\d+(\.\d+)?$/.test(this.transferAmount)) {
           this.$vux.toast.show({
-            text:this.$t('Please Enter Amount Number'),
-            type:'text',
-            width:'16rem',
-            position:'middle'
+            text: this.$t('Please Enter Amount Number'),
+            type: 'text',
+            width: '16rem',
+            position: 'middle'
           })
           return
         }
@@ -249,36 +254,47 @@ Insufficient Balance!:
 
         //转账操作
         this.$vux.loading.show({
-          text:'转账中'
+          text: '转账中'
         })
         let code = this.code
         let from = this.account
         let to = this.receiver
+        let sym = this.selected
         // let to = 'user'
         let quant = parseFloat(this.transferAmount) * 10000;
-        console.log(code,from,to,quant)
-        this.$http.get('/transfer',{
+        console.log(code, from, to, quant)
+        this.$http.get('/transfer', {
           params: {
-            code:code,
-            from:from,
-            to:to,
-            quant:quant
+            code: code,
+            from: from,
+            to: to,
+            quant: quant,
+            sym: sym
           }
-        }).then(res=>{
+        }).then(res => {
           console.log(res)
           let msg = res.data.msg
-          if(msg == 'Success'){
-            this.$vux.loading.hide()
+          if (msg == 'Success') {
             this.getTokenBalance(code)
             this.$vux.toast.show({
-              text:this.$t('Transfer Success'),
-              type:'success',
-              width:'16rem',
-              position:'middle',
-              onHide:this.resetInput()
+              text: this.$t('Transfer Success'),
+              type: 'success',
+              width: '16rem',
+              position: 'middle',
+              onHide: this.resetInput()
             })
+          }else {
+            this.$vux.alert.show({
+              title: this.$t('Transfer Fail'),
+              text: res.data.msg,
+              type: 'success',
+              width: '16rem',
+              position: 'middle'
+            })
+
           }
-        }).catch(res=>{
+          this.$vux.loading.hide()
+        }).catch(res => {
           console.log("转账失败，失败原因：" + res)
         })
       }

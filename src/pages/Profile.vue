@@ -21,7 +21,7 @@
           <cell class="setting-cell" :border-intent="false" :title="$t('Switch BP')" @click.native="showComingSoon = true" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('Security Test')" @click.native="showComingSoon = true" is-link></cell>
           <cell class="setting-cell" :border-intent="false" :title="$t('About Us')" is-link link="/about"></cell>
-          <cell class="setting-cell" :border-intent="false" :title="$t('Contact Us')" @click.native="show = !show" is-link></cell>
+          <!--<cell class="setting-cell" :border-intent="false" :title="$t('Contact Us')" @click.native="show = !show" is-link></cell>-->
           <x-button class="terms" link="/license">{{$t('Terms')}}</x-button>
         </div>
       </card>

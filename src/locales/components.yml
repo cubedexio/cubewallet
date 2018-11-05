@@ -102,6 +102,7 @@ en:
   Password: Password
   Please check the user agreement: Please check the user agreement
   Please enter verify code: Please enter verify code
+  Transfer Fail: Transfer Fail
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -206,3 +207,4 @@ zh-CN:
   Password: 密码
   Please check the user agreement: 请先同意用户协议
   Please enter verify code: 请输入验证码
+  Transfer Fail: 转账失败
