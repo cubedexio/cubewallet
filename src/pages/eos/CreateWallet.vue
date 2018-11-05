@@ -29,8 +29,8 @@ Register:
 
 <script>
 import { Group, XHeader, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem } from 'vux'
-
-
+import eosjs from 'eosjs-ecc'
+import { eosEndpoint } from '@/config'
 
 export default {
 
@@ -47,17 +47,57 @@ export default {
   },
   data () {
     return{
-      eosname: ''
+      eosname: '',
+      privateKey: '',
+      publicKey: ''
+
     }
   },
   mounted(){
 
+      this.newkeypairs()
+
   },
-  methods: {
-      createEOSAccount() {
-          alert("SB")
-      }
-  }
+    methods: {
+
+        newkeypairs() {
+            eosjs.randomKey().then(privateKey => {
+                this.privateKey = privateKey
+                this.publicKey = ecc.privateToPublic(privateKey)
+            })
+
+        },
+        createEOSAccount() {
+  
+
+            this.$http.post(eosEndpoint + '/v1/chain/get_account', {
+                account_name: this.eosname
+            }).then( res=>{
+                if( res.status === 200 && res.data.account_name ) {
+                    // account check out,next
+                    this.$vux.toast.show({
+                        text:this.$t('Account name unavailabe, please input another one' ),
+                        type:'text',
+                        // width:'16rem',
+                        // position:'middle'
+                    })                    
+                } else {
+                    // alert('ok')
+                    this.$router.push({ 
+                        path: '/createwalletpay', 
+                        query: {
+                            eosname: this.eosname,
+                            pubkey: this.publicKey,
+                            prvkey: this.privateKey
+                        }
+                    })
+
+                }
+            }, err=>{
+
+            })
+        }
+    }
 }
 </script>
 
