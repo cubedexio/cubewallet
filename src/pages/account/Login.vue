@@ -17,7 +17,7 @@
 
 
         </flexbox-item>
-        <flexbox-item :span="5/12" class="flex-item flex-btn">
+        <flexbox-item :span="5/12" class="flex-item ">
 
             <div>
                 <x-button type='primary' @click.native="onLogin">{{ $t('Login') }}</x-button>
@@ -147,7 +147,7 @@ export default {
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
-  background-size: auto 100%;
+  background-size:  100% 100%;
 }
 
 .flex-item {

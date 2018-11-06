@@ -36,7 +36,7 @@
 
 
         </flexbox-item>
-        <flexbox-item :span="3/12" class="flex-item flex-btn">
+        <flexbox-item :span="3/12" class="flex-item ">
 
             <div>
                 <x-button @click.native="register">{{$t('Register')}}</x-button>

@@ -31,7 +31,7 @@
 
 
         </flexbox-item>
-        <flexbox-item :span="3/12" class="flex-item flex-btn">
+        <flexbox-item :span="3/12" class="flex-item ">
 
             <div>
                 <x-button @click.native="forgot">重置密码</x-button>
