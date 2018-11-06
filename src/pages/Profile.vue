@@ -167,6 +167,7 @@ Cancel:
           onConfirm(){
             that.$store.commit('setAccessToken', undefined)
             that.$store.commit('setLoggedIn', false)
+            that.$store.commit('setEOSAccountName', undefined)
             that.$router.replace('/login')
           },
           onCancel(){}

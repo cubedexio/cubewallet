@@ -198,13 +198,16 @@ export default {
                     return;
                 }else {
 
-
+                    this.$store.commit('setMemo', res.data.data.memo)
+                    this.$store.commit('setLoggedIn', true)
+                    this.$store.commit('setAccessToken', res.data.data.accessToken)
+                    this.$store.commit('setRefreshToken', res.data.data.refreshToken)
 
                     var self = this
                     this.$vux.alert.show({
                         title: '注册成功',
                         onHide () {
-                            self.$router.replace('/importwallet')
+                            self.$router.replace('/eosindex')
                         }
                     });
                 }

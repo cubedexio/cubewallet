@@ -63,8 +63,7 @@ export default {
     },
     computed: mapState([
         // ...
-        'privateKey',
-        'eosAccountName'
+        'memo',
     ]),
     methods: {
         onImportEOSAccount: function() {
@@ -75,25 +74,43 @@ export default {
                 return
             }
 
+            this.$vux.loading.show({
+                text: '导入中'
+            })
+
+            let eosAccount = undefined
+
             const publicKey = eosjs.privateToPublic(this.privatekey ) 
 
             this.$http.post(eosURI,  {
                 public_key: publicKey
             }).then( (res)=>{
                 if( res.status !== 200  ) {
-                    this.$vux.alert.show({ title: '导入失败'});                                   
-                    return;     
+                    throw new Error(`服务器错误:${res.status}`)                                
                 }
                 if( res.data.account_names === undefined || res.data.account_names.length <= 0 ) {
-                    this.$vux.alert.show({ title: '导入失败', content: '未找到对应帐户'});                                   
-                    return;        
+                    throw new Error(`未找到对应帐户`)                                 
                 }
-                const eosAccount = res.data.account_names[0]
+                eosAccount = res.data.account_names[0]
+                
 
+                return this.$http.post('/create_account', {
+                    memo: this.memo,
+                    name: eosAccount
+                })
+
+            }).then(res=>{
+                if( res.status !== 200  ) {
+                    throw new Error(`服务器错误:${res.status}`)
+                }
+                if( res.data.code !== 0) {
+                    throw new Error(`${res.data.msg}`)
+                }
+
+                this.$vux.loading.hide();
 
                 this.$store.commit('setPrivateKey', this.privatekey)
                 this.$store.commit('setEOSAccountName', eosAccount)
-                this.$store.commit('setLoggedIn', true)
 
                 let self = this;
                 this.$vux.alert.show({ 
@@ -103,8 +120,9 @@ export default {
                     }    
                 });  
 
-            }, (err)=>{
-               this.$vux.alert.show({ title: '导入失败', content: err.message });   
+            }).catch(err=>{
+                this.$vux.loading.hide();
+               this.$vux.alert.show({ title: '导入失败', content: err.toString() });  
             })
 
             

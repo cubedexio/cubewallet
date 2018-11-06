@@ -21,6 +21,7 @@ export default new Vuex.Store({
         eosAccountName: undefined,
         accessToken: undefined,
         refreshToken: undefined,
+        memo: undefined,
         userAvatar:'m1'
     },
     mutations: {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
         },
         setRefreshToken (state, token) {
             state.refreshToken = token
+        },
+        setMemo(state, memo) {
+            state.memo = memo;
         },
       SETUSERAVATAR (state, val) {
           state.userAvatar = val

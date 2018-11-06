@@ -4,7 +4,7 @@
         <router-view></router-view>
 
 
-            <tabbar id="c-nav-tab" class="nav-tab" v-if="$store.state.loggedIn ">
+            <tabbar id="c-nav-tab" class="nav-tab" v-if="$store.state.loggedIn && $store.state.eosAccountName">
             <tabbar-item @click.native="go('home')" selected>
                 <i class="icon-wallet" slot="icon"></i>
             </tabbar-item>

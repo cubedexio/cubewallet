@@ -111,12 +111,23 @@ export default {
                 this.$store.commit('setLoggedIn', true)
                 this.$store.commit('setAccessToken', res.data.data.accessToken)
                 this.$store.commit('setRefreshToken', res.data.data.refreshToken)
+                this.$store.commit('setEOSAccountName', res.data.data.name)
+                this.$store.commit('setMemo', res.data.data.memo)
+                
+                this.$vux.toast.show({
+                    text:this.$t('Login succeeed'),
+                    type:'text',
+                    position:'middle'
+                })
 
-                setTimeout(()=>{
+                console.log(res.data.data.name)
+                console.log(res.data.data.name == "" || res.data.data.name == undefined)
+
+                if(res.data.data.name == "" || res.data.data.name == undefined) { // 若没有EOS帐号提示导入或创建
+                    this.$router.replace("/eosindex")
+                }else {
                     this.$router.replace('/home')
-                }, 500)
-
-
+                }
 
             }, (err)=> {
                 console.log(err)

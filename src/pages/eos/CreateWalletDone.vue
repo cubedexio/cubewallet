@@ -102,7 +102,7 @@ export default {
         },
 
         
-        pay() {            
+        pay2() {            
 
             let orderId = null
             this.$http.get('/get_alipay_order') // 获取订单
