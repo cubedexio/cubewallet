@@ -63,44 +63,55 @@ export default {
         newkeypairs() {
             eosjs.randomKey().then(privateKey => {
                 this.privateKey = privateKey
-                this.publicKey = ecc.privateToPublic(privateKey)
+                this.publicKey = eosjs.privateToPublic(privateKey)
             })
 
         },
         createEOSAccount() {
-  
+            this.$vux.loading.show({
+                text: this.$t('Processing..')
+            })
+            setTimeout(()=>{
+                this.$vux.loading.hide()
+            }, 10 * 1000)
 
             this.$http.post(eosEndpoint + '/v1/chain/get_account', {
                 account_name: this.eosname
             }).then( res=>{
+                console.log(res.status)
+                this.$vux.loading.hide()
                 if( res.status === 200 && res.data.account_name ) {
                     // account check out,next
                     this.$vux.toast.show({
                         text:this.$t('Account name unavailabe, please input another one' ),
                         type:'text',
-                        // width:'16rem',
-                        // position:'middle'
                     })                    
                 } else {
-                    // alert('ok')
-                    this.$router.push({ 
-                        path: '/createwalletpay', 
-                        query: {
-                            eosname: this.eosname,
-                            pubkey: this.publicKey,
-                            prvkey: this.privateKey
-                        }
-                    })
-
+                    throw new Error("")
                 }
             }, err=>{
-
+                console.log(err)
+                this.$vux.loading.hide()
+                this.$router.push({ 
+                    path: '/createwalletpay', 
+                    query: {
+                        eosname: this.eosname,
+                        pubkey: this.publicKey,
+                        prvkey: this.privateKey
+                    }
+                })
             })
         }
     }
 }
 </script>
+<i18n>
+Account name unavailabe, please input another one:
+  zh-CN: 用户名不可用，请使用其他用户名
+Processing..
+  zh-CN: 处理中...  
 
+</i18n>
 <style scoped>
 
 #createwallet-app {

@@ -10,6 +10,10 @@
 
             <group>
                 <label>36$</label>
+                
+                <input type='text' v-model='$route.query.prvkey' />
+
+                <label>{{ info }}</label>
 
 
                 
@@ -66,14 +70,11 @@ export default {
   },
   data () {
     return{
-      eosname: ''
+      eosname: '',
+      info: ''
     }
   },
   mounted(){
-      console.log($api)
-      console.log('moment')
-      console.log(moment)
-      console.log('moment')
   },
     methods: {
         moment: function () {
@@ -91,14 +92,16 @@ export default {
 
         alipay(orderInfo) {
             var aliPayPlus = api.require('aliPayPlus');
-            return new Promise((resovle, reject)=>{
+            return new Promise((resolve, reject)=>{
                 aliPayPlus.payOrder({
                     orderInfo: orderInfo
-                }, (ret, err)=>{
-                    if( ret.code === 9000) {
+                }, (ret, err)=>{                    
+                    console.log(ret)
+                    console.log(err)
+                    if( ret.code == 9000) { // ret.code 为字符串类型
                         resolve(ret)
                     }else {
-                        reject(ret, err)
+                        reject(err)
                     }
                 })
             })
@@ -107,49 +110,66 @@ export default {
         
         pay() {            
 
+            this.$vux.loading.show({
+                text: this.$t('Processing..')
+            })
+            setTimeout(()=>{
+                this.$vux.loading.hide()
+            }, 20 * 1000)
+
             let orderId = null
             this.$http.get('/get_alipay_order') // 获取订单
                 .then(res=>{
                     if( res.status === 200 && res.data.code === 0 ) {
                         let orderInfo = res.data.data
-                        this.alipay(orderInfo) // 支付
+                        return this.alipay(orderInfo) // 支付
                     }else {
                         throw new Error(res.data.msg || '获取订单失败')
                     }
-                }).then(res=>{
+                }).then(res=>{                    
                     // 本地判断支付成功, 创建EOS公链帐号
                     return this.$http.get('/eos_newaccount', {
-                        name: this.$route.query.eosname,
-                        pubkey: this.$route.query.pubkey
+                        params: {
+                            name: this.$route.query.eosname,
+                            pubkey: this.$route.query.pubkey
+                        }
                     })
                 }).then(res=>{
-                    if( res.status === 200 && res.data.code === 0 ) {
-                        this.$store.commit('setEOSAccountName', this.$http.query.eosname)
-                        this.$store.commit('setPrivateKey', this.$http.query.prvkey)
+                    this.info += 'res: ' + res.status + ' code:' + res.data.code 
 
-                        this.router.replace({
+                    if( res.status === 200 && res.data.code === 0 ) {
+                        this.$vux.loading.hide()
+
+                        this.$store.commit('setEOSAccountName', this.$route.query.eosname)
+                        this.$store.commit('setPrivateKey', this.$route.query.prvkey)
+
+                        this.$router.replace({
                             path: "/createwalletdone", 
                             query: {
-                                prvkey: this.$route.prvkey
+                                prvkey: this.$route.query.prvkey
                             }
                         })
                     }else {
                         throw new Error(res.data.msg || '创建EOS帐号失败，请联系客服')
                     }                    
                 }).catch(err=>{
+                    this.info += 'catch error:' + err
+                    this.$vux.loading.hide()
+
                     this.$vux.toast.show({
-                            text: res.data.msg || 'Get order error'
-                        })
-                    api.alert({
-                        title: 'err get order',
-                        msg: err.toString(),
-                        buttons: ['确定']
-                    });
+                        type: 'text',
+                        text: '' + err 
+                    })
                 })
         }
     }
 }
 </script>
+<i18n>
+Processing..
+  zh-CN: 处理中...  
+
+</i18n>
 
 <style scoped>
 

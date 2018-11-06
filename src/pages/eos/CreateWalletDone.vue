@@ -10,7 +10,7 @@
             <group>
                 创建帐号完成，请务必保存好您的私钥
 
-                {{ $route.query.prvkey }}
+                <input type='text' v-model='$route.query.prvkey' />
 
                 
             </group>
@@ -22,7 +22,7 @@
         </flexbox-item>
         <flexbox-item :span="1/4" class="flex-item">      
 
-                <x-button type='default' @click.native="pay">确认</x-button>
+                <x-button type='default' @click.native="done">确认</x-button>
 
         </flexbox-item>
     </flexbox>
@@ -76,73 +76,9 @@ export default {
         moment: function () {
             return moment();
         },
-
-        getOrder() {
-            return this.$http.get('/get_pay_order')
-                .then(res=>{
-
-                }, err=>{
-
-                })
-        },
-
-        alipay(orderInfo) {
-            var aliPayPlus = api.require('aliPayPlus');
-            return new Promise((resovle, reject)=>{
-                aliPayPlus.payOrder({
-                    orderInfo: orderInfo
-                }, (ret, err)=>{
-                    if( ret.code === 9000) {
-                        resolve(ret)
-                    }else {
-                        reject(ret, err)
-                    }
-                })
-            })
-        },
-
-        
-        pay2() {            
-
-            let orderId = null
-            this.$http.get('/get_alipay_order') // 获取订单
-                .then(res=>{
-                    if( res.status === 200 && res.data.code === 0 ) {
-                        let orderInfo = res.data.data
-                        this.alipay(orderInfo) // 支付
-                    }else {
-                        throw new Error(res.data.msg || '获取订单失败')
-                    }
-                }).then(res=>{
-                    // 本地判断支付成功, 创建EOS公链帐号
-                    return this.$http.get('/eos_newaccount', {
-                        name: this.$route.query.eosname,
-                        pubkey: this.$route.query.pubkey
-                    })
-                }).then(res=>{
-                    if( res.status === 200 && res.data.code === 0 ) {
-                        this.$store.commit('setEOSAccountName', this.$http.query.eosname)
-
-                        this.router.replace({
-                            path: "/createwalletdone", 
-                            query: {
-                                prvkey: this.$route.prvkey
-                            }
-                        })
-                    }else {
-                        throw new Error(res.data.msg || '创建EOS帐号失败，请联系客服')
-                    }                    
-                }).catch(err=>{
-                    this.$vux.toast.show({
-                            text: res.data.msg || 'Get order error'
-                        })
-                    api.alert({
-                        title: 'err get order',
-                        msg: err.toString(),
-                        buttons: ['确定']
-                    });
-                })
-        }
+        done() {
+            this.$router.replace('/home')
+        }        
     }
 }
 </script>
