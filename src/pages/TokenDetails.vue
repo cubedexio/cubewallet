@@ -205,7 +205,7 @@ Transfer Record:
         this.$http.get('/balance',{
           params:{
             code:this.code,
-            scope:this.myAddress
+            name:this.myAddress
           }
         }).then(res=>{
           // console.log(Boolean(res.data.data))

@@ -1,7 +1,7 @@
 let common = {
   /**
    * 获取余额字符串中的数字
-   * @param str string
+   * @param str String
    * @return number
   **/
   getNumByBalance(str){
@@ -15,7 +15,7 @@ let common = {
 
   /**
    * 移动设备顶部状态适配
-   * @param header string
+   * @param header String
   **/
   fixStatusBarByHeader(header){
     if(!header) return;
@@ -26,13 +26,22 @@ let common = {
 
   /**
    * 移动设备底部导航栏适配
-   * @param nav string
+   * @param nav String
   **/
   fixTabBarByNav(nav){
     if(!nav) return;
     let n = $api.byId(nav);
     if(!n) return;
     $api.fixTabBar(n);
+  },
+
+  /**
+   * 计算eos兑cbt比率
+   * @param price Number
+   * @return number
+   **/
+  exchangeRate(num){
+    return (1 / num).toFixed(4);
   }
 }
 

@@ -11,7 +11,7 @@
           <p class="text-center"><b>Cube Wallet</b></p>
           <p class="text-center version">V0.0.1</p>
         </flexbox-item>
-        <flexbox-item :span="3/5" >
+        <flexbox-item :span="3/5">
           <group>
             <cell>
               <span slot="title">Website</span>
@@ -49,15 +49,19 @@
     Group,
     Cell
   }
-  from 'vux'
+    from 'vux'
+
   export default {
-  components:{
-    ViewBox,
-    XHeader,
-    Flexbox,
-    FlexboxItem,
-    Group,
-    Cell
-  }
+    components: {
+      ViewBox,
+      XHeader,
+      Flexbox,
+      FlexboxItem,
+      Group,
+      Cell
+    },
+    mounted(){
+      this.$common.fixStatusBarByHeader('c-header')
+    }
   }
 </script>

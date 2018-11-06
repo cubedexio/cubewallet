@@ -53,31 +53,31 @@
   </transition>
 </template>
 <i18n>
-Transfer:
+  Transfer:
   zh-CN: 转账
-Token:
+  Token:
   zh-CN: 通证
-Receiver:
+  Receiver:
   zh-CN: 收款人
-Transfer Amount:
+  Transfer Amount:
   zh-CN: 转账数量
-Balance:
+  Balance:
   zh-CN: 余额
-Remark:
+  Remark:
   zh-CN: 备注
-Please Enter Account:
+  Please Enter Account:
   zh-CN: 请输入账户名称
-Please Enter Amount Number:
+  Please Enter Amount Number:
   zh-CN: 请输入金额数字
-Please Enter Remark:
+  Please Enter Remark:
   zh-CN: 请输入备注
-Confirm Transfer:
+  Confirm Transfer:
   zh-CN: 确认转账
-Transfer Success:
+  Transfer Success:
   zh-CN: 转账成功
-Transfer Fail:
+  Transfer Fail:
   zh-CN: 转账失败
-Insufficient Balance!:
+  Insufficient Balance!:
   zh-CN: 余额不足
 </i18n>
 <script>
@@ -135,13 +135,13 @@ Insufficient Balance!:
         isBalanceLoaded: false
       }
     },
-    mounted(){
-      this.$common.fixStatusBarByHeader('c-header')
+    mounted() {
       this.account = this.$store.state.eosAccountName
       if (!this.account) {
         this.account = 'fenghaha'
       }
       this.getTokenBalance(this.code)
+      this.$common.fixStatusBarByHeader('c-header')
     },
     computed: {
       balanceNum() {
@@ -167,7 +167,7 @@ Insufficient Balance!:
         this.$http.get('/balance', {
           params: {
             code: code,
-            scope: userName
+            name: userName
           }
         }).then(res => {
           if (res.status !== 200 || res.data.code !== 0) {
@@ -183,7 +183,7 @@ Insufficient Balance!:
           this.isBalanceLoaded = true
 
         }).catch(res => {
-          console.log('获取余额失败，失败原因', res)
+          console.log('获取余额失败：', res)
         })
       },
       getBalanceNum(str) {
@@ -201,7 +201,6 @@ Insufficient Balance!:
         this.remark = ''
       },
       doTransfer() {
-
         //如果账号余额为零则阻止操作
         if (!this.balance) {
           this.$vux.toast.show({
@@ -274,26 +273,26 @@ Insufficient Balance!:
           }
         }).then(res => {
           console.log(res)
-          let msg = res.data.msg
-          if (msg == 'Success') {
-            this.getTokenBalance(code)
-            this.$vux.toast.show({
-              text: this.$t('Transfer Success'),
+          if (res.data.code !== 0 || res.status !== 200) {
+            this.$vux.alert.show({
+              title: this.$t('Transfer Fail'),
+              content: res.data.msg,
               type: 'success',
               width: '16rem',
               position: 'middle',
-              onHide: this.resetInput()
+              onConfirm: this.getTokenBalance(code)
             })
-          }else {
-            this.$vux.alert.show({
-              title: this.$t('Transfer Fail'),
-              text: res.data.msg,
-              type: 'success',
-              width: '16rem',
-              position: 'middle'
-            })
-
+            this.$vux.loading.hide()
+            return
           }
+          this.getTokenBalance(code)
+          this.$vux.toast.show({
+            text: this.$t('Transfer Success'),
+            type: 'success',
+            width: '16rem',
+            position: 'middle',
+            onHide: this.resetInput()
+          })
           this.$vux.loading.hide()
         }).catch(res => {
           console.log("转账失败，失败原因：" + res)

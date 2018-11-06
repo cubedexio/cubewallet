@@ -100,7 +100,7 @@ Reserved Balance:
         this.$http.get('/balance',{
           params:{
             code:this.code,
-            scope:this.account
+            name:this.account
           }
         }).then(res=>{
           if( res.status !== 200  || res.data.code !== 0 ) {

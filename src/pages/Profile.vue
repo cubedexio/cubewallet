@@ -175,7 +175,7 @@ Cancel:
       },
       goForgot(){
         // this.$store.commit('setLoggedIn',false)
-        this.$router.replace('forgot')
+        this.$router.push('forgot')
       }
     }
   }
