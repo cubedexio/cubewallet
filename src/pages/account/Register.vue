@@ -235,6 +235,10 @@ export default {
     background-clip: padding-box;
 }
 
+.flex-input {
+    min-height: 20rem;
+}
+
 .license {
     color: #F5A623;
 }
@@ -256,7 +260,7 @@ label.agreeterm {
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in.jpg") center 0  no-repeat ;
-  background-size: auto 100%;
+    background-size:  cover;
 }
 .custom-default {
   border-radius: 99px!important;

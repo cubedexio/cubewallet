@@ -50,7 +50,7 @@ Register:
 import { Group, XHeader, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem } from 'vux'
 import moment from 'moment'
 
-
+import { mapState } from 'vuex'
 import { eosEndpoint, alipayAppId } from '@/config'
 import { resolve } from 'path';
 import { rejects } from 'assert';

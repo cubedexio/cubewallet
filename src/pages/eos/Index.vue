@@ -67,7 +67,7 @@ export default {
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
-    background-size: 100%;
+    background-size: cover;
 }
 
 .flex-item {

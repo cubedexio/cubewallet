@@ -147,7 +147,12 @@ export default {
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
-  background-size:  100% 100%;
+    background-size:  cover;
+    
+}
+
+.flex-input {
+    min-height: 14rem;
 }
 
 .flex-item {
