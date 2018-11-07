@@ -8,7 +8,7 @@
           <br>
           <p class="done-tips text-center">创建帐号完成，请务必保存好您的私钥</p>
           <div class="prvkey">
-            <input type='text' v-model='$route.query.prvkey' />
+            <textarea name="" id="" v-model='$route.query.prvkey' cols="30" rows="4"></textarea>
           </div>
           <span class="warn">
             请确保已将私钥认真抄写再纸上，妥善保管好。电子方式只建议保存在密码保管箱，切勿截图或保存在网络工具里，非常危险
@@ -111,10 +111,20 @@ export default {
 }
 .prvkey{
   display: block;
-  width: 12rem;
+  width: 16rem;
   margin: 1rem auto;
-  padding: 3rem;
+  padding: 1rem;
   background: #f3f5f7;
+  textarea{
+    width: 100%;
+    height: 100%;
+    font-size: 1.25rem;
+    font-family: Arial;
+    word-wrap: break-spaces;
+    border:0;
+    background: transparent;
+    outline: none;
+  }
 }
 label#hint-label {
     color: #fff;

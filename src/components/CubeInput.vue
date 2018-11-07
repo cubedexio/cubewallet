@@ -1,20 +1,20 @@
 <template>
   <div>
-    <input class='cube-input' :value='value' ref="cubeinput" @input='updateValue()'/>
+    <input class='cube-input' :placeholder="placeholder" :value='value' ref="cubeinput" @input='updateValue()'/>
   </div>
 </template>
 
 <script>
 
 
-export default {
-    props: ['value'],
-    components: {
-
-    },
-    data:  function() {
-        return {
-        }
+  export default {
+    props: [
+      'value',
+      'placeholder'
+    ],
+    components: {},
+    data: function () {
+      return {}
     },
     methods: {
         updateValue: function() {
@@ -39,7 +39,19 @@ export default {
     border-radius: 0;
 }
 
-.reversed .cube-input {
+  .cube-input::-webkit-input-placeholder {
+    color: white;
+  }
+
+  .cube-input:-moz-placeholder {
+    color: white;
+  }
+
+  .cube-input:-ms-input-placeholder {
+    color: white;
+  }
+
+  .reversed .cube-input {
     color: black;
     border-bottom: solid 1px black;
 }

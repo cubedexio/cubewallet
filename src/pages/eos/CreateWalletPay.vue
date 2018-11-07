@@ -8,7 +8,9 @@
         <label class="title">请支付一定金额用于创建EOS钱包帐号</label>
         <br>
         <label class="money"><span>￥</span>36</label>
-        <input type='text' v-model='$route.query.prvkey' />
+        <p>
+          <input type='text' v-model='$route.query.prvkey' />
+        </p>
 
         <label>{{ info }}</label>
         <br>

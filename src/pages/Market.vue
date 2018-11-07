@@ -1,7 +1,7 @@
 <template>
-  <div id="market" class="head-sm-pic">
+  <div id="market">
     <view-box>
-      <x-header id="c-header" :left-options="{showBack: false}" class="header-content">{{$t('Market')}}</x-header>
+      <x-header id="c-header" :left-options="{showBack: false}" class="header-content head-bg-md">{{$t('Market')}}</x-header>
       <x-table class="token-table" :cell-bordered="false">
         <thead>
         <tr>
@@ -76,25 +76,28 @@
       }
     },
     mounted() {
-      // setInterval(() => {
-      //   this.getEosPrice()
-      //   this.getCbtPrice()
-      // }, 5000)
-      this.getEosPrice()
-      this.getCbtPrice()
+      setInterval(() => {
+        this.getPrice()
+      }, 5000)
+      this.getPrice()
+    },
+    updated(){
+      console.log('updated')
     },
     methods: {
+      getPrice(){
+        this.getEosPrice()
+        this.getCbtPrice()
+      },
       goTransaction() {
         this.$router.push('/transaction')
       },
       getEosPrice() {
         this.$http.get('/prices', {
           params: {
-            sym: 'eos',
-            hour: 14
+            sym: 'eos'
           }
         }).then(res => {
-          console.log(res)
           if (res.status !== 200 || res.data.code !== 0) {
             this.$vux.alert.show({
               title: this.$t('Get price fail'),
@@ -104,7 +107,8 @@
           }
           this.tokenList[0].price = res.data.data.price
           if(res.data.data.percent){
-            this.tokenList[0].range = res.data.data.percent.toFixed(2)
+            let range = parseFloat(res.data.data.percent).toFixed(2)
+            this.tokenList[0].range = range
           }else {
             this.tokenList[0].range = 0.00
           }
@@ -113,8 +117,7 @@
       getCbtPrice() {
         this.$http.get('/prices', {
           params: {
-            sym: 'cbt',
-            hour: 14
+            sym: 'cbt'
           }
         }).then(res => {
           if (res.status !== 200 || res.data.code !== 0) {
@@ -125,9 +128,10 @@
             return
           }
           if(res.data.data.percent){
-            this.tokenList[1].range = res.data.data.percent.toFixed(2)
+            let range = parseFloat(res.data.data.percent).toFixed(2)
+            this.tokenList[1].range = range
           }else {
-            this.tokenList[1].range = 0
+            this.tokenList[1].range = 0.00
           }
           this.tokenList[1].price = res.data.data.price
         })
