@@ -18,9 +18,7 @@
         <br>
       </flexbox-item>
       <flexbox-item :span="4/6" class="pay-btn">
-
         <x-button type='primary' @click.native="pay">去支付</x-button>
-
       </flexbox-item>
     </flexbox>
 

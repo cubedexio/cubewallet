@@ -8,7 +8,6 @@
           <br>
           <p class="done-tips text-center">创建帐号完成，请务必保存好您的私钥</p>
           <div class="prvkey">
-
             <input type='text' v-model='$route.query.prvkey' />
           </div>
           <span class="warn">
@@ -16,9 +15,7 @@
           </span>
         </flexbox-item>
         <flexbox-item :span="4/6" class="flex-item">
-
-                <x-button type='default' @click.native="done">确认</x-button>
-
+            <x-button type='default' @click.native="done">确认</x-button>
         </flexbox-item>
     </flexbox>
 
