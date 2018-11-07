@@ -1,7 +1,7 @@
 <template>
   <div id="token-details" class="head-bg-pic">
     <view-box>
-      <x-header class="header-content" :left-options="{backText:''}">
+      <x-header id="c-header" class="header-content" :left-options="{backText:''}">
         <i class="token-icon">
           <img v-if="tokenName=='CBT'" src="@/assets/images/cubecart.png" alt="">
           <img v-else src="@/assets/images/eos.png" alt="">
@@ -166,7 +166,6 @@ Transfer Record:
     },
     data() {
       return {
-        tokenImg: 'http://www.cubecart.io/img/cubecart_logo.2392cac3.png',
         tokenName: 'CBT',
         tokenAmount: 0,
         transfers:[],
@@ -186,6 +185,10 @@ Transfer Record:
       this.setTokenName()
       this.getBalance()
       this.getTransList()
+    },
+    mounted(){
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
     },
     computed: {
       amount() {

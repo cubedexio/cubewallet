@@ -1,19 +1,25 @@
 <template>
-  
+
     <div id="createwallet-app">
-    <x-header>创建EOS帐号</x-header>
-    <flexbox  orient="vertical" justify="space-around">
-        <flexbox-item :span="1/4" class="flex-item">
-            <group>
-                <x-input title="" placeholder="请输入EOS帐号" v-model="eosname"></x-input>
-            </group>
+    <x-header id="c-header" class="header-content" :left-options="{backText:''}">创建EOS帐号</x-header>
+        <!--<flexbox  orient="vertical" justify="space-around">-->
+          <!--<flexbox-item :span="1/2" class="flex-item eos-account">-->
+            <!--<cube-input title="" placeholder="请输入EOS帐号" v-model="eosname"></cube-input>-->
+          <!--</flexbox-item>-->
+          <!--<flexbox-item :span="1/2" class="flex-item">-->
+            <!--<br>-->
+            <!--<x-button type='default' @click.native="createEOSAccount">确认</x-button>-->
+          <!--</flexbox-item>-->
+        <!--</flexbox>-->
+      <flexbox orient="vertical" justify="space-around">
+        <flexbox-item>
+          <cube-input class="eos-account" title="" placeholder="请输入EOS帐号" v-model="eosname"></cube-input>
         </flexbox-item>
-        <flexbox-item :span="1/4" class="flex-item">      
-
-                <x-button type='default' @click.native="createEOSAccount">确认</x-button>
+        <flexbox-item>
+          <x-button type='default' @click.native="createEOSAccount">确认</x-button>
 
         </flexbox-item>
-    </flexbox>
+      </flexbox>
 
 
 
@@ -29,6 +35,7 @@ Register:
 
 <script>
 import { Group, XHeader, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem } from 'vux'
+import CubeInput from '@/components/CubeInput'
 import eosjs from 'eosjs-ecc'
 import { eosEndpoint } from '@/config'
 
@@ -43,7 +50,8 @@ export default {
     Tabbar,
     TabbarItem,
     Flexbox,
-    FlexboxItem
+    FlexboxItem,
+    CubeInput
   },
   data () {
     return{
@@ -56,6 +64,8 @@ export default {
   mounted(){
 
       this.newkeypairs()
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
 
   },
     methods: {
@@ -68,12 +78,16 @@ export default {
 
         },
         createEOSAccount() {
+<<<<<<< HEAD
             this.$vux.loading.show({
                 text: this.$t('Processing..')
             })
             setTimeout(()=>{
                 this.$vux.loading.hide()
             }, 10 * 1000)
+=======
+
+>>>>>>> 29d3b11... Bug fix/create wallet UI
 
             this.$http.post(eosEndpoint + '/v1/chain/get_account', {
                 account_name: this.eosname
@@ -85,9 +99,26 @@ export default {
                     this.$vux.toast.show({
                         text:this.$t('Account name unavailabe, please input another one' ),
                         type:'text',
+<<<<<<< HEAD
                     })                    
                 } else {
                     throw new Error("")
+=======
+                        // width:'16rem',
+                        // position:'middle'
+                    })
+                } else {
+                    // alert('ok')
+                    this.$router.push({
+                        path: '/createwalletpay',
+                        query: {
+                            eosname: this.eosname,
+                            pubkey: this.publicKey,
+                            prvkey: this.privateKey
+                        }
+                    })
+
+>>>>>>> 29d3b11... Bug fix/create wallet UI
                 }
             }, err=>{
                 console.log(err)
@@ -111,27 +142,24 @@ Account name unavailabe, please input another one:
 Processing..
   zh-CN: 处理中...  
 
+<<<<<<< HEAD
 </i18n>
 <style scoped>
+=======
+<style lang="less" scoped>
+>>>>>>> 29d3b11... Bug fix/create wallet UI
 
 #createwallet-app {
     width: 100%;
     height: 100%;
-    background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
-    background-size: 100%;
+    background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
+    background-size: auto 100%;
 }
 
-.flex-item {
-    display: flex;
-    width: 75%;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-    align-items: center;
-
-    text-align: center;
-    background-clip: padding-box;
+.eos-account{
+    padding:1rem 3rem;
 }
+
 
 
 label#hint-label {

@@ -1,13 +1,6 @@
 <template>
-  
-    <div id="createwalletpay-app">
-    <x-header>支付</x-header>
-    <flexbox  orient="vertical" justify="space-around">
-        <flexbox-item :span="1/4" class="flex-item">
-            <group>
-                <label>请支付一定金额用于创建EOS钱包帐号</label>
-            </group>
 
+<<<<<<< HEAD
             <group>
                 <label>36$</label>
                 
@@ -32,21 +25,42 @@
                 <x-button type='default' @click.native="pay">确认</x-button>
 
         </flexbox-item>
+=======
+  <div id="createwalletpay-app">
+    <x-header :left-options="{backText:''}" class="header-content head-bg-md">支付</x-header>
+    <flexbox class="pay-flex" orient="vertical" justify="space-around">
+      <flexbox-item :span="2/6" class=" pay-info">
+        <br>
+        <label class="title">请支付一定金额用于创建EOS钱包帐号</label>
+        <br>
+        <label class="money"><span>￥</span>36</label>
+        <br>
+        <span class="time">{{ moment().format('YYYY-MM-DD HH:mm:ss') }}</span>
+        <br>
+        <img src="@/assets/images/alipay.png" alt="">
+        <br>
+      </flexbox-item>
+      <flexbox-item :span="4/6" class="pay-btn">
+
+        <x-button type='primary' @click.native="pay">去支付</x-button>
+
+      </flexbox-item>
+>>>>>>> 29d3b11... Bug fix/create wallet UI
     </flexbox>
 
 
-
-    </div>
+  </div>
 </template>
 <i18n>
-Login:
-    zh-CN: 登录
-Register:
-    zh-CN: 注册
+  Login:
+  zh-CN: 登录
+  Register:
+  zh-CN: 注册
 
 </i18n>
 
 <script>
+<<<<<<< HEAD
 import { Group, XHeader, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem } from 'vux'
 import moment from 'moment'
 
@@ -178,8 +192,116 @@ export default {
                     })
                 })
         }
+=======
+  import {Group, XHeader, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem} from 'vux'
+  import moment from 'moment'
+
+
+  import {eosEndpoint, alipayAppId} from '@/config'
+  import {resolve} from 'path';
+  import {rejects} from 'assert';
+
+  export default {
+
+    components: {
+      Group,
+      XInput,
+      XHeader,
+      XButton,
+      Cell,
+      Tabbar,
+      TabbarItem,
+      Flexbox,
+      FlexboxItem
+    },
+    data() {
+      return {
+        eosname: ''
+      }
+    },
+    mounted() {
+      console.log($api)
+      console.log('moment')
+      console.log(moment)
+      console.log('moment')
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
+    },
+    methods: {
+      moment: function () {
+        return moment();
+      },
+
+      getOrder() {
+        return this.$http.get('/get_pay_order')
+          .then(res => {
+
+          }, err => {
+
+          })
+      },
+
+      alipay(orderInfo) {
+        var aliPayPlus = api.require('aliPayPlus');
+        return new Promise((resovle, reject) => {
+          aliPayPlus.payOrder({
+            orderInfo: orderInfo
+          }, (ret, err) => {
+            if (ret.code === 9000) {
+              resolve(ret)
+            } else {
+              reject(ret, err)
+            }
+          })
+        })
+      },
+
+
+      pay() {
+
+        let orderId = null
+        this.$http.get('/get_alipay_order') // 获取订单
+          .then(res => {
+            if (res.status === 200 && res.data.code === 0) {
+              let orderInfo = res.data.data
+              this.alipay(orderInfo) // 支付
+            } else {
+              throw new Error(res.data.msg || '获取订单失败')
+            }
+          }).then(res => {
+          // 本地判断支付成功, 创建EOS公链帐号
+          return this.$http.get('/eos_newaccount', {
+            name: this.$route.query.eosname,
+            pubkey: this.$route.query.pubkey
+          })
+        }).then(res => {
+          if (res.status === 200 && res.data.code === 0) {
+            this.$store.commit('setEOSAccountName', this.$http.query.eosname)
+            this.$store.commit('setPrivateKey', this.$http.query.prvkey)
+
+            this.router.replace({
+              path: "/createwalletdone",
+              query: {
+                prvkey: this.$route.prvkey
+              }
+            })
+          } else {
+            throw new Error(res.data.msg || '创建EOS帐号失败，请联系客服')
+          }
+        }).catch(err => {
+          this.$vux.toast.show({
+            text: res.data.msg || 'Get order error'
+          })
+          api.alert({
+            title: 'err get order',
+            msg: err.toString(),
+            buttons: ['确定']
+          });
+        })
+      }
+>>>>>>> 29d3b11... Bug fix/create wallet UI
     }
-}
+  }
 </script>
 <i18n>
 Processing..
@@ -187,16 +309,18 @@ Processing..
 
 </i18n>
 
-<style scoped>
+<style lang="less" scoped>
 
-#createwallet-app {
+  #createwalletpay-app {
     width: 100%;
     height: 100%;
-    background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
-    background-size: 100%;
-}
-
-.flex-item {
+    background: #fff;
+  }
+  .pay-flex{
+    width: 100%;
+    height: 100%;
+  }
+  .flex-item {
     display: flex;
     width: 75%;
     flex-direction: column;
@@ -206,14 +330,37 @@ Processing..
 
     text-align: center;
     background-clip: padding-box;
-}
+  }
 
+  .pay-info {
+    text-align: center;
+    .title {
+      font-size: .75rem;
+    }
+    .time {
+      display: block;
+      font-size: .75rem;
+      color: darkgray;
+    }
+    img {
+      width: 100%;
+    }
+  }
 
-label#hint-label {
+  .money {
+    color: orangered;
+    font-size: 2.5rem;
+    font-weight: bold;
+    span {
+      font-weight: normal;
+      font-size: .75rem;
+    }
+  }
+
+  label#hint-label {
     color: #fff;
     font-size: 1.2em;
-}
-
+  }
 
 
 </style>

@@ -12,18 +12,18 @@
           <!--</div>-->
         </div>
         <div class="my-property">
-        <span class="property-head" @click="eyeOn = !eyeOn">
+        <span class="property-head" @click="SETSEENPROPERTY">
           {{ $t('MyProperty') }}(₵)：
-          <i class="icon-eye" v-if="eyeOn"></i>
-          <i class="icon-eye-off" v-if="!eyeOn"></i>
+          <i class="icon-eye" v-if="seenProperty"></i>
+          <i class="icon-eye-off" v-else></i>
         </span>
-          <p class="property-text" v-if="eyeOn">
+          <p class="property-text" v-if="seenProperty">
 
             <span v-if="isLoaded">{{propertyComma}}</span>
             <inline-loading v-else></inline-loading>
             CBT
           </p>
-          <p class="property-text" v-if="!eyeOn">**** CBT</p>
+          <p class="property-text" v-else>**** CBT</p>
         </div>
         <flexbox class="operation" :gutter="0">
           <flexbox-item :span="2"></flexbox-item>
@@ -46,7 +46,7 @@
       </section>
       <group class="property-list">
         <transition name="fade">
-          <div >
+          <div>
             <cell-box class="property-item" :border-intent="false" :link="'/tokendetails/'+properyList[0].tokenCode">
               <flexbox>
                 <flexbox-item :span="2">
@@ -56,12 +56,18 @@
                   <span class="token-name">EOS</span>
                 </flexbox-item>
                 <flexbox-item :span="5" class="text-right property-num">
-                  <p class="amount">
+                  <p class="amount" v-if="seenProperty">
                     {{properyList[0].balance}}
                   </p>
-                  <span class="money">
-              ₵{{properyList[0].balance * exchangeRate}}
-            </span>
+                  <p class="amount" v-else>
+                    ****
+                  </p>
+                  <span class="money" v-if="seenProperty">
+                  ₵{{properyList[0].balance * exchangeRate}}
+                  </span>
+                  <span class="money" v-else>
+                    ****
+                  </span>
                 </flexbox-item>
               </flexbox>
             </cell-box>
@@ -74,18 +80,24 @@
                   <span class="token-name">CBT</span>
                 </flexbox-item>
                 <flexbox-item :span="5" class="text-right property-num">
-                  <p class="amount">
+                  <p v-if="seenProperty" class="amount">
                     {{properyList[1].balance}}
                   </p>
-                  <span class="money">
-              ₵{{properyList[1].balance}}
-            </span>
+                  <p v-else class="amount">
+                    ****
+                  </p>
+                  <span class="money" v-if="seenProperty">
+                    ₵{{properyList[1].balance}}
+                  </span>
+                  <span class="money" v-else>
+                    ****
+                  </span>
                 </flexbox-item>
               </flexbox>
             </cell-box>
           </div>
           <!--<div v-else class="loading">-->
-            <!--<inline-loading></inline-loading>-->
+          <!--<inline-loading></inline-loading>-->
           <!--</div>-->
         </transition>
       </group>
@@ -133,6 +145,8 @@
     InlineLoading
   } from 'vux'
   import common from '@/js/commonUtils'
+
+  import {mapState,mapMutations} from 'vuex'
 
 
   const propertyArr = [
@@ -193,73 +207,81 @@
       if (!this.account) {
         this.account = 'fenghaha'
       }
-      // this.$common.fixStatusBarByHeader('c-header')
     },
     mounted() {
+      // this.$store.commit('setEOSAccountName','fenghaha')
       this.getExchangeRate()
       this.initBalance()
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
     },
     computed: {
-      propertyComma() {
-        let num = this.properyList[1].balance;
-        return numberComma(num)
+      ...mapState(['seenProperty']),
+      ...{
+        propertyComma() {
+          let num = this.properyList[1].balance;
+          return numberComma(num)
+        }
       }
     },
     methods: {
-       initBalance() {
-        // this.$http.all([this.getBalance(this.properyList[0].tokenCode),this.getBalance(this.properyList[1].tokenCode)]).then(
-        //   this.$http.spread((eosRes,cbtRes)=>{
-        //     console.log(eosRes,cbtRes)
-        //   })
-        // )
-        let balanceArr = this.properyList
-        for (let i = 0; i < balanceArr.length; i++) {
-          let code = balanceArr[i].tokenCode.toString()
-           this.$http.get('/balance', {
+      ...mapMutations(['SETSEENPROPERTY']),
+      ...{
+        initBalance() {
+          // this.$http.all([this.getBalance(this.properyList[0].tokenCode),this.getBalance(this.properyList[1].tokenCode)]).then(
+          //   this.$http.spread((eosRes,cbtRes)=>{
+          //     console.log(eosRes,cbtRes)
+          //   })
+          // )
+          let balanceArr = this.properyList
+          for (let i = 0; i < balanceArr.length; i++) {
+            let code = balanceArr[i].tokenCode.toString()
+            this.$http.get('/balance', {
+              params: {
+                code: code,
+                name: this.account
+              }
+            }).then(res => {
+              this.failAlert(res)
+              if (res.data.data.length > 0) {
+                let b = res.data.data[0].balance
+                let n = common.getNumByBalance(b)
+                console.log(n)
+                this.properyList[i].balance = n
+              }
+            }).catch(err => {
+              console.log(`获取${code}余额失败：` + err)
+            })
+            setTimeout(() => {
+              this.isLoaded = true
+            }, 500)
+          }
+        },
+        failAlert(res) {
+          if (res.status !== 200 || res.data.code !== 0) {
+            this.$vux.alert.show({title: '获取余额失败', content: res.data.msg || res.statusText || '未知错误',});
+            return;
+          }
+        },
+        getBalance(code) {
+          return this.$http.get('/balance', {
             params: {
               code: code,
               name: this.account
             }
-          }).then(res => {
+          })
+        },
+        getExchangeRate() {
+          this.$http.get('/get_price').then(res => {
             this.failAlert(res)
-            if (res.data.data.length > 0) {
-              let b = res.data.data[0].balance
-              let n = common.getNumByBalance(b)
-              console.log(n)
-              this.properyList[i].balance = n
+            if (res.data.data) {
+              let price = res.data.data.price
+              this.exchangeRate = this.$common.exchangeRate(price)
             }
           }).catch(err => {
-            console.log(`获取${code}余额失败：` + err)
+            console.log('获取兑换数失败：' + err)
           })
-          setTimeout(()=>{
-            this.isLoaded = true
-          },500)
         }
-      },
-      failAlert(res) {
-        if (res.status !== 200 || res.data.code !== 0) {
-          this.$vux.alert.show({title: '获取余额失败', content: res.data.msg || res.statusText || '未知错误',});
-          return;
-        }
-      },
-      getBalance(code) {
-        return this.$http.get('/balance', {
-          params: {
-            code: code,
-            name: this.account
-          }
-        })
-      },
-      getExchangeRate() {
-        this.$http.get('/get_price').then(res => {
-          this.failAlert(res)
-          if (res.data.data) {
-            let price = res.data.data.price
-            this.exchangeRate = this.$common.exchangeRate(price)
-          }
-        }).catch(err => {
-          console.log('获取兑换数失败：' + err)
-        })
       }
     }
   }

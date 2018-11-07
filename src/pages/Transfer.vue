@@ -135,13 +135,17 @@
         isBalanceLoaded: false
       }
     },
+    created(){
+      this.$nextTick(()=>{
+        this.$common.fixStatusBarByHeader('c-header')
+      })
+    },
     mounted() {
       this.account = this.$store.state.eosAccountName
       if (!this.account) {
         this.account = 'fenghaha'
       }
       this.getTokenBalance(this.code)
-      this.$common.fixStatusBarByHeader('c-header')
     },
     computed: {
       balanceNum() {
