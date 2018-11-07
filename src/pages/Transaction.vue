@@ -405,13 +405,9 @@ let interval = undefined
     beforeDestroy() {
         clearInterval(interval)
     },
-    created(){
-      this.$nextTick(()=>{
-        this.$common.fixStatusBarByHeader('c-header')
-      })
-    },
     mounted() {
 
+      this.$common.fixStatusBarByHeader('c-header')
 
         this.getPrice();
         this.getMemo();

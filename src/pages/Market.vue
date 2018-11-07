@@ -1,7 +1,7 @@
 <template>
-  <div id="market">
+  <div id="market" class="head-sm-pic">
     <view-box>
-      <x-header id="c-header" :left-options="{showBack: false}" class="header-content head-bg-md">{{$t('Market')}}</x-header>
+      <x-header id="c-header" :left-options="{showBack: false}" class="header-content">{{$t('Market')}}</x-header>
       <x-table class="token-table" :cell-bordered="false">
         <thead>
         <tr>
@@ -37,8 +37,6 @@
 <i18n>
   Market:
   zh-CN: 市场
-Get price fail:
-  zh-CN: 获取价格失败
 </i18n>
 <script>
   const tokens = [
@@ -48,7 +46,7 @@ Get price fail:
       price: 0,
       name: 'Eos',
       tokenImg: '../static/imgs/eos.png',
-      range: '0.00'
+      range: '-2.46'
     },
     {
       id: 2,
@@ -56,7 +54,7 @@ Get price fail:
       price: 0,
       name: 'CubeCart',
       tokenImg: '../static/imgs/cbt.png',
-      range: '0.00'
+      range: '+3.46'
     },
   ]
   import {
@@ -77,17 +75,13 @@ Get price fail:
         tokenList: tokens
       }
     },
-    created() {
-      this.getEosPrice()
-      this.getCbtPrice()
-    },
-    mounted(){
+    mounted() {
       // setInterval(() => {
       //   this.getEosPrice()
       //   this.getCbtPrice()
       // }, 5000)
-      this.$common.fixStatusBarByHeader('c-header')
-      this.$common.fixTabBarByNav('c-nav-tab')
+      this.getEosPrice()
+      this.getCbtPrice()
     },
     methods: {
       goTransaction() {
@@ -96,9 +90,11 @@ Get price fail:
       getEosPrice() {
         this.$http.get('/prices', {
           params: {
-            sym: 'eos'
+            sym: 'eos',
+            hour: 14
           }
         }).then(res => {
+          console.log(res)
           if (res.status !== 200 || res.data.code !== 0) {
             this.$vux.alert.show({
               title: this.$t('Get price fail'),
@@ -108,8 +104,7 @@ Get price fail:
           }
           this.tokenList[0].price = res.data.data.price
           if(res.data.data.percent){
-            let range = parseFloat(res.data.data.percent).toFixed(2)
-            this.tokenList[1].range = range
+            this.tokenList[0].range = res.data.data.percent.toFixed(2)
           }else {
             this.tokenList[0].range = 0.00
           }
@@ -118,7 +113,8 @@ Get price fail:
       getCbtPrice() {
         this.$http.get('/prices', {
           params: {
-            sym: 'cbt'
+            sym: 'cbt',
+            hour: 14
           }
         }).then(res => {
           if (res.status !== 200 || res.data.code !== 0) {
@@ -129,10 +125,9 @@ Get price fail:
             return
           }
           if(res.data.data.percent){
-            let range = parseFloat(res.data.data.percent).toFixed(2)
-            this.tokenList[1].range = range
+            this.tokenList[1].range = res.data.data.percent.toFixed(2)
           }else {
-            this.tokenList[1].range = 0.00
+            this.tokenList[1].range = 0
           }
           this.tokenList[1].price = res.data.data.price
         })

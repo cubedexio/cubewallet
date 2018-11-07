@@ -23,14 +23,13 @@
     </flexbox>
 
 
-
-    </div>
+  </div>
 </template>
 <i18n>
-Login:
-    zh-CN: 登录
-Register:
-    zh-CN: 注册
+  Login:
+  zh-CN: 登录
+  Register:
+  zh-CN: 注册
 
 </i18n>
 
@@ -108,6 +107,9 @@ export default {
             this.$vux.loading.show({
                 text: this.$t('Processing..')
             })
+            setTimeout(()=>{
+                this.$vux.loading.hide()
+            }, 20 * 1000)
 
             let orderId = null
             this.$http.get('/get_alipay_order') // 获取订单
@@ -168,7 +170,7 @@ export default {
                 })
         }
     }
-}
+  }
 </script>
 <i18n>
 Processing..
@@ -224,11 +226,10 @@ Processing..
     }
   }
 
-label#hint-label {
+  label#hint-label {
     color: #fff;
     font-size: 1.2em;
-}
-
+  }
 
 
 </style>

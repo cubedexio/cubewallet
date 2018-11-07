@@ -3,8 +3,8 @@
 
         <router-view></router-view>
 
-      <!--v-if="$store.state.loggedIn && $store.state.eosAccountName"-->
-            <tabbar id="c-nav-tab" class="nav-tab" >
+
+            <tabbar id="c-nav-tab" class="nav-tab" v-if="$store.state.loggedIn && $store.state.eosAccountName">
             <tabbar-item @click.native="go('home')" selected>
                 <i class="icon-wallet" slot="icon"></i>
             </tabbar-item>
@@ -68,7 +68,6 @@
         this.refreshToken()
     },
     mounted(){
-      this.$common.fixStatusBarByHeader('c-header')
       this.$common.fixTabBarByNav('c-nav-tab')
     }
   }

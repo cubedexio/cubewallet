@@ -91,10 +91,6 @@ Reserved Balance:
       }
       this.getBalance()
     },
-    mounted(){
-      this.$common.fixStatusBarByHeader('c-header')
-      this.$common.fixTabBarByNav('c-nav-tab')
-    },
     methods:{
       numberC(num){
         let n = num.toFixed(4);

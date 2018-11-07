@@ -150,12 +150,10 @@ Cancel:
       }
     },
     mounted(){
-      this.account = this.$store.state.eosAccountName;
-      if(!this.account){
+      let user = this.$store.state.eosAccountName;
+      if(!user){
         this.account = 'fenghaha';
       }
-      this.$common.fixStatusBarByHeader('c-header')
-      this.$common.fixTabBarByNav('c-nav-tab')
     },
     methods:{
       switchLang(lang){

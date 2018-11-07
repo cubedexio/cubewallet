@@ -16,14 +16,13 @@ import createPersistedState from 'vuex-persistedstate'
 export default new Vuex.Store({
     state: {
         count: 0,
-        loggedIn: true,
+        loggedIn: false,
         privateKey: undefined,
-        eosAccountName: 'fenghaha',
+        eosAccountName: undefined,
         accessToken: undefined,
         refreshToken: undefined,
         memo: undefined,
-        userAvatar:'m1',
-        seenProperty:true
+        userAvatar:'m1'
     },
     mutations: {
         increment (state) {
@@ -47,12 +46,9 @@ export default new Vuex.Store({
         setMemo(state, memo) {
             state.memo = memo;
         },
-        SETUSERAVATAR (state, val) {
-            state.userAvatar = val
-        },
-        SETSEENPROPERTY(state){
-          state.seenProperty = state.seenProperty ? false : true
-        }
+      SETUSERAVATAR (state, val) {
+          state.userAvatar = val
+      }
     },
   modules: {
     // profile,

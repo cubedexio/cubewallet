@@ -78,16 +78,12 @@ export default {
 
         },
         createEOSAccount() {
-<<<<<<< HEAD
             this.$vux.loading.show({
                 text: this.$t('Processing..')
             })
             setTimeout(()=>{
                 this.$vux.loading.hide()
             }, 10 * 1000)
-=======
-
->>>>>>> 29d3b11... Bug fix/create wallet UI
 
             this.$http.post(eosEndpoint + '/v1/chain/get_account', {
                 account_name: this.eosname
@@ -99,32 +95,15 @@ export default {
                     this.$vux.toast.show({
                         text:this.$t('Account name unavailabe, please input another one' ),
                         type:'text',
-<<<<<<< HEAD
-                    })                    
+                    })
                 } else {
                     throw new Error("")
-=======
-                        // width:'16rem',
-                        // position:'middle'
-                    })
-                } else {
-                    // alert('ok')
-                    this.$router.push({
-                        path: '/createwalletpay',
-                        query: {
-                            eosname: this.eosname,
-                            pubkey: this.publicKey,
-                            prvkey: this.privateKey
-                        }
-                    })
-
->>>>>>> 29d3b11... Bug fix/create wallet UI
                 }
             }, err=>{
                 console.log(err)
                 this.$vux.loading.hide()
-                this.$router.push({ 
-                    path: '/createwalletpay', 
+                this.$router.push({
+                    path: '/createwalletpay',
                     query: {
                         eosname: this.eosname,
                         pubkey: this.publicKey,
@@ -140,14 +119,10 @@ export default {
 Account name unavailabe, please input another one:
   zh-CN: 用户名不可用，请使用其他用户名
 Processing..
-  zh-CN: 处理中...  
+  zh-CN: 处理中...
 
-<<<<<<< HEAD
 </i18n>
-<style scoped>
-=======
 <style lang="less" scoped>
->>>>>>> 29d3b11... Bug fix/create wallet UI
 
 #createwallet-app {
     width: 100%;
