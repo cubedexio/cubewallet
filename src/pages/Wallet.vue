@@ -14,16 +14,16 @@
         <div class="my-property">
         <span class="property-head" @click="SETSEENPROPERTY">
           {{ $t('MyProperty') }}(₵)：
-          <i class="icon-eye" v-if="eyeOn"></i>
-          <i class="icon-eye-off" v-if="!eyeOn"></i>
+          <i class="icon-eye" v-if="seenProperty"></i>
+          <i class="icon-eye-off" v-else></i>
         </span>
-          <p class="property-text" v-if="eyeOn">
+          <p class="property-text" v-if="seenProperty">
 
             <span v-if="isLoaded">{{propertyComma}}</span>
             <inline-loading v-else></inline-loading>
             CBT
           </p>
-          <p class="property-text" v-if="!eyeOn">**** CBT</p>
+          <p class="property-text" v-else>**** CBT</p>
         </div>
         <flexbox class="operation" :gutter="0">
           <flexbox-item :span="2"></flexbox-item>

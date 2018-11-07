@@ -14,7 +14,6 @@ export default {
     XHeader
   },
   mounted(){
-    this.$common.fixStatusBarByHeader('c-header')
   }
 }
 </script>

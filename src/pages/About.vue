@@ -61,7 +61,6 @@
       Cell
     },
     mounted(){
-      this.$common.fixStatusBarByHeader('c-header')
     }
   }
 </script>

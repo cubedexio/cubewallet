@@ -72,17 +72,18 @@
     },
     data() {
       return {
-        tokenList: tokens
+        tokenList: tokens,
+        timer:null
       }
     },
     mounted() {
-      setInterval(() => {
+     this.timer = setInterval(() => {
         this.getPrice()
       }, 5000)
       this.getPrice()
     },
-    updated(){
-      console.log('updated')
+    beforeDestroy(){
+      clearInterval(this.timer)
     },
     methods: {
       getPrice(){
