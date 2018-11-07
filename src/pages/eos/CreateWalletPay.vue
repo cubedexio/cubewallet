@@ -7,12 +7,13 @@
         <br>
         <label class="title">请支付一定金额用于创建EOS钱包帐号</label>
         <br>
-        <label class="money"><span>￥</span>36</label>
-        <p>
+        <label class="money"><span>￥</span>{{ price }}</label>
+        <!-- <p>
           <input type='text' v-model='$route.query.prvkey' />
-        </p>
+        </p> -->
 
-        <label>{{ info }}</label>
+        <!-- <label>{{ info }}</label> -->
+
         <br>
         <span class="time">{{ moment().format('YYYY-MM-DD HH:mm:ss') }}</span>
         <br>
@@ -60,10 +61,13 @@ export default {
   data () {
     return{
       eosname: '',
-      info: ''
+      info: '',
+      price: 0,
     }
   },
   mounted(){
+      this.getEOSCreationPrice();
+      
     this.$common.fixStatusBarByHeader('c-header')
     this.$common.fixTabBarByNav('c-nav-tab')
   },
@@ -73,6 +77,14 @@ export default {
         'memo',
     ]),
     methods: {
+
+        getEOSCreationPrice() {
+            this.$http.get('/get_eos_creation_price')
+                .then(res=>{
+                    this.price = res.data.data
+                })
+        },
+
         moment: function () {
             return moment();
         },
