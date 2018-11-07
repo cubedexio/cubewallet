@@ -343,7 +343,7 @@ let interval = undefined
 
         setTimeout(()=>{
             this.$vux.loading.hide()
-        }, 10 * 1000)
+        }, 20 * 1000)
 
         const rpc = new JsonRpc(eosEndpoint);
         const signatureProvider = new JsSignatureProvider([this.privateKey]);

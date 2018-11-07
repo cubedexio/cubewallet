@@ -116,9 +116,6 @@ export default {
             this.$vux.loading.show({
                 text: this.$t('Processing..')
             })
-            setTimeout(()=>{
-                this.$vux.loading.hide()
-            }, 20 * 1000)
 
             let orderId = null
             this.$http.get('/get_alipay_order') // 获取订单
@@ -193,7 +190,7 @@ Processing..
     width: 100%;
     height: 100%;
     background: url("../../assets/images/sign_in_up.jpg")  no-repeat ;
-    background-size: 100%;
+    background-size: cover;
 }
 
 .flex-item {
