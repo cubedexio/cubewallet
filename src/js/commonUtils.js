@@ -10,7 +10,7 @@ let common = {
       return;
     }
     this.num = str.split(' ')[0];
-    return this.num;
+    return parseFloat(this.num).toFixed(4);
   },
 
   /**

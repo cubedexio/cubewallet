@@ -22,7 +22,8 @@ export default new Vuex.Store({
         accessToken: undefined,
         refreshToken: undefined,
         memo: undefined,
-        userAvatar:'m1'
+        userAvatar:'m1',
+        seenProperty:true
     },
     mutations: {
         increment (state) {
@@ -46,9 +47,12 @@ export default new Vuex.Store({
         setMemo(state, memo) {
             state.memo = memo;
         },
-      SETUSERAVATAR (state, val) {
-          state.userAvatar = val
-      }
+        SETUSERAVATAR (state, val) {
+            state.userAvatar = val
+        },
+        SETSEENPROPERTY(state){
+          state.seenProperty = state.seenProperty ? false : true
+        }
     },
   modules: {
     // profile,
