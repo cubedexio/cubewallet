@@ -1,7 +1,7 @@
 <template>
     <div id="importkey-app">
 
-        <x-header  :left-options="{showBack: false}" style="background-color:transparent;">导入钱包</x-header>
+        <x-header   style="background-color:transparent;">导入钱包</x-header>
         <flexbox id="flexbox" orient="vertical" justify="space-around">
 
             <flexbox-item :span="1/2" class="flex-item">            
@@ -75,7 +75,7 @@ export default {
             }
 
             this.$vux.loading.show({
-                text: '导入中'
+                text: '导入中...'
             })
 
             let eosAccount = undefined

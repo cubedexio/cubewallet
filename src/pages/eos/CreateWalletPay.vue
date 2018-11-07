@@ -74,8 +74,11 @@ export default {
       info: ''
     }
   },
-  mounted(){
-  },
+
+      computed: mapState([
+        // ...
+        'memo',
+    ]),
     methods: {
         moment: function () {
             return moment();
@@ -134,11 +137,24 @@ export default {
                             pubkey: this.$route.query.pubkey
                         }
                     })
-                }).then(res=>{
-                    this.info += 'res: ' + res.status + ' code:' + res.data.code 
+                }).then(res=>{ 
+                    // 创建私链帐号
+                    this.info += 'new eos account res: ' + res.status + ' code:' + res.data.code 
 
                     if( res.status === 200 && res.data.code === 0 ) {
-                        this.$vux.loading.hide()
+
+                        return this.$http.post('/create_account', { 
+                            memo: this.memo,
+                            name: this.$route.query.eosname,
+                        })                        
+                    }else {
+                        throw new Error(res.data.msg || '创建EOS帐号失败，请联系客服')
+                    }                    
+                }).then(res=>{
+                    this.info += 'new account res: ' + res.status + ' code:' + res.data.code 
+
+                    if( res.status === 200 && res.data.code === 0 ) {
+                        this.$vux.loading.hide()                    
 
                         this.$store.commit('setEOSAccountName', this.$route.query.eosname)
                         this.$store.commit('setPrivateKey', this.$route.query.prvkey)
@@ -150,8 +166,8 @@ export default {
                             }
                         })
                     }else {
-                        throw new Error(res.data.msg || '创建EOS帐号失败，请联系客服')
-                    }                    
+                        throw new Error(res.data.msg || '创建私链帐号失败，请联系客服')
+                    }
                 }).catch(err=>{
                     this.info += 'catch error:' + err
                     this.$vux.loading.hide()
