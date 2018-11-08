@@ -1,28 +1,29 @@
 <template>
     <div id="importkey-app">
 
-        <!-- <x-header   style="background-color:transparent;">导入钱包</x-header> -->
-        <x-header id="c-header" class="header-content" :left-options="{backText:''}">导入钱包</x-header>
+        <x-header id="c-header" class="header-content head-bg-md" :left-options="{backText:''}" style="background-color:transparent;">导入钱包</x-header>
+      <br>
         <flexbox id="flexbox" orient="vertical" justify="space-around">
 
-            <flexbox-item :span="1/2" class="flex-item">            
-                <div class="importkey">                
+            <flexbox-item :span="1/2" class="flex-item">
+                <div class="importkey">
                     <label>私钥</label>
                     <cube-textarea v-model="privatekey" placeholder="请输入您的私钥"></cube-textarea>
-                    
+
                     <!-- <label>钱包密码</label>
-                    <cube-input class='reversed' name="password" v-model="password"></cube-input>               
+                    <cube-input class='reversed' name="password" v-model="password"></cube-input>
                     <label>确认密码</label>
                     <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input> -->
                 </div>
             </flexbox-item>
-            <flexbox-item :span="1/4" class="flex-item">      
+            <flexbox-item :span="1/2" class="flex-item">
+              <br>
                     <x-button type='primary' @click.native="onImportEOSAccount">{{ $t('Import EOS Account') }}</x-button>
             </flexbox-item>
         </flexbox>
-            
 
-        
+
+
     </div>
 </template>
 <i18n>
@@ -55,25 +56,25 @@ export default {
         CubeTextarea,
         TabbarItem,
         XHeader,
-        XTextarea, Flexbox, FlexboxItem 
+        XTextarea, Flexbox, FlexboxItem
     },
     data: function() {
         return {
             privatekey: ''
         }
     },
+    mounted(){
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
+    },
     computed: mapState([
         // ...
         'memo',
     ]),
-    mounted() {
-        this.$common.fixStatusBarByHeader('c-header')
-        this.$common.fixTabBarByNav('c-nav-tab')
-    },
     methods: {
         onImportEOSAccount: function() {
             // var ecc = eosjs_ecc
-            
+
             if( !eosjs.isValidPrivate(this.privatekey) ) {
                 this.$vux.alert.show({ title: '不合法的私钥' })
                 return
@@ -85,19 +86,19 @@ export default {
 
             let eosAccount = undefined
 
-            const publicKey = eosjs.privateToPublic(this.privatekey ) 
+            const publicKey = eosjs.privateToPublic(this.privatekey )
 
             this.$http.post(eosURI,  {
                 public_key: publicKey
             }).then( (res)=>{
                 if( res.status !== 200  ) {
-                    throw new Error(`服务器错误:${res.status}`)                                
+                    throw new Error(`服务器错误:${res.status}`)
                 }
                 if( res.data.account_names === undefined || res.data.account_names.length <= 0 ) {
-                    throw new Error(`未找到对应帐户`)                                 
+                    throw new Error(`未找到对应帐户`)
                 }
                 eosAccount = res.data.account_names[0]
-                
+
 
                 return this.$http.post('/create_account', {
                     memo: this.memo,
@@ -118,19 +119,19 @@ export default {
                 this.$store.commit('setEOSAccountName', eosAccount)
 
                 let self = this;
-                this.$vux.alert.show({ 
-                    title: '导入成功', 
+                this.$vux.alert.show({
+                    title: '导入成功',
                     onHide () {
                         self.$router.replace('/home')
-                    }    
-                });  
+                    }
+                });
 
             }).catch(err=>{
                 this.$vux.loading.hide();
-               this.$vux.alert.show({ title: '导入失败', content: err.toString() });  
+               this.$vux.alert.show({ title: '导入失败', content: err.toString() });
             })
 
-            
+
         }
     }
 }

@@ -15,6 +15,9 @@ import store from './store'
 import vuxLocales from './locales/all.yml'
 import componentsLocales from './locales/components.yml'
 
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
 import api from './js/api'
 import common from './js/commonUtils'
 

@@ -154,6 +154,8 @@ Cancel:
       if(!user){
         this.account = 'fenghaha';
       }
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
     },
     methods:{
       switchLang(lang){

@@ -103,6 +103,18 @@ en:
   Please check the user agreement: Please check the user agreement
   Please enter verify code: Please enter verify code
   Transfer Fail: Transfer Fail
+  Copy: Copy
+  Deposit Eos: Deposit Eos
+  Deposit Account: Deposit Account
+  Copy Success!: Copy Success!
+  Copy Success: Copy Success
+  Copy Fail: Copy Fail
+  Withdraw Amount: Withdraw Amount
+  Please Enter Withdraw Amount: Please Enter Withdraw Amount
+  Exchange ₵EOS With Your EOS: Exchange ₵EOS With Your EOS
+  Usable Balance: Usable Balance
+  Please Enter Deposit Amount: Please Enter Deposit Amount
+  Are you sure to exchange?: Are you sure to exchange?
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -208,3 +220,15 @@ zh-CN:
   Please check the user agreement: 请先同意用户协议
   Please enter verify code: 请输入验证码
   Transfer Fail: 转账失败
+  Copy: 复制
+  Deposit Eos: 充值EOS
+  Deposit Account: 充值地址
+  Copy Success!: 复制成功！
+  Copy Success: 复制成功
+  Copy Fail: 复制失败
+  Withdraw Amount: 提现数量
+  Please Enter Withdraw Amount: 请输入提现数量
+  Exchange ₵EOS With Your EOS: 用你的EOS兑换等值的₵EOS
+  Usable Balance: 可用余额
+  Please Enter Deposit Amount: 请输入充值数量
+  Are you sure to exchange?: 你确定要充值吗？

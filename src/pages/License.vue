@@ -14,6 +14,8 @@ export default {
     XHeader
   },
   mounted(){
+    this.$common.fixStatusBarByHeader('c-header')
+    this.$common.fixTabBarByNav('c-nav-tab')
   }
 }
 </script>

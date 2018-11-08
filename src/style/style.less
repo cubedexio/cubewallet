@@ -37,6 +37,17 @@
   background-size: auto 100%;
 }
 
+.input-black {
+  font-size: .875rem;
+  padding:.5rem 0!important;
+  &:before {
+    border-top: 0!important;
+  }
+  padding-left: 0;
+  border: 1px solid #000;
+  border-width: 0 0 1px 0
+}
+
 html {
   width: 100%;
   height: 100%;
@@ -148,6 +159,9 @@ body {
   .header-content-sm {
     color: #000;
     background-color: white;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
     .vux-header-title {
       color: #000;
       height: 3rem;
@@ -474,11 +488,6 @@ body {
     .transaction-tab {
       margin: 0 3rem;
     }
-    .header-content-sm {
-      -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-      -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-    }
     .transaction-token {
       margin: 0 3rem;
       .weui-cells__title {
@@ -538,25 +547,11 @@ body {
   #transfer {
     background: white;
     height: 100%;
-    .header-content-sm {
-      -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-      -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-    }
     .input-box {
       margin: 0 3rem 1.5rem 3rem;
       position: relative;
       label {
         font-size: .875rem;
-      }
-      .input-black {
-        font-size: .875rem;
-        &:before {
-          border: 0;
-        }
-        padding-left: 0;
-        border: 1px solid #000;
-        border-width: 0 0 1px 0
       }
       .property {
         position: absolute;
@@ -767,6 +762,110 @@ body {
       height: auto;
     }
   }
+
+  //Deposit 充值
+  #deposit{
+    height: 100%;
+    background: white;
+    .content{
+      padding:1rem 3rem;
+      font-size: .875rem;
+      .qrcode{
+        padding:3rem;
+        border-radius: 1rem;
+        background: #f3f5f7;
+      }
+      .balance-content{
+
+      }
+    }
+    .eos-icon{
+      display: flex;
+      height: 2rem;
+      line-height: 2rem;
+      justify-content: flex-end;
+      align-items: center;
+      img{
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+      }
+    }
+    .account-box{
+      background: white;
+    }
+    .account{
+      button{
+        width: 100%!important;
+        font-size: .825rem;
+      }
+      .vux-flexbox-item{
+        b{
+          display: block;
+          margin-bottom: .825rem;
+        }
+      }
+    }
+  }
+
+  //withdraw提现
+  #withdraw{
+    height: 100%;
+    background: white;
+    font-size: .875rem;
+    .content{
+      margin: 3rem 3rem;
+      .title{
+        margin-bottom: .5rem;
+      }
+      .eos-account{
+        height: 2rem;
+        line-height: 2rem;
+      }
+      .token-options{
+        display: flex;
+        align-items: center;
+        line-height: 2.5rem;
+        height: 2.5rem;
+        font-size: .875rem;
+      }
+      .withdraw-amount{
+        position: relative;
+        .property{
+          position: absolute;
+          top: 0rem;
+          right: .5rem;
+          font-size: .75rem;
+          color: gray;
+        }
+      }
+      .input-black{
+        border:1px solid gray;
+        border-width: 0 0 1px 0;
+        padding: 1rem 0;
+        line-height: 2rem;
+        &:before{
+          border:none;
+        }
+      }
+    }
+    .token-icon{
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        margin-right: .5rem;
+    }
+    .receiver{
+      border: 1px solid @light-gray;
+      border-width: 1px 0 ;
+      margin: 1rem 0;
+      padding: 1rem 0;
+      label{
+        display: block;
+      }
+    }
+  }
+
 }
 
 // .container {
@@ -792,12 +891,6 @@ body {
         margin-bottom: 6px;
     }
 
-    #flexbox {
-        height: 100%;
-    }
-    .flex-item {
-        width: 75%;
-    }
 }
 
 button.weui-btn  {

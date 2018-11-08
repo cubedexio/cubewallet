@@ -18,7 +18,7 @@ export default new Vuex.Store({
         count: 0,
         loggedIn: false,
         privateKey: undefined,
-        eosAccountName: undefined,
+        eosAccountName: '',
         accessToken: undefined,
         refreshToken: undefined,
         memo: undefined,

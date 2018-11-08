@@ -26,8 +26,7 @@
           <p class="property-text" v-else>**** CBT</p>
         </div>
         <flexbox class="operation" :gutter="0">
-          <flexbox-item :span="2"></flexbox-item>
-          <flexbox-item :span="4" class="text-center">
+          <flexbox-item :span="3" class="text-center">
             <div class="transfer">
               <x-button class="operation-btn" plain link="/transfer">
                 <img src="../assets/images/transfer.png" alt="">
@@ -35,13 +34,24 @@
               </x-button>
             </div>
           </flexbox-item>
-          <flexbox-item :span="4" class="text-center">
+          <flexbox-item :span="3" class="text-center">
             <x-button plain class="operation-btn" link="/transaction">
               <img src="../assets/images/exchange.png" alt="">
               <span>{{$t('Transaction')}}</span>
             </x-button>
           </flexbox-item>
-          <flexbox-item :span="2"></flexbox-item>
+          <flexbox-item :span="3" class="text-center">
+          <x-button plain class="operation-btn" link="/deposit">
+            <img src="../assets/images/exchange.png" alt="">
+            <span>{{$t('Deposit')}}</span>
+          </x-button>
+        </flexbox-item>
+          <flexbox-item :span="3" class="text-center">
+            <x-button plain class="operation-btn" link="/withdraw">
+              <img src="../assets/images/exchange.png" alt="">
+              <span>{{$t('Withdraw')}}</span>
+            </x-button>
+          </flexbox-item>
         </flexbox>
       </section>
       <group class="property-list">

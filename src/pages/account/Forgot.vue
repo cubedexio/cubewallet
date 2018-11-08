@@ -95,11 +95,10 @@ export default {
     methods: {
       hideTabbar(show){
         // let tabbar = $api.byId('c-nav-tab')
-        if(this.$store.state.eosAccountName){
           let tabbar = document.getElementById('c-nav-tab')
-          console.log(tabbar)
-          tabbar.style.display = show
-        }
+          if(tabbar){
+            tabbar.style.display = show
+          }
       },
         countdownSMS: function(cd) {
             this.countdown = cd
