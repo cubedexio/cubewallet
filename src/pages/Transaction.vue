@@ -34,7 +34,10 @@
           </group>
           <group class="transaction-token" :title="$t('Transaction Amount')">
             <span class="cbt-logo token-name">CBT</span>
-            <x-input disabled type='text' class="c-input" placeholder="请输入数量" :value="transactionCBT"/>
+            <!-- <x-input disabled type='text' class="c-input" placeholder="请输入数量" :value="transactionCBT"/> -->
+            <div class="c-input weui-cell">
+                <label class="c-output-label">{{ transactionCBT }}</label>
+            </div>
           </group>
         </swiper-item>
         <swiper-item>
@@ -50,7 +53,10 @@
           </group>
           <group class="eos-token transaction-token" :title="$t('Sell Amount')">
             <span class="eos-logo token-name">EOS</span>
-            <x-input disabled type='text' class="c-input" :placeholder="$t('Please enter a number')" :value="transactionEos"></x-input>
+            <!-- <x-input disabled type='text' class="c-input" :placeholder="$t('Please enter a number')" :value="transactionEos"></x-input> -->
+            <div class="c-input weui-cell">
+                <label class="c-output-label">{{ transactionEos }}</label>
+            </div>
           </group>
         </swiper-item>
       </swiper>
@@ -450,6 +456,12 @@ Get EOS price failed, please re-enter this page to try again:
 </i18n>
 
 <style scoped>
+.c-output-label {
+    padding-right: 5rem;
+    padding-left: 0;
+    /* border-bottom: 1px solid #000000; */
+}
+
   .rate-hint {
     text-align: center;
   }
