@@ -78,7 +78,7 @@
 <i18n>
 
 Transaction:
-  zh-CN: CBT通证兑换
+  zh-CN: 兑换
 Buy:
   zh-CN: 买入
 Sell:

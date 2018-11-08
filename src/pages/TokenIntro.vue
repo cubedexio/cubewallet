@@ -2,7 +2,7 @@
   <transition name="slide">
   <div id="token-intro" class="head-bg-pic">
     <view-box>
-      <x-header :left-options="{backText:''}" class="header-content">
+      <x-header id="c-header" :left-options="{backText:''}" class="header-content">
         <i class="token-icon">
         <img v-if="tokenName=='CBT'" src="@/assets/images/cubecart.png" alt="">
         <img v-else src="@/assets/images/eos.png" alt="">
@@ -90,6 +90,10 @@ Reserved Balance:
         this.tokenName = 'EOS'
       }
       this.getBalance()
+    },
+    mounted(){
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
     },
     methods:{
       numberC(num){

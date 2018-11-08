@@ -79,6 +79,8 @@
   zh-CN: 转账失败
   Insufficient Balance!:
   zh-CN: 余额不足
+Get Balance Fail:
+  zh-CN: 获取余额失败
 </i18n>
 <script>
   const menuList = [
@@ -171,7 +173,7 @@
           }
         }).then(res => {
           if (res.status !== 200 || res.data.code !== 0) {
-            this.$vux.alert.show({title: '获取余额失败', content: res.data.msg || res.statusText || '未知错误',});
+            this.$vux.alert.show({title: this.$t('Get Balance Fail'), content: res.data.msg || res.statusText || '未知错误',});
             return;
           }
           // console.log(res)
@@ -179,6 +181,8 @@
             let rows = res.data.data;
             let b = that.getBalanceNum(rows[0].balance)
             that.balance = b
+          }else{
+            this.balance = 0
           }
           this.isBalanceLoaded = true
 

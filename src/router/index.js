@@ -12,6 +12,8 @@ import Profile from '@/pages/Profile'
 import TokenDetails from '@/pages/TokenDetails'
 import TokenIntro from '@/pages/TokenIntro'
 import About from '@/pages/About'
+import Deposit from '@/pages/Deposit'
+import Withdraw from '@/pages/Withdraw'
 
 import Register from '@/pages/account/Register'
 import Login from '@/pages/account/Login'
@@ -32,43 +34,41 @@ import User from '@/pages/wallet/Wallet'
 import License from '@/pages/license'
 
 
-
-
 Vue.use(Router)
 
 export default new Router({
-    // mode:'history',
-    routes: [
-        {
-            path: '/license',
-            name: 'License',
-            component: License,
-        },
-        {
-          path: '/',
-          name: 'Index',
-          component: Index
-        },
-        {
-            path: '/importwallet',
-            name: 'ImportWallet',
-            component: ImportWallet
-        },
-        {
-            path: '/createwallet',
-            name: 'CreateWallet',
-            component: CreateWallet
-        },
-        {
-            path: '/createwalletPay',
-            name: 'CreateWalletPay',
-            component: CreateWalletPay
-        },
-        {
-            path: '/createwalletdone',
-            name: 'CreateWalletDone',
-            component: CreateWalletDone
-        },
+  // mode:'history',
+  routes: [
+    {
+      path: '/license',
+      name: 'License',
+      component: License,
+    },
+    {
+      path: '/',
+      name: 'Index',
+      component: Index
+    },
+    {
+      path: '/importwallet',
+      name: 'ImportWallet',
+      component: ImportWallet
+    },
+    {
+      path: '/createwallet',
+      name: 'CreateWallet',
+      component: CreateWallet
+    },
+    {
+      path: '/createwalletPay',
+      name: 'CreateWalletPay',
+      component: CreateWalletPay
+    },
+    {
+      path: '/createwalletdone',
+      name: 'CreateWalletDone',
+      component: CreateWalletDone
+    },
 
     {
 
@@ -114,45 +114,55 @@ export default new Router({
       component: Profile
     },
     {
-        path: '/register',
-        name: 'Register',
-        component: Register
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
-        path: '/login',
-        name: 'Login',
-        component: Login
-      },
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
     {
-        path: '/forgot',
-        name: 'Forgot',
-        component: Forgot
+      path: '/forgot',
+      name: 'Forgot',
+      component: Forgot
     },
     {
       path: '/tokendetails/:code',
-      name:'TokenDetails',
-      component:TokenDetails
+      name: 'TokenDetails',
+      component: TokenDetails
     },
     {
-      path:'/tokenintro/:code',
-      name:'TokenIntro',
-      component:TokenIntro
+      path: '/tokenintro/:code',
+      name: 'TokenIntro',
+      component: TokenIntro
     },
     {
-      path:'/about',
-      name:About,
-      component:About
+      path: '/about',
+      name: About,
+      component: About
     },
     {
       path: '/eosindex',
       name: 'EOSIndex',
       component: EOSIndex
     },
+    {
+      path: '/deposit',
+      name: 'Deposit',
+      component: Deposit
+    },
+    {
+      path: '/withdraw',
+      name: 'Withdraw',
+      component: Withdraw
+    }
     // ,
     //   {
     //     path:'/comingsoon',
     //     name:'ComingSoon',
     //     component:ComingSoon
     //   }
-    ]
+  ]
 })

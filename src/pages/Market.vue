@@ -1,7 +1,8 @@
 <template>
   <div id="market">
     <view-box>
-      <x-header id="c-header" :left-options="{showBack: false}" class="header-content head-bg-md">{{$t('Market')}}</x-header>
+      <x-header id="c-header" :left-options="{showBack: false}" class="header-content head-bg-md">{{$t('Market')}}
+      </x-header>
       <x-table class="token-table" :cell-bordered="false">
         <thead>
         <tr>
@@ -73,20 +74,22 @@
     data() {
       return {
         tokenList: tokens,
-        timer:null
+        timer: null
       }
     },
     mounted() {
-     this.timer = setInterval(() => {
+      this.timer = setInterval(() => {
         this.getPrice()
       }, 5000)
       this.getPrice()
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
     },
-    beforeDestroy(){
+    beforeDestroy() {
       clearInterval(this.timer)
     },
     methods: {
-      getPrice(){
+      getPrice() {
         this.getEosPrice()
         this.getCbtPrice()
       },
@@ -94,7 +97,7 @@
         this.$router.push('/transaction')
       },
       getEosPrice() {
-        this.$http.get('/prices', {
+        this.$http.get('/last_price', {
           params: {
             sym: 'eos'
           }
@@ -107,16 +110,16 @@
             return
           }
           this.tokenList[0].price = res.data.data.price
-          if(res.data.data.percent){
+          if (res.data.data.percent) {
             let range = parseFloat(res.data.data.percent).toFixed(2)
             this.tokenList[0].range = range
-          }else {
+          } else {
             this.tokenList[0].range = 0.00
           }
         })
       },
       getCbtPrice() {
-        this.$http.get('/prices', {
+        this.$http.get('/last_price', {
           params: {
             sym: 'cbt'
           }
@@ -128,10 +131,10 @@
             })
             return
           }
-          if(res.data.data.percent){
+          if (res.data.data.percent) {
             let range = parseFloat(res.data.data.percent).toFixed(2)
             this.tokenList[1].range = range
-          }else {
+          } else {
             this.tokenList[1].range = 0.00
           }
           this.tokenList[1].price = res.data.data.price

@@ -181,6 +181,10 @@ Financing:
       TabItem,
       ComingSoon
     },
+    mounted(){
+      this.$common.fixStatusBarByHeader('c-header')
+      this.$common.fixTabBarByNav('c-nav-tab')
+    },
     methods:{
       switchTab (index){
         this.i=index

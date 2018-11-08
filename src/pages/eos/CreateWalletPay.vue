@@ -1,7 +1,7 @@
 <template>
 
    <div id="createwalletpay-app">
-    <x-header :left-options="{backText:''}" class="header-content head-bg-md">支付</x-header>
+    <x-header id="c-header" :left-options="{backText:''}" class="header-content head-bg-md">支付</x-header>
     <flexbox class="pay-flex" orient="vertical" justify="space-around">
       <flexbox-item :span="2/6" class=" pay-info">
         <br>
