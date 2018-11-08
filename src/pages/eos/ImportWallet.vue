@@ -1,7 +1,8 @@
 <template>
     <div id="importkey-app">
 
-        <x-header   style="background-color:transparent;">导入钱包</x-header>
+        <!-- <x-header   style="background-color:transparent;">导入钱包</x-header> -->
+        <x-header id="c-header" class="header-content" :left-options="{backText:''}">导入钱包</x-header>
         <flexbox id="flexbox" orient="vertical" justify="space-around">
 
             <flexbox-item :span="1/2" class="flex-item">            
@@ -65,6 +66,10 @@ export default {
         // ...
         'memo',
     ]),
+    mounted() {
+        this.$common.fixStatusBarByHeader('c-header')
+        this.$common.fixTabBarByNav('c-nav-tab')
+    },
     methods: {
         onImportEOSAccount: function() {
             // var ecc = eosjs_ecc
@@ -136,8 +141,15 @@ export default {
 
 </style>
 <style type="less">
+#importkey-app {
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
+    background-size: cover;
+}
+
 #importkey-app h1.vux-header-title {
-    color: black !important;
+    /* color: black !important; */
 
 }
 </style>
