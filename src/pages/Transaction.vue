@@ -433,13 +433,14 @@ let interval = undefined
     mounted() {
 
         this.getEOSPrice();
+        this.getPrice();
+        this.getMemo();        
 
       this.$common.fixStatusBarByHeader('c-header')
 
       
 
-        this.getPrice();
-        this.getMemo();
+
 
         // interval = setInterval(()=>{
             // this.getPrice();
