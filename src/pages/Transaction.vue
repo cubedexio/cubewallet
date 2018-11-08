@@ -167,7 +167,7 @@ let interval = undefined
         exchangeRate: 1,
         amount: 0,
         CBTAmount: 0,
-        eosRmb: 36,
+        eosRmb: 0,
         i:0,
         checkTerms:false,
         memo: undefined
@@ -192,6 +192,25 @@ let interval = undefined
         ]),
     },
     methods:{
+        getEOSPrice() {
+            // https://api.coinmarketcap.com/v1/ticker/eos/?convert=CNY
+            this.$http.get('https://api.coinmarketcap.com/v1/ticker/eos', {
+                params: {
+                    convert: 'CNY'
+                }
+            }).then(res=>{
+                if( res.status == 200 && res.data.length > 0){
+                    this.eosRmb = new Number(res.data[0].price_cny).toFixed(2)
+                } else {
+                    this.$vux.toast.show({
+                    text:this.$t('Get EOS price failed, please re-enter this page to try again'),
+                        type:'text',
+                        width:'16rem',
+                        position:'middle'
+                    })                    
+                }
+            })
+        },
       doTransaction(){
         if(!this.checkTerms){
           this.$vux.toast.show({
@@ -403,23 +422,32 @@ let interval = undefined
       }
     },
     beforeDestroy() {
-        clearInterval(interval)
+        // clearInterval(interval)
     },
     mounted() {
 
+        this.getEOSPrice();
+
       this.$common.fixStatusBarByHeader('c-header')
+
+      
 
         this.getPrice();
         this.getMemo();
 
-        interval = setInterval(()=>{
+        // interval = setInterval(()=>{
             // this.getPrice();
-        }, 1 * 60 * 1000) // 每分钟更新一次价格
+        // }, 1 * 60 * 1000) // 每分钟更新一次价格
 
 
     }
   }
 </script>
+
+<i18n>
+Get EOS price failed, please re-enter this page to try again:
+    zh-CN: 获取EOS币价失败，请重新进入此页面再试一次
+</i18n>
 
 <style scoped>
   .rate-hint {
