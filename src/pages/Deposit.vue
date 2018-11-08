@@ -122,15 +122,7 @@ import { officialEosAccount, eosEndpoint } from '@/config'
     ]),
     mounted(){
 
-        console.log(this.privateKey)
-        console.log(this.eosAccountName)
-
-        this.$store.commit('setEOSAccountName','alexchan1234')
-        this.$store.commit('setPrivateKey','5KGCrSZXBw7d7nSAFDdDtywQL4KszPbmKAk2fGGySDZ1AUDggjW')
-
-
-        console.log(this.privateKey)
-        console.log(this.eosAccountName)
+   
 
         this.getEOSBalance()
       this.$common.fixStatusBarByHeader('c-header')
