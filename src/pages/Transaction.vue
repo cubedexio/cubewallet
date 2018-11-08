@@ -333,8 +333,8 @@ let interval = undefined
 
             this.$http.get('/sell', {
                 params: {
-                    from: this.eosAccountName,
-                    quant: this.amount
+                    name: this.eosAccountName,
+                    quant: this.CBTAmount
                 }
             }).then(res=>{
                 this.$vux.loading.hide()
