@@ -14,7 +14,7 @@
             {{balance}}
           </flexbox-item>
         </flexbox>
-        <x-input :placeholder="$t('Please Enter Deposit Amount')" v-model="transferAmount" class="input-black"
+        <x-input type='number' :placeholder="$t('Please Enter Deposit Amount')" v-model="transferAmount" class="input-black"
                  name="transferAmount"></x-input>
         <br>
         <x-button type="primary" @click.native="confirm">{{$t('Confirm')}}</x-button>
@@ -76,6 +76,11 @@ Are you sure to exchange?:
   zh-CN: 你确定要充值吗？
 </i18n>
 <script>
+import { setInterval, setTimeout } from 'timers';
+import { mapState } from 'vuex'
+import {Api, JsonRpc, JsSignatureProvider, RpcError } from 'eosjs'
+import { officialEosAccount, eosEndpoint } from '@/config'
+
   import {
     ViewBox,
     XHeader,
@@ -108,14 +113,113 @@ Are you sure to exchange?:
         account:'abc',
         memo:'321321',
         balance:0,
-        transferAmount:''
+        transferAmount:'',
       }
     },
+    computed: mapState([
+        'privateKey',
+        'eosAccountName'
+    ]),
     mounted(){
+
+        console.log(this.privateKey)
+        console.log(this.eosAccountName)
+
+        this.$store.commit('setEOSAccountName','alexchan1234')
+        this.$store.commit('setPrivateKey','5KGCrSZXBw7d7nSAFDdDtywQL4KszPbmKAk2fGGySDZ1AUDggjW')
+
+
+        console.log(this.privateKey)
+        console.log(this.eosAccountName)
+
+        this.getEOSBalance()
       this.$common.fixStatusBarByHeader('c-header')
       this.$common.fixTabBarByNav('c-nav-tab')
+
+        
     },
     methods:{
+
+        async eos2ceos() {
+
+            this.$vux.loading.show({
+                text: 'Processing..'
+            })
+
+            setTimeout(()=>{
+                this.$vux.loading.hide()
+            }, 20 * 1000)
+
+            const rpc = new JsonRpc(eosEndpoint);
+            const signatureProvider = new JsSignatureProvider([this.privateKey]);
+            const api = new Api({ rpc, signatureProvider });
+
+
+            let textContent = ''
+
+                let quanity = (new Number(this.transferAmount)).toFixed(4) + ' EOS'
+                try {
+                    const result = await api.transact({
+                        actions: [{
+                            account: 'eosio.token',
+                            name: 'transfer',
+                            authorization: [{
+                                actor: this.eosAccountName,
+                                permission: 'active',
+                            }],
+                            data: {
+                                from: this.eosAccountName,
+                                to: officialEosAccount,
+                                quantity: quanity,
+                                memo: this.memo,
+                            },
+                        }]
+                    }, {
+                        blocksBehind: 3,
+                        expireSeconds: 30,
+                    });
+
+                    this.$vux.loading.hide()
+                    textContent += '\n\nTransaction pushed!\n\n' + JSON.stringify(result, null, 2);
+
+                    if( result.transaction_id ) {
+                        this.$vux.toast.show({
+                            text:this.$t('Transaction completed'),
+                            type:'text',
+                            width:'16rem',
+                            position:'middle'
+                        })
+                    }
+
+                } catch (e) {
+                    this.$vux.loading.hide()
+                    textContent = '\nCaught exception: ' + e;
+                    this.$vux.alert.show({
+                        title: '兑换失败',
+                        content: e.toString()
+                    });
+
+                    if (e instanceof RpcError)
+                        textContent += '\n\n' + JSON.stringify(e.json, null, 2);
+                }
+                console.log(textContent)
+                // alert(textContent)
+            // }
+        },
+
+
+        getEOSBalance() {
+            this.$http.post(`${eosEndpoint}/v1/chain/get_currency_balance`, {
+                    account: this.eosAccountName,
+                    code: 'eosio.token',
+                    symbol: 'EOS'
+            }).then(res=>{
+                if( res.status === 200 && res.data.length > 0) {
+                    this.balance =  res.data[0];
+                }
+            })
+
+        },
       // doCody(text){
       //   this.$copyText(text).then(success=>{
       //     this.$vux.toast.show({
@@ -148,6 +252,16 @@ Are you sure to exchange?:
       },
       doDeposit(){
         //充值操作
+        if( this.memo == null ) {
+            this.$vux.toast.show({
+                text:this.$t('momo is null'),
+                type:'text',
+                width:'16rem',
+                position:'middle'
+            })
+            return;
+        }
+        this.eos2ceos()
       }
     }
   }
