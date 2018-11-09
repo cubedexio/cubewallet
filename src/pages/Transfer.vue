@@ -86,14 +86,14 @@ Get Balance Fail:
   const menuList = [
     {
       token_code: 'eosio.token',
-      token_name: 'EOS',
-      token_img: 'http://www.bizhuren.com/d/file/201806/43afce7dfb6ab33f14c52d963631b15c.png',
+      token_name: '₵EOS',
+      token_img: './static/imgs/eos.png',
       amount: 300.2565
     },
     {
       token_code: 'cbtban1',
       token_name: 'CBT',
-      token_img: 'http://www.cubecart.io/img/cubecart_logo.2392cac3.png',
+      token_img: './static/imgs/cbt.png',
       amount: 12003.004
     }
   ];
@@ -126,7 +126,7 @@ Get Balance Fail:
       return {
         code: 'eosio.token',
         selected: 'EOS',
-        selectedImg: 'http://www.bizhuren.com/d/file/201806/43afce7dfb6ab33f14c52d963631b15c.png',
+        selectedImg: './static/imgs/eos.png',
         account: '',
         balance: 0,
         menus: menuList,
