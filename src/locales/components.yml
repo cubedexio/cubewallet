@@ -115,6 +115,10 @@ en:
   Usable Balance: Usable Balance
   Please Enter Deposit Amount: Please Enter Deposit Amount
   Are you sure to exchange?: Are you sure to exchange?
+  The withdrawa amount shall not be greater than the balance: The withdrawa amount shall not be greater than the balance
+  Withdraw Success: Withdraw Success
+  Withdraw Fail: Withdraw Fail
+  Withdrawing...: Withdrawing...
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -160,7 +164,7 @@ zh-CN:
   About Us: 关于我们
   Contact Us: 联系客服
   Terms: 服务条款
-  Transaction: CBT通证兑换
+  Transaction: 兑换
   Buy Amount: 买入数量
   Transaction Amount: 兑换数量
   Sell Amount: 卖出数量
@@ -232,3 +236,7 @@ zh-CN:
   Usable Balance: 可用余额
   Please Enter Deposit Amount: 请输入充值数量
   Are you sure to exchange?: 你确定要充值吗？
+  The withdrawa amount shall not be greater than the balance: 提现金额不能大于余额
+  Withdraw Success: 提现成功
+  Withdraw Fail: 提现失败
+  Withdrawing...: 提现中...

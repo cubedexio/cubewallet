@@ -60,10 +60,10 @@
             <cell-box class="property-item" :border-intent="false" :link="'/tokendetails/'+properyList[0].tokenCode">
               <flexbox>
                 <flexbox-item :span="2">
-                  <img src="@/assets/images/eos.png" alt="">
+                  <img src="static/imgs/eos.png" alt="">
                 </flexbox-item>
                 <flexbox-item :span="5" class="text-left">
-                  <span class="token-name">EOS</span>
+                  <span class="token-name">₵EOS</span>
                 </flexbox-item>
                 <flexbox-item :span="5" class="text-right property-num">
                   <p class="amount" v-if="seenProperty">
@@ -84,7 +84,7 @@
             <cell-box class="property-item" :border-intent="false" :link="'/tokendetails/'+properyList[1].tokenCode">
               <flexbox>
                 <flexbox-item :span="2">
-                  <img src="@/assets/images/cbt_logo.png" alt="">
+                  <img src="static/imgs/cbt.png" alt="">
                 </flexbox-item>
                 <flexbox-item :span="5" class="text-left">
                   <span class="token-name">CBT</span>
@@ -122,17 +122,17 @@
 </template>
 
 <i18n>
-  MyProperty:
+MyProperty:
   zh-CN: 我的资产
-  Transfer:
+Transfer:
   zh-CN: 转账
-  Deposit:
+Deposit:
   zh-CN: 充值
-  Transaction:
+Transaction:
   zh-CN: 兑换
-  My Wallet:
+My Wallet:
   zh-CN: 资产
-  I have bottom line:
+I have bottom line:
   zh-CN: 我是有底线的
 </i18n>
 
