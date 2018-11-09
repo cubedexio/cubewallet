@@ -333,8 +333,8 @@ let interval = undefined
 
             this.$http.get('/sell', {
                 params: {
-                    from: this.eosAccountName,
-                    quant: this.amount
+                    name: this.eosAccountName,
+                    quant: this.CBTAmount
                 }
             }).then(res=>{
                 this.$vux.loading.hide()
@@ -433,13 +433,14 @@ let interval = undefined
     mounted() {
 
         this.getEOSPrice();
+        this.getPrice();
+        this.getMemo();        
 
       this.$common.fixStatusBarByHeader('c-header')
 
       
 
-        this.getPrice();
-        this.getMemo();
+
 
         // interval = setInterval(()=>{
             // this.getPrice();
