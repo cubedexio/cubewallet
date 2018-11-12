@@ -1,26 +1,33 @@
 <template>
     <div id="importkey-app">
 
-        <x-header id="c-header" class="header-content head-bg-md" :left-options="{backText:''}" style="background-color:transparent;">导入钱包</x-header>
+        <x-header id="c-header" class="header-content " :left-options="{backText:''}" >导入钱包</x-header>
       <br>
+      <div class="content">
         <flexbox id="flexbox" orient="vertical" justify="space-around">
 
-            <flexbox-item :span="1/2" class="flex-item">
-                <div class="importkey">
-                    <label>私钥</label>
-                    <cube-textarea v-model="privatekey" placeholder="请输入您的私钥"></cube-textarea>
+          <flexbox-item :span="1/5">
+            <div class="importkey">
+              <label>私钥</label>
 
-                    <!-- <label>钱包密码</label>
-                    <cube-input class='reversed' name="password" v-model="password"></cube-input>
-                    <label>确认密码</label>
-                    <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input> -->
-                </div>
-            </flexbox-item>
-            <flexbox-item :span="1/2" class="flex-item">
-              <br>
-                    <x-button type='primary' @click.native="onImportEOSAccount">{{ $t('Import EOS Account') }}</x-button>
-            </flexbox-item>
+
+              <cube-textarea v-if="$route.query.type == 1"  v-model="privatekey" :placeholder="reImportHint"></cube-textarea>
+              <cube-textarea v-else v-model="privatekey" placeholder="请输入您的私钥"></cube-textarea>
+
+
+              <!-- <label>钱包密码</label>
+              <cube-input class='reversed' name="password" v-model="password"></cube-input>
+              <label>确认密码</label>
+              <cube-input class='reversed' name="password-confirm" v-model="passwordConfirm"></cube-input> -->
+            </div>
+          </flexbox-item>
+          <flexbox-item :span="4/5">
+            <br>
+            <x-button type='primary' @click.native="onImportEOSAccount">{{ $t('Import EOS Account') }}</x-button>
+          </flexbox-item>
         </flexbox>
+
+      </div>
 
 
 
@@ -31,7 +38,7 @@ Import EOS Account:
     zh-CN: 导入EOS帐号
 
 </i18n>
-<script src=eosjs-ecc.js></script>
+<!--<script src="eosjs-ecc.js"></script>-->
 <script>
 import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, XHeader, XTextarea, Flexbox, FlexboxItem  } from 'vux'
 import eosjs from 'eosjs-ecc'
@@ -67,26 +74,19 @@ export default {
       this.$common.fixStatusBarByHeader('c-header')
       this.$common.fixTabBarByNav('c-nav-tab')
     },
-    computed: mapState([
-        // ...
-        'memo',
-    ]),
+    computed: {
+        reImportHint() {
+            return  `由于您删除过本钱包或其他原因，您的私钥已丢失，请重新导入${this.eosAccountName}的私钥`
+        },
+        ...mapState([
+            // ...
+            'eosAccountName',
+            'memo',
+        ])
+    },
     methods: {
-        onImportEOSAccount: function() {
-            // var ecc = eosjs_ecc
-
-            if( !eosjs.isValidPrivate(this.privatekey) ) {
-                this.$vux.alert.show({ title: '不合法的私钥' })
-                return
-            }
-
-            this.$vux.loading.show({
-                text: '导入中...'
-            })
-
+        importEOS(publicKey) {
             let eosAccount = undefined
-
-            const publicKey = eosjs.privateToPublic(this.privatekey )
 
             this.$http.post(eosURI,  {
                 public_key: publicKey
@@ -97,6 +97,7 @@ export default {
                 if( res.data.account_names === undefined || res.data.account_names.length <= 0 ) {
                     throw new Error(`未找到对应帐户`)
                 }
+
                 eosAccount = res.data.account_names[0]
 
 
@@ -128,8 +129,63 @@ export default {
 
             }).catch(err=>{
                 this.$vux.loading.hide();
-               this.$vux.alert.show({ title: '导入失败', content: err.toString() });
+                this.$vux.alert.show({ title: '导入失败', content: err.toString() });
             })
+        },
+        importPrivateKey(publicKey) {
+            this.$http.post(eosURI,  {
+                public_key: publicKey
+            }).then( (res)=>{
+                if( res.status !== 200  ) {
+                    throw new Error(`服务器错误:${res.status}`)
+                }
+                if( res.data.account_names === undefined || res.data.account_names.length <= 0 ) {
+                    throw new Error(`未找到对应帐户`)
+                }
+                let eosAccount = res.data.account_names[0]
+                if( eosAccount !== this.eosAccountName ) {
+                    throw new Error(`您导入的不是帐户${this.eosAccountName}的私钥`)
+                }
+
+                this.$store.commit('setPrivateKey', this.privatekey)
+
+                let self = this;
+                this.$vux.alert.show({
+                    title: '导入成功',
+                    onHide () {
+                        self.$router.replace('/home')
+                    }
+                });
+                this.$vux.loading.hide();
+
+            }).catch(err=>{
+                this.$vux.loading.hide();
+                this.$vux.alert.show({
+                    title: err.toString(),
+                });
+            })
+        },
+        onImportEOSAccount: function() {
+            // var ecc = eosjs_ecc
+
+            if( !eosjs.isValidPrivate(this.privatekey) ) {
+                this.$vux.alert.show({ title: '不合法的私钥' })
+                return
+            }
+
+            this.$vux.loading.show({
+                text: '导入中...'
+            })
+
+            const publicKey = eosjs.privateToPublic(this.privatekey )
+
+            if( this.$route.query.type && this.$route.query.type == 1) {
+                // only import private key
+                this.importPrivateKey(publicKey)
+            }else{
+                // import eos account
+                this.importEOS(publicKey)
+            }
 
 
         }
@@ -138,15 +194,18 @@ export default {
 </script>
 
 <style  lang='less' scoped>
-
-
-</style>
-<style type="less">
+#flexbox{
+  height: 100%;
+}
 #importkey-app {
     width: 100%;
     height: 100%;
+  overflow: hidden;
     background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
     background-size: cover;
+  .content{
+    margin: 3rem 3rem;
+  }
 }
 
 #importkey-app h1.vux-header-title {

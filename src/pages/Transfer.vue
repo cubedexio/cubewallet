@@ -28,7 +28,7 @@
             </p>
           </div>
           <label>{{$t('Transfer Amount')}}</label>
-          <x-input :placeholder="$t('Please Enter Amount')" v-model="transferAmount" class="input-black"
+          <x-input :placeholder="$t('Please Enter Amount Number')" v-model="transferAmount" class="input-black"
                    name="transferAmount"></x-input>
         </div>
         <div class="remark input-box">
@@ -53,31 +53,31 @@
   </transition>
 </template>
 <i18n>
-  Transfer:
+Transfer:
   zh-CN: 转账
-  Token:
+Token:
   zh-CN: 通证
-  Receiver:
+Receiver:
   zh-CN: 收款人
-  Transfer Amount:
+Transfer Amount:
   zh-CN: 转账数量
-  Balance:
+Balance:
   zh-CN: 余额
-  Remark:
+Remark:
   zh-CN: 备注
-  Please Enter Account:
+Please Enter Account:
   zh-CN: 请输入账户名称
-  Please Enter Amount Number:
+Please Enter Amount Number:
   zh-CN: 请输入金额数字
-  Please Enter Remark:
+Please Enter Remark:
   zh-CN: 请输入备注
-  Confirm Transfer:
+Confirm Transfer:
   zh-CN: 确认转账
-  Transfer Success:
+Transfer Success:
   zh-CN: 转账成功
-  Transfer Fail:
+Transfer Fail:
   zh-CN: 转账失败
-  Insufficient Balance!:
+Insufficient Balance!:
   zh-CN: 余额不足
 Get Balance Fail:
   zh-CN: 获取余额失败
@@ -125,7 +125,7 @@ Get Balance Fail:
     data() {
       return {
         code: 'eosio.token',
-        selected: 'EOS',
+        selected: '₵EOS',
         selectedImg: './static/imgs/eos.png',
         account: '',
         balance: 0,
@@ -139,9 +139,9 @@ Get Balance Fail:
     },
     mounted() {
       this.account = this.$store.state.eosAccountName
-      if (!this.account) {
-        this.account = 'fenghaha'
-      }
+      // if (!this.account) {
+      //   this.account = 'fenghaha'
+      // }
       this.getTokenBalance(this.code)
       this.$common.fixStatusBarByHeader('c-header')
     },
@@ -245,6 +245,18 @@ Get Balance Fail:
           })
           return
         }
+        //转账金额不能大于余额
+        let b = parseFloat(this.balance)
+        let a = parseFloat(this.transferAmount)
+        if(b < a){
+          this.$vux.toast.show({
+            text: this.$t('The Transfer amount shall not be greater than the balance'),
+            type: 'text',
+            width: '16rem',
+            position: 'middle'
+          })
+          return
+        }
         //校验备注不为空
         // if(!this.remark){
         //   this.$vux.toast.show({
@@ -264,9 +276,12 @@ Get Balance Fail:
         let from = this.account
         let to = this.receiver
         let sym = this.selected
+        if(sym == '₵EOS'){
+          sym = 'EOS'
+        }
         // let to = 'user'
-        let quant = parseFloat(this.transferAmount) * 10000;
-        console.log(code, from, to, quant)
+        let quant = parseFloat(this.transferAmount).toFixed(4) * 10000
+        // console.log(code, from, to, quant)
         this.$http.get('/transfer', {
           params: {
             code: code,

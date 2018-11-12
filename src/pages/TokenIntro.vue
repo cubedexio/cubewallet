@@ -82,9 +82,9 @@ Reserved Balance:
     },
     created(){
       this.account = this.$store.state.eosAccountName
-      if(!this.account){
-        this.account = 'fenghaha'
-      }
+      // if(!this.account){
+      //   this.account = 'fenghaha'
+      // }
       this.code = this.$route.params.code
       if(!/cbt/.test(this.code)){
         this.tokenName = 'EOS'

@@ -79,10 +79,14 @@ AjaxPlugin.$http.interceptors.response.use(  (response)=> {
 });
 
 const nowLocale = Vue.locale.get()
-if (/zh/.test(nowLocale)) {
+if(nowLocale){//匹配安卓
+  if (/zh/.test(nowLocale)) {
+    Vue.i18n.set('zh-CN')
+  } else {
+    Vue.i18n.set('en')
+  }
+}else {
   Vue.i18n.set('zh-CN')
-} else {
-  Vue.i18n.set('en')
 }
 
 

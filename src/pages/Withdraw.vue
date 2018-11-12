@@ -180,7 +180,7 @@ Withdrawing...:
         let from = this.account
         let to = this.receiver
         let sym = 'EOS'
-        let quant = parseFloat(this.transferAmount) * 10000;
+        let quant = parseFloat(this.transferAmount).toFixed(4) * 10000
         console.log(code, from, to, quant)
         this.$http.get('/transfer', {
           params: {

@@ -29,8 +29,8 @@
 }
 
 .head-bg-pic {
-  background: url("../assets/images/head_bg_lg.jpg")0 -1.5rem no-repeat;
-  background-size: 100% auto;
+  background: url("../assets/images/head_bg_lg.jpg")center 0 no-repeat;
+  background-size: auto 20rem;
 }
 .head-sm-pic {
   background: url("../assets/images/head_bg_sm.jpg")center 0 no-repeat;
@@ -264,6 +264,9 @@ body {
         border-radius: .5rem;
         margin: .3rem .3rem .8rem .3rem;
         padding: .5rem 1rem;
+        &:before{
+          content: none;
+        }
         &:after {
           display: none;
         }
@@ -489,7 +492,6 @@ body {
       margin: 0 3rem;
     }
     .transaction-token {
-      margin: 0 3rem;
       .weui-cells__title {
         padding-left: 0;
         color: @nml-font;

@@ -119,6 +119,30 @@ en:
   Withdraw Success: Withdraw Success
   Withdraw Fail: Withdraw Fail
   Withdrawing...: Withdrawing...
+  Forgot Password?: Forgot Password?
+  Reset Password: Reset Password
+  New Password: New Password
+  Back: Back
+  Please enter an EOS account: Please enter an EOS account
+  EOS account consists of lowercase letters and 1-5 strings of length 12: EOS account consists of lowercase letters and 1-5 strings of length 12
+  Create EOS Account: Create EOS Account
+  'Once the account is created, be sure to save your private key': 'Once the account is created, be sure to save your private key'
+  Pay: Pay
+  'Please make sure that the private key has been copied carefully on the paper, and properly keep the electronic way only recommended in the password safe box. Do not take screenshots or save them in the network tools, which is very dangerous': >-
+    Please make sure that the private key has been copied carefully on the
+    paper, and properly keep the electronic way only recommended in the password
+    safe box. Do not take screenshots or save them in the network tools, which
+    is very dangerous
+  Backup Your PrivateKey: Backup Your PrivateKey
+  Import Wallet: Import Wallet
+  PrivateKey: PrivateKey
+  Please Enter Your PrivateKey: Please Enter Your PrivateKey
+  Import EOS Wallet: Import EOS Wallet
+  Forgot Password: Forgot Password
+  Get Balance Fail: Get Balance Fail
+  Please Enter EOS Account: Please Enter EOS Account
+  Terms Of CubeWallet: Terms Of CubeWallet
+  Transfer amount is illegal: Transfer amount is illegal
 zh-CN:
   vux.actionsheet.cancel: 取消
   vux.alert.button_text: 确定
@@ -240,3 +264,23 @@ zh-CN:
   Withdraw Success: 提现成功
   Withdraw Fail: 提现失败
   Withdrawing...: 提现中...
+  Forgot Password?: 忘记密码？
+  Reset Password: 重置密码
+  New Password: 新密码
+  Back: 返回
+  Please enter an EOS account: 请输入EOS帐号
+  EOS account consists of lowercase letters and 1-5 strings of length 12: EOS帐号名由小写字母和1-5组成的长度为12的字符串
+  Create EOS Account: 创建EOS账号
+  'Once the account is created, be sure to save your private key': 创建帐号完成，请务必保存好您的私钥
+  Pay: 支付
+  'Please make sure that the private key has been copied carefully on the paper, and properly keep the electronic way only recommended in the password safe box. Do not take screenshots or save them in the network tools, which is very dangerous': 请确保已将私钥认真抄写再纸上，妥善保管好。电子方式只建议保存在密码保管箱，切勿截图或保存在网络工具里，非常危险
+  Backup Your PrivateKey: 备份私钥
+  Import Wallet: 导入钱包
+  PrivateKey: 私钥
+  Please Enter Your PrivateKey: 请输入您的私钥
+  Import EOS Wallet: 导入EOS钱包
+  Forgot Password: 忘记密码
+  Get Balance Fail: 获取余额失败
+  Please Enter EOS Account: 请输入EOS帐号
+  Terms Of CubeWallet: 服务及隐私条款
+  Transfer amount is illegal: 转帐数量不合法

@@ -37,7 +37,7 @@
   </div>
 </template>
 <i18n>
-  About Us:
+About Us:
   zh-CN: 关于我们
 </i18n>
 <script>

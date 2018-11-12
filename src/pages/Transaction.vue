@@ -66,7 +66,7 @@
         </check-icon>
         <router-link to="/license">
           <a class="terms-text">
-            《{{$t('The Terms of Transaction')}}》
+            《{{$t('Terms Of CubeWallet')}}》
           </a>
         </router-link>
       </p>
@@ -101,7 +101,7 @@ Please enter a Non-negative number:
   zh-CN: 请输入非零且非负数字
 Please make sure you read:
   zh-CN: 我已经仔细阅读并同意
-The Terms of Transaction:
+Terms Of CubeWallet:
   zh-CN: 服务及隐私条款
 Please check the terms box:
   zh-CN: 请勾选已阅读隐私及服务条款
@@ -184,13 +184,13 @@ let interval = undefined
             return  (new Number(1 / this.exchangeRate)).toFixed(1)
         },
         amountOut() {
-            return this.amount * this.exchangeRate
+            return new Number(this.amount * this.exchangeRate).toFixed(4);
         },
         transactionCBT() {
-            return this.amount / this.exchangeRate ;
+            return new Number(this.amount / this.exchangeRate).toFixed(4) ;
         },
         transactionEos(){
-            return this.CBTAmount * this.exchangeRate ;
+            return new Number(this.CBTAmount * this.exchangeRate).toFixed(4) ;
         },
         ...mapState([
             'privateKey',
@@ -213,7 +213,7 @@ let interval = undefined
                         type:'text',
                         width:'16rem',
                         position:'middle'
-                    })                    
+                    })
                 }
             })
         },
@@ -329,12 +329,12 @@ let interval = undefined
             })
             setTimeout(()=>{
                 this.$vux.loading.hide()
-            }, 10 * 1000)
+            }, 20 * 1000)
 
             this.$http.get('/sell', {
                 params: {
                     name: this.eosAccountName,
-                    quant: this.CBTAmount
+                    cbt: parseInt( new Number(this.CBTAmount) * 10000 )
                 }
             }).then(res=>{
                 this.$vux.loading.hide()
@@ -358,8 +358,49 @@ let interval = undefined
                 this.$vux.alert.show({ title: '注册失败',content: err.msg });
             })
 
-  },
-      async eos2cbt() {
+    },
+    eos2cbt() {
+       this.$vux.loading.show({
+            text: 'Processing..'
+        })
+        setTimeout(()=>{
+            this.$vux.loading.hide()
+        }, 20 * 1000)
+
+
+            setTimeout(()=>{
+                this.$vux.loading.hide()
+            }, 10 * 1000)
+
+            this.$http.get('/buy', {
+                params: {
+                    name: this.eosAccountName,
+                    eos: parseInt(new Number(this.amount) * 10000)
+                }
+            }).then(res=>{
+                this.$vux.loading.hide()
+                if( res.status !== 200  || res.data.code !== 0 ) {
+                    this.$vux.alert.show({
+                        title: '兑换失败',
+                        content: res.data.msg ||  res.statusText || '未知错误',
+                    });
+                    return;
+                }
+
+                this.$vux.toast.show({
+                    text:this.$t('Transaction completed'),
+                    type:'text',
+                    width:'16rem',
+                    position:'middle'
+                })
+
+            }, err=>{
+                this.$vux.loading.hide()
+                this.$vux.alert.show({ title: '注册失败',content: err.msg });
+            })
+
+    },
+      async eos2cbtOld() {
 
 
         this.$vux.loading.show({
@@ -434,11 +475,11 @@ let interval = undefined
 
         this.getEOSPrice();
         this.getPrice();
-        this.getMemo();        
+        this.getMemo();
 
       this.$common.fixStatusBarByHeader('c-header')
 
-      
+
 
 
 

@@ -74,6 +74,8 @@ Please Enter Deposit Amount:
   zh-CN: 请输入充值数量
 Are you sure to exchange?:
   zh-CN: 你确定要充值吗？
+Transfer amount is illegal :
+  zh-CN: 转帐数量不合法
 </i18n>
 <script>
 import { setInterval, setTimeout } from 'timers';
@@ -140,7 +142,7 @@ import { officialEosAccount, eosEndpoint } from '@/config'
 
             setTimeout(()=>{
                 this.$vux.loading.hide()
-            }, 20 * 1000)
+            }, 40 * 1000)
 
             const rpc = new JsonRpc(eosEndpoint);
             const signatureProvider = new JsSignatureProvider([this.privateKey]);
@@ -252,6 +254,16 @@ import { officialEosAccount, eosEndpoint } from '@/config'
                 position:'middle'
             })
             return;
+        }
+        let a = new Number(this.transferAmount)
+        if( a == 0 || isNaN(a) ) {
+            this.$vux.toast.show({
+                text:this.$t('Transfer amount is illegal'),
+                type:'text',
+                width:'16rem',
+                position:'middle'
+            })
+            return;          
         }
         this.eos2ceos()
       }

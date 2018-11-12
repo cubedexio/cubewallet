@@ -8,13 +8,13 @@
         </flexbox-item>
         <flexbox-item :span="4/12" class="flex-item">
                 <label id="hint-label">
-                    创建<br/>/<br/>登陆帐号
+                  {{$t('Register')}}<br/>/<br/>{{$t('Login')}}
                 </label>
         </flexbox-item>
         <flexbox-item :span="5/12" class="flex-item">
 
-                <x-button type='primary' link="/register">创建帐号</x-button>
-                <x-button link="/login">登陆帐号</x-button>
+                <x-button type='primary' link="/register">{{$t('Register')}}</x-button>
+                <x-button link="/login">{{$t('Login')}}</x-button>
 
         </flexbox-item>
     </flexbox>
@@ -28,6 +28,7 @@ Login:
     zh-CN: 登录
 Register:
     zh-CN: 注册
+
 
 </i18n>
 
@@ -55,7 +56,7 @@ export default {
   },
   beforeCreate(){
     console.log()
-    if(this.$store.state.loggedIn){
+    if(this.$store.state.loggedIn && this.$store.state.eosAccountName){
       this.$router.replace('/home')
     }
   },

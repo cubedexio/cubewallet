@@ -1,17 +1,17 @@
 <template>
-  
+
     <flexbox id="eosindex-app" orient="vertical" justify="space-around">
         <flexbox-item :span="1/4" class="flex-item" >
-            
+
                 <img id="logo-img" src="@/assets/images/cbt_logo.png"/>
-            
+
         </flexbox-item>
         <flexbox-item :span="1/4" class="flex-item">
                 <label id="hint-label">
                     创建<br/>/<br/>导入EOS帐号
                 </label>
         </flexbox-item>
-        <flexbox-item :span="1/4" class="flex-item">      
+        <flexbox-item :span="1/4" class="flex-item">
 
                 <x-button type='primary' link="/createwallet">创建EOS帐号</x-button>
                 <x-button link="/importwallet">导入EOS帐号</x-button>

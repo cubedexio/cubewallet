@@ -8,10 +8,10 @@
         </flexbox-item>
         <flexbox-item :span="4/12" class="flex-item flex-input">
             <div class="login">
-                <label>手机号</label>
+                <label>{{$t('Phone Number')}}</label>
                 <cube-input name="phone" v-model="phone"></cube-input>
                 <br/>
-                <label>密码</label>
+                <label>{{$t('Password')}}</label>
                 <cube-input name="password" v-model="password"></cube-input>
             </div>
 
@@ -25,7 +25,7 @@
                 <x-button  link='/register'>{{ $t('Register') }}</x-button>
                 <br/>
                 <router-link class='gologin' :to="'Forgot'">
-                    忘记密码
+                    {{$t('Forgot Password')}}
                 </router-link>
             </div>
 
@@ -46,13 +46,15 @@ Please enter phone number!:
     zh-CN: 手机号码不能为空！
 Please enter password!:
     zh-CN: 密码不能为空！
-
+Forgot Password:
+  zh-CN: 忘记密码
 </i18n>
 
 <script>
 import { Group, XButton, XInput, Cell, Tabbar, TabbarItem, Flexbox, FlexboxItem  } from 'vux'
 
 import CubeInput from '@/components/CubeInput'
+import { mapState } from 'vuex'
 
 export default {
 
@@ -71,6 +73,9 @@ export default {
             password: ''
         }
     },
+    computed: mapState([
+        'privateKey',
+    ]),
     methods: {
         onLogin: function() {
             console.log('onLogin')
@@ -113,7 +118,7 @@ export default {
                 this.$store.commit('setRefreshToken', res.data.data.refreshToken)
                 this.$store.commit('setEOSAccountName', res.data.data.name)
                 this.$store.commit('setMemo', res.data.data.memo)
-                
+
                 this.$vux.toast.show({
                     text:this.$t('Login succeeed'),
                     type:'text',
@@ -123,9 +128,18 @@ export default {
                 console.log(res.data.data.name)
                 console.log(res.data.data.name == "" || res.data.data.name == undefined)
 
+                console.log('private key: ' + this.privateKey)
+
                 if(res.data.data.name == "" || res.data.data.name == undefined) { // 若没有EOS帐号提示导入或创建
                     this.$router.replace("/eosindex")
-                }else {
+                } else if( this.privateKey == "" || this.privateKey == undefined ) { // 若本地没有私钥则提示导入
+                    this.$router.replace({
+                        path: '/importwallet',
+                        query: {
+                            type: 1
+                        }
+                    })
+                } else {
                     this.$router.replace('/home')
                 }
 
@@ -148,7 +162,7 @@ export default {
     height: 100%;
     background: url("../../assets/images/sign_in_up.jpg") center 0  no-repeat ;
     background-size:  cover;
-    
+
 }
 
 .flex-input {

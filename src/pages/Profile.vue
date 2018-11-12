@@ -150,10 +150,10 @@ Cancel:
       }
     },
     mounted(){
-      let user = this.$store.state.eosAccountName;
-      if(!user){
-        this.account = 'fenghaha';
-      }
+      this.account = this.$store.state.eosAccountName;
+      // if(!user){
+      //   this.account = 'fenghaha';
+      // }
       this.$common.fixStatusBarByHeader('c-header')
       this.$common.fixTabBarByNav('c-nav-tab')
     },
@@ -167,6 +167,7 @@ Cancel:
         this.$vux.confirm.show({
           content:this.$t('Switch account will logout, Are you sure?'),
           onConfirm(){
+            that.$store.commit('setPrivateKey', undefined)
             that.$store.commit('setAccessToken', undefined)
             that.$store.commit('setLoggedIn', false)
             that.$store.commit('setEOSAccountName', undefined)

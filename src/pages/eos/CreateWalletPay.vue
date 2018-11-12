@@ -29,9 +29,9 @@
   </div>
 </template>
 <i18n>
-  Login:
+Login:
   zh-CN: 登录
-  Register:
+Register:
   zh-CN: 注册
 
 </i18n>
@@ -67,7 +67,7 @@ export default {
   },
   mounted(){
       this.getEOSCreationPrice();
-      
+
     this.$common.fixStatusBarByHeader('c-header')
     this.$common.fixTabBarByNav('c-nav-tab')
   },

@@ -1,7 +1,7 @@
 <template>
 
     <div id="createwallet-app">
-    <x-header id="c-header" class="header-content" :left-options="{backText:''}">创建EOS帐号</x-header>
+    <x-header id="c-header" class="header-content" :left-options="{backText:''}">{{$t('Create EOS Account')}}</x-header>
         <!--<flexbox  orient="vertical" justify="space-around">-->
           <!--<flexbox-item :span="1/2" class="flex-item eos-account">-->
             <!--<cube-input title="" placeholder="请输入EOS帐号" v-model="eosname"></cube-input>-->
@@ -13,11 +13,11 @@
         <!--</flexbox>-->
       <flexbox orient="vertical" justify="space-around">
         <flexbox-item class="">
-          <cube-input class="eos-account" title="" placeholder="请输入EOS帐号" v-model="eosname"></cube-input>
+          <cube-input class="eos-account" title="" :placeholder="$t('Please Enter EOS Account')" v-model="eosname"></cube-input>
           <label class="hint-label">EOS帐号名由小写字母和1-5组成的长度为12的字符串</label>
         </flexbox-item>
         <flexbox-item>
-          <x-button type='default' @click.native="createEOSAccount">确认</x-button>
+          <x-button type='default' @click.native="createEOSAccount">{{$t('Confirm')}}</x-button>
 
         </flexbox-item>
       </flexbox>
@@ -31,7 +31,10 @@ Login:
     zh-CN: 登录
 Register:
     zh-CN: 注册
-
+Create EOS Account:
+  zh-CN: 创建EOS账号
+Please Enter EOS Account:
+  zh-CN: 请输入EOS帐号
 </i18n>
 
 <script>
@@ -86,8 +89,8 @@ export default {
                     type: 'text',
                     position: 'middle',
                     width: '16rem'
-                })      
-                return           
+                })
+                return
             }
 
             this.$vux.loading.show({
@@ -108,7 +111,7 @@ export default {
                         text:this.$t('Account name unavailabe, please input another one' ),
                         type:'text',
                         position: 'middle',
-                        width: '16rem'                        
+                        width: '16rem'
                     })
                 } else {
                     throw new Error("")

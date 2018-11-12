@@ -12,11 +12,11 @@
 
                 <!-- <label>名字</label>
                 <cube-input name="name"></cube-input>                    -->
-                <label>手机号</label>
+                <label>{{$t('Phone Number')}}</label>
                 <!-- {{ phone }} -->
                 <cube-input v-model="phone" name="phone" type='number'></cube-input>
                 <br/>
-                <label>验证码</label>
+                <label>{{$t('VerifyCode')}}</label>
                 <div style="display:flex">
                     <cube-input v-model="sms" name="verifycode" style="flex:3"/>
                     <x-button  :disabled="disablePhoneNumber" plain type='default' class="custom-default" action-type='button' style="flex:1;height:80%" @click.native="requestVerifyCode">
@@ -25,7 +25,7 @@
                     </x-button>
                 </div>
                 <br/>
-                <label>新密码</label>
+                <label>{{$t('New Password')}}</label>
                 <cube-input v-model='newpassword' name="newpassword"></cube-input>
             </div>
 
@@ -53,6 +53,8 @@ Register:
     zh-CN: 注册
 VerifyCode:
     zh-CN: 验证码
+New Password:
+  zh-CN: 新密码
 
 </i18n>
 
@@ -95,10 +97,12 @@ export default {
     methods: {
       hideTabbar(show){
         // let tabbar = $api.byId('c-nav-tab')
+        if(this.$store.state.eosAccountName) {
           let tabbar = document.getElementById('c-nav-tab')
-          if(tabbar){
+          if (tabbar) {
             tabbar.style.display = show
           }
+        }
       },
         countdownSMS: function(cd) {
             this.countdown = cd

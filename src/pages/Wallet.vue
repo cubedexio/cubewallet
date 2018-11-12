@@ -42,13 +42,13 @@
           </flexbox-item>
           <flexbox-item :span="3" class="text-center">
           <x-button plain class="operation-btn" link="/deposit">
-            <img src="../assets/images/exchange.png" alt="">
+            <img src="../assets/images/deposit.png" alt="">
             <span>{{$t('Deposit')}}</span>
           </x-button>
         </flexbox-item>
           <flexbox-item :span="3" class="text-center">
             <x-button plain class="operation-btn" link="/withdraw">
-              <img src="../assets/images/exchange.png" alt="">
+              <img src="../assets/images/withdraw.png" alt="">
               <span>{{$t('Withdraw')}}</span>
             </x-button>
           </flexbox-item>
@@ -134,6 +134,8 @@ My Wallet:
   zh-CN: 资产
 I have bottom line:
   zh-CN: 我是有底线的
+Withdraw:
+  zh-CN: 提现
 </i18n>
 
 <script>
@@ -214,9 +216,9 @@ I have bottom line:
     },
     created() {
       this.account = this.$store.state.eosAccountName
-      if (!this.account) {
-        this.account = 'fenghaha'
-      }
+      // if (!this.account) {
+      //   this.account = 'fenghaha'
+      // }
     },
     mounted() {
       this.getExchangeRate()

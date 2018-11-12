@@ -9,7 +9,7 @@
           <th class="number">#</th>
           <th class="text-left">Name</th>
           <th></th>
-          <th ref="sortPrice" class="sort-price text-left">$
+          <th ref="sortPrice" class="sort-price text-left">￥
             <!--<i><img src="../assets/images/options-arrow.png" alt=""></i> -->
           </th>
           <th ref="sortRange">24H
@@ -25,7 +25,7 @@
             {{item.name}}
           </td>
           <td>{{item.tokenName}}</td>
-          <td class="text-left">${{item.price}}</td>
+          <td class="text-left">￥{{item.price}}</td>
           <td :class="{ goUp : item.range >= 0, goDown:item.range < 0 }">
             {{ item.range + '%'}}
           </td>
@@ -36,7 +36,7 @@
   </div>
 </template>
 <i18n>
-  Market:
+Market:
   zh-CN: 市场
 </i18n>
 <script>
@@ -46,16 +46,16 @@
       tokenName: 'EOS',
       price: 0,
       name: 'Eos',
-      tokenImg: '../static/imgs/eos.png',
-      range: '-2.46'
+      tokenImg: './static/imgs/eos.png',
+      range: '0.00'
     },
     {
       id: 2,
       tokenName: 'CBT',
       price: 0,
       name: 'CubeCart',
-      tokenImg: '../static/imgs/cbt.png',
-      range: '+3.46'
+      tokenImg: './static/imgs/cbt.png',
+      range: '0.00'
     },
   ]
   import {
